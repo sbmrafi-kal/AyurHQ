@@ -1,0 +1,164 @@
+{{ 'ayurhq-blog-hub.css' | asset_url | stylesheet_tag }}
+
+<div class="ayurhq-blog-wrapper">
+  <div class="ayurhq-blog-container">
+    
+    <!-- Hero Banner -->
+    <header class="ayurhq-blog-hero">
+      {%- if blog.metafields.custom.hero_eyebrow != blank -%}
+        <span class="ayurhq-blog-hero__eyebrow">{{ blog.metafields.custom.hero_eyebrow.value }}</span>
+      {%- else -%}
+        <span class="ayurhq-blog-hero__eyebrow">AYURVEDIC WISDOM</span>
+      {%- endif -%}
+
+      <h1 class="ayurhq-blog-hero__heading">
+        {{ blog.metafields.custom.hero_heading.value | default: blog.title }}
+      </h1>
+
+      {%- if blog.metafields.custom.hero_subheading != blank -%}
+        <p class="ayurhq-blog-hero__subheading">{{ blog.metafields.custom.hero_subheading.value | newline_to_br }}</p>
+      {%- endif -%}
+
+      <div class="ayurhq-blog-hero__actions">
+        {%- if blog.metafields.custom.primary_cta_label != blank and blog.metafields.custom.primary_cta_link != blank -%}
+          <a href="{{ blog.metafields.custom.primary_cta_link.value }}" class="ayurhq-blog-btn">
+            {{ blog.metafields.custom.primary_cta_label.value }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if blog.metafields.custom.topic_count_label != blank or blog.metafields.custom.read_count_label != blank -%}
+        <div class="ayurhq-blog-hero__stats">
+          {%- if blog.metafields.custom.topic_count_label != blank -%}
+            <span class="ayurhq-blog-hero__pill">{{ blog.metafields.custom.topic_count_label.value }}</span>
+          {%- endif -%}
+          {%- if blog.metafields.custom.read_count_label != blank -%}
+            <span class="ayurhq-blog-hero__pill">{{ blog.metafields.custom.read_count_label.value }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </header>
+
+    <!-- Featured Section -->
+    {%- assign featured_article = blog.metafields.custom.featured_article.value -%}
+    {%- if featured_article == blank -%}
+      {%- assign featured_article = blog.articles.first -%}
+    {%- endif -%}
+
+    {%- if featured_article != blank -%}
+      <section class="ayurhq-blog-featured">
+        <h2 class="ayurhq-blog-section-title">Editor's Choice</h2>
+        <div class="ayurhq-blog-featured-card">
+          {%- if featured_article.image != blank -%}
+            <div class="ayurhq-blog-featured-card__image-wrapper">
+              {{ featured_article.image | image_url: width: 800 | image_tag: 
+                loading: 'eager', 
+                class: 'ayurhq-blog-featured-card__image',
+                sizes: '(min-width: 991px) 50vw, 100vw',
+                widths: '400, 600, 800, 1000'
+              }}
+            </div>
+          {%- endif -%}
+          <div class="ayurhq-blog-featured-card__content">
+            <div class="ayurhq-blog-featured-card__meta">
+              {%- if featured_article.tags.size > 0 -%}
+                <span>{{ featured_article.tags[0] }}</span>
+                <span>•</span>
+              {%- endif -%}
+              {%- if featured_article.metafields.custom.read_time != blank -%}
+                <span>{{ featured_article.metafields.custom.read_time.value }} read</span>
+              {%- endif -%}
+            </div>
+            <h3 class="ayurhq-blog-featured-card__title">{{ featured_article.title }}</h3>
+            <p class="ayurhq-blog-featured-card__excerpt">
+              {{ featured_article.excerpt | default: featured_article.content | strip_html | truncatewords: 35 }}
+            </p>
+            <a href="{{ featured_article.url }}" class="ayurhq-blog-featured-card__cta">
+              Read Editorial Article →
+            </a>
+          </div>
+        </div>
+      </section>
+    {%- endif -%}
+
+    <!-- Topic Cards Grid -->
+    {%- if blog.metafields.custom.topic_cards.value != blank -%}
+      <section class="ayurhq-blog-topics">
+        <h2 class="ayurhq-blog-section-title">Explore Topics</h2>
+        <div class="ayurhq-blog-topic-grid">
+          {%- for topic in blog.metafields.custom.topic_cards.value -%}
+            {%- render 'ayurhq-topic-card', topic_card: topic -%}
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+
+    <!-- All Articles list -->
+    <section class="ayurhq-blog-articles">
+      <h2 class="ayurhq-blog-section-title">All Guides & Wisdom</h2>
+      <div class="ayurhq-blog-article-grid">
+        {%- for article in blog.articles -%}
+          {%- if article.id != featured_article.id -%}
+            {%- render 'ayurhq-article-card', article: article -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <!-- Consultation CTA -->
+    {%- if blog.metafields.custom.consultation_heading != blank -%}
+      <section class="ayurhq-blog-consultation">
+        <h2 class="ayurhq-blog-consultation__heading">{{ blog.metafields.custom.consultation_heading.value }}</h2>
+        {%- if blog.metafields.custom.consultation_text != blank -%}
+          <p class="ayurhq-blog-consultation__text">{{ blog.metafields.custom.consultation_text.value | newline_to_br }}</p>
+        {%- endif -%}
+        {%- if blog.metafields.custom.consultation_cta_label != blank and blog.metafields.custom.consultation_cta_link != blank -%}
+          <a href="{{ blog.metafields.custom.consultation_cta_link.value }}" class="ayurhq-blog-btn">
+            {{ blog.metafields.custom.consultation_cta_label.value }}
+          </a>
+        {%- endif -%}
+      </section>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<!-- Floating Ask Guruji CTA -->
+{%- if section.settings.show_ask_guruji and section.settings.ask_guruji_link != blank -%}
+  <a href="{{ section.settings.ask_guruji_link }}" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12c0 2.21.72 4.25 1.94 5.92L3 22l4.28-1.07C8.83 21.46 10.37 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+    </svg>
+    <span>{{ section.settings.ask_guruji_label | default: 'Ask Guruji' }}</span>
+  </a>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "AyurHQ Ayurveda Blog Hub",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Floating CTA Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ask_guruji",
+      "label": "Show Floating Ask Guruji Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "ask_guruji_label",
+      "label": "Button Label",
+      "default": "Ask Guruji"
+    },
+    {
+      "type": "url",
+      "id": "ask_guruji_link",
+      "label": "Button Link",
+      "info": "Link to consultation form or chat service."
+    }
+  ]
+}
+{% endschema %}

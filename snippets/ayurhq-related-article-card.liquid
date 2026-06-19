@@ -1,0 +1,39 @@
+{% comment %}
+  Renders a compact related article card.
+  Accepts:
+  - article: {Article} The article object
+{% endcomment %}
+
+{%- if article != blank -%}
+  <div class="ayurhq-article-related-card">
+    <a href="{{ article.url }}" class="ayurhq-article-related-card__link">
+      {%- if article.image != blank -%}
+        <div class="ayurhq-article-related-card__image-wrapper">
+          {{ article.image | image_url: width: 450 | image_tag: 
+            loading: 'lazy', 
+            sizes: '(min-width: 769px) 33vw, 100vw', 
+            widths: '200, 300, 450, 600',
+            class: 'ayurhq-article-related-card__image' 
+          }}
+        </div>
+      {%- else -%}
+        <div class="ayurhq-article-related-card__image-placeholder"></div>
+      {%- endif -%}
+      <div class="ayurhq-article-related-card__content">
+        <div class="ayurhq-article-related-card__meta">
+          {%- if article.tags.size > 0 -%}
+            <span class="ayurhq-article-related-card__tag">{{ article.tags[0] }}</span>
+            <span class="ayurhq-article-related-card__separator">•</span>
+          {%- endif -%}
+          {%- if article.metafields.custom.read_time != blank -%}
+            <span class="ayurhq-article-related-card__read-time">{{ article.metafields.custom.read_time.value }}</span>
+          {%- endif -%}
+        </div>
+        <h4 class="ayurhq-article-related-card__title">{{ article.title }}</h4>
+        {%- if article.metafields.custom.hindi_title != blank -%}
+          <p class="ayurhq-article-related-card__hindi">{{ article.metafields.custom.hindi_title.value }}</p>
+        {%- endif -%}
+      </div>
+    </a>
+  </div>
+{%- endif -%}

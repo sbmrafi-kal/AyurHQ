@@ -1,0 +1,34 @@
+{% comment %}
+  Renders an Ayurveda topic card.
+  Accepts:
+  - topic_card: {Metaobject} The topic card metaobject reference (ayurhq_topic_card type)
+{% endcomment %}
+
+{%- if topic_card != blank -%}
+  {%- assign tc = topic_card.value -%}
+  <a href="{{ tc.link | default: '#' }}" class="ayurhq-blog-topic-card">
+    {%- if tc.image != blank -%}
+      <div class="ayurhq-blog-topic-card__image-wrapper">
+        {{ tc.image | image_url: width: 300 | image_tag: 
+          loading: 'lazy', 
+          sizes: '(min-width: 769px) 25vw, (min-width: 481px) 50vw, 100vw', 
+          widths: '150, 200, 300, 400',
+          class: 'ayurhq-blog-topic-card__image' 
+        }}
+      </div>
+    {%- else -%}
+      <div class="ayurhq-blog-topic-card__image-placeholder"></div>
+    {%- endif -%}
+    <div class="ayurhq-blog-topic-card__content">
+      <div class="ayurhq-blog-topic-card__titles">
+        <h3 class="ayurhq-blog-topic-card__title">{{ tc.title }}</h3>
+        {%- if tc.hindi_title != blank -%}
+          <span class="ayurhq-blog-topic-card__hindi">{{ tc.hindi_title }}</span>
+        {%- endif -%}
+      </div>
+      {%- if tc.article_count != blank -%}
+        <span class="ayurhq-blog-topic-card__count">{{ tc.article_count }} Articles</span>
+      {%- endif -%}
+    </div>
+  </a>
+{%- endif -%}

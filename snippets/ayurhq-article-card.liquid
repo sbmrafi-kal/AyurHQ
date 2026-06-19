@@ -1,0 +1,52 @@
+{% comment %}
+  Renders an Ayurveda blog article card.
+  Accepts:
+  - article: {Article} The article object
+{% endcomment %}
+
+{%- if article != blank -%}
+  <article class="ayurhq-blog-article-card">
+    <a href="{{ article.url }}" class="ayurhq-blog-article-card__link" aria-label="{{ article.title }}">
+      {%- if article.image != blank -%}
+        <div class="ayurhq-blog-article-card__image-wrapper">
+          {{ article.image | image_url: width: 600 | image_tag: 
+            loading: 'lazy', 
+            sizes: '(min-width: 769px) 33vw, (min-width: 481px) 50vw, 100vw', 
+            widths: '300, 450, 600, 750, 900',
+            class: 'ayurhq-blog-article-card__image' 
+          }}
+          {%- if article.metafields.custom.hero_badge != blank -%}
+            <span class="ayurhq-blog-article-card__badge">{{ article.metafields.custom.hero_badge.value }}</span>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="ayurhq-blog-article-card__image-placeholder"></div>
+      {%- endif -%}
+      <div class="ayurhq-blog-article-card__content">
+        <div class="ayurhq-blog-article-card__meta">
+          {%- if article.tags.size > 0 -%}
+            <span class="ayurhq-blog-article-card__tag">{{ article.tags[0] }}</span>
+            <span class="ayurhq-blog-article-card__separator">•</span>
+          {%- endif -%}
+          {%- if article.metafields.custom.read_time != blank -%}
+            <span class="ayurhq-blog-article-card__read-time">{{ article.metafields.custom.read_time.value }} read</span>
+          {%- endif -%}
+        </div>
+        
+        <h3 class="ayurhq-blog-article-card__title">
+          {{ article.title }}
+        </h3>
+        
+        {%- if article.metafields.custom.hindi_title != blank -%}
+          <p class="ayurhq-blog-article-card__hindi-title">{{ article.metafields.custom.hindi_title.value }}</p>
+        {%- endif -%}
+
+        <p class="ayurhq-blog-article-card__excerpt">
+          {{ article.excerpt | default: article.content | strip_html | truncatewords: 24 }}
+        </p>
+
+        <span class="ayurhq-blog-article-card__cta">Read Article →</span>
+      </div>
+    </a>
+  </article>
+{%- endif -%}

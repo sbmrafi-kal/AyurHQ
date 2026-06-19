@@ -1,0 +1,16 @@
+{
+  "name": "Ayurveda Article Template",
+  "sections": {
+    "main": {
+      "type": "ayurhq-article-template",
+      "settings": {
+        "show_ask_guruji": true,
+        "ask_guruji_label": "Ask Guruji",
+        "ask_guruji_link": "/pages/consultation"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

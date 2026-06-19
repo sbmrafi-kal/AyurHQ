@@ -1,0 +1,530 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+:root {
+  --ayurhq-bg: #fffdf8;
+  --ayurhq-cream-card-light: #fff8ef;
+  --ayurhq-cream-card-dark: #fff7ea;
+  --ayurhq-border: #eadcc8;
+  --ayurhq-orange: #c94f17;
+  --ayurhq-orange-hover: #b24112;
+  --ayurhq-dark-text: #1e1e1e;
+  --ayurhq-body-text: #4e4a45;
+  --ayurhq-muted-text: #7b746c;
+  --ayurhq-blue-link: #1f5f9d;
+  --ayurhq-font-title: 'Playfair Display', Georgia, serif;
+  --ayurhq-font-body: 'Outfit', sans-serif;
+}
+
+.ayurhq-blog-wrapper {
+  background-color: var(--ayurhq-bg);
+  color: var(--ayurhq-body-text);
+  font-family: var(--ayurhq-font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  padding: 60px 0;
+}
+
+.ayurhq-blog-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* Hero Section */
+.ayurhq-blog-hero {
+  background-color: var(--ayurhq-cream-card-light);
+  border: 1px solid var(--ayurhq-border);
+  border-radius: 28px;
+  padding: 60px 40px;
+  margin-bottom: 60px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(234, 220, 200, 0.15);
+}
+
+.ayurhq-blog-hero__eyebrow {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: var(--ayurhq-orange);
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.ayurhq-blog-hero__heading {
+  font-family: var(--ayurhq-font-title);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--ayurhq-dark-text);
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+}
+
+.ayurhq-blog-hero__subheading {
+  font-size: 18px;
+  color: var(--ayurhq-body-text);
+  max-width: 720px;
+  margin: 0 auto 30px auto;
+  line-height: 1.6;
+}
+
+.ayurhq-blog-hero__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ayurhq-blog-btn {
+  background-color: var(--ayurhq-orange);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.ayurhq-blog-btn:hover {
+  background-color: var(--ayurhq-orange-hover);
+  transform: translateY(-1px);
+}
+
+.ayurhq-blog-hero__stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.ayurhq-blog-hero__pill {
+  background-color: #ffffff;
+  border: 1px solid var(--ayurhq-border);
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ayurhq-muted-text);
+}
+
+/* Featured Article */
+.ayurhq-blog-featured {
+  margin-bottom: 80px;
+}
+
+.ayurhq-blog-section-title {
+  font-family: var(--ayurhq-font-title);
+  font-size: 32px;
+  color: var(--ayurhq-dark-text);
+  margin-bottom: 30px;
+}
+
+.ayurhq-blog-featured-card {
+  background-color: #ffffff;
+  border: 1px solid var(--ayurhq-border);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(234, 220, 200, 0.2);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  transition: transform 0.3s ease;
+}
+
+.ayurhq-blog-featured-card:hover {
+  transform: translateY(-4px);
+}
+
+.ayurhq-blog-featured-card__image-wrapper {
+  position: relative;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.ayurhq-blog-featured-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.ayurhq-blog-featured-card:hover .ayurhq-blog-featured-card__image {
+  transform: scale(1.03);
+}
+
+.ayurhq-blog-featured-card__content {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--ayurhq-cream-card-light);
+}
+
+.ayurhq-blog-featured-card__meta {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ayurhq-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ayurhq-blog-featured-card__title {
+  font-family: var(--ayurhq-font-title);
+  font-size: 36px;
+  color: var(--ayurhq-dark-text);
+  margin: 0 0 16px 0;
+  line-height: 1.3;
+}
+
+.ayurhq-blog-featured-card__excerpt {
+  font-size: 16px;
+  color: var(--ayurhq-body-text);
+  margin: 0 0 30px 0;
+  line-height: 1.7;
+}
+
+.ayurhq-blog-featured-card__cta {
+  font-weight: 600;
+  color: var(--ayurhq-orange);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ayurhq-blog-featured-card__cta:hover {
+  color: var(--ayurhq-orange-hover);
+}
+
+/* Topic Grid */
+.ayurhq-blog-topics {
+  margin-bottom: 80px;
+}
+
+.ayurhq-blog-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.ayurhq-blog-topic-card {
+  background-color: var(--ayurhq-cream-card-light);
+  border: 1px solid var(--ayurhq-border);
+  border-radius: 22px;
+  padding: 24px;
+  text-decoration: none;
+  color: var(--ayurhq-body-text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(234, 220, 200, 0.1);
+}
+
+.ayurhq-blog-topic-card:hover {
+  transform: translateY(-4px);
+  background-color: var(--ayurhq-cream-card-dark);
+  box-shadow: 0 8px 25px rgba(234, 220, 200, 0.2);
+}
+
+.ayurhq-blog-topic-card__image-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1.5px solid var(--ayurhq-border);
+}
+
+.ayurhq-blog-topic-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ayurhq-blog-topic-card__image-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--ayurhq-border);
+  margin-bottom: 16px;
+}
+
+.ayurhq-blog-topic-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ayurhq-blog-topic-card__titles {
+  margin-bottom: 8px;
+}
+
+.ayurhq-blog-topic-card__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ayurhq-dark-text);
+  margin: 0;
+}
+
+.ayurhq-blog-topic-card__hindi {
+  font-family: var(--ayurhq-font-title);
+  font-size: 14px;
+  color: var(--ayurhq-orange);
+  display: block;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.ayurhq-blog-topic-card__count {
+  font-size: 13px;
+  color: var(--ayurhq-muted-text);
+}
+
+/* Article Cards Layout */
+.ayurhq-blog-articles {
+  margin-bottom: 80px;
+}
+
+.ayurhq-blog-article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.ayurhq-blog-article-card {
+  background-color: #ffffff;
+  border: 1px solid var(--ayurhq-border);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 15px rgba(234, 220, 200, 0.1);
+}
+
+.ayurhq-blog-article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(234, 220, 200, 0.2);
+}
+
+.ayurhq-blog-article-card__link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.ayurhq-blog-article-card__image-wrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.ayurhq-blog-article-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.ayurhq-blog-article-card:hover .ayurhq-blog-article-card__image {
+  transform: scale(1.03);
+}
+
+.ayurhq-blog-article-card__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: var(--ayurhq-orange);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.ayurhq-blog-article-card__image-placeholder {
+  height: 220px;
+  background-color: var(--ayurhq-border);
+}
+
+.ayurhq-blog-article-card__content {
+  padding: 24px;
+}
+
+.ayurhq-blog-article-card__meta {
+  font-size: 13px;
+  color: var(--ayurhq-muted-text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.ayurhq-blog-article-card__tag {
+  color: var(--ayurhq-orange);
+  text-transform: uppercase;
+}
+
+.ayurhq-blog-article-card__title {
+  font-family: var(--ayurhq-font-title);
+  font-size: 22px;
+  color: var(--ayurhq-dark-text);
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.ayurhq-blog-article-card__hindi-title {
+  font-family: var(--ayurhq-font-title);
+  font-size: 15px;
+  color: var(--ayurhq-muted-text);
+  margin: 0 0 12px 0;
+  font-style: italic;
+}
+
+.ayurhq-blog-article-card__excerpt {
+  font-size: 14px;
+  color: var(--ayurhq-body-text);
+  margin: 0 0 20px 0;
+  line-height: 1.6;
+}
+
+.ayurhq-blog-article-card__cta {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ayurhq-orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Consultation CTA Section */
+.ayurhq-blog-consultation {
+  background-color: var(--ayurhq-cream-card-dark);
+  border: 1px solid var(--ayurhq-border);
+  border-radius: 28px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(234, 220, 200, 0.1);
+}
+
+.ayurhq-blog-consultation__heading {
+  font-family: var(--ayurhq-font-title);
+  font-size: 36px;
+  color: var(--ayurhq-dark-text);
+  margin: 0 0 16px 0;
+}
+
+.ayurhq-blog-consultation__text {
+  font-size: 18px;
+  color: var(--ayurhq-body-text);
+  max-width: 680px;
+  margin: 0 auto 30px auto;
+  line-height: 1.6;
+}
+
+/* Floating Ask Guruji CTA */
+.ayurhq-floating-guruji {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background-color: var(--ayurhq-orange);
+  color: #ffffff;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(201, 79, 23, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--ayurhq-border);
+}
+
+.ayurhq-floating-guruji:hover {
+  transform: translateY(-4px);
+  background-color: var(--ayurhq-orange-hover);
+  box-shadow: 0 8px 25px rgba(201, 79, 23, 0.45);
+}
+
+.ayurhq-floating-guruji svg {
+  fill: currentColor;
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsiveness */
+@media (max-width: 990px) {
+  .ayurhq-blog-hero {
+    padding: 40px 24px;
+  }
+  .ayurhq-blog-hero__heading {
+    font-size: 38px;
+  }
+  .ayurhq-blog-featured-card {
+    grid-template-columns: 1fr;
+  }
+  .ayurhq-blog-featured-card__image-wrapper {
+    min-height: 300px;
+  }
+  .ayurhq-blog-featured-card__content {
+    padding: 30px 24px;
+  }
+  .ayurhq-blog-featured-card__title {
+    font-size: 28px;
+  }
+  .ayurhq-blog-topic-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .ayurhq-blog-article-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .ayurhq-blog-consultation {
+    padding: 40px 24px;
+  }
+  .ayurhq-blog-consultation__heading {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ayurhq-blog-wrapper {
+    padding: 40px 0;
+  }
+  .ayurhq-blog-hero__heading {
+    font-size: 32px;
+  }
+  .ayurhq-blog-hero__subheading {
+    font-size: 16px;
+  }
+  .ayurhq-blog-topic-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .ayurhq-blog-article-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .ayurhq-floating-guruji {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
