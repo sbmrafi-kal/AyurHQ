@@ -750,7 +750,7 @@
   z-index: 1000;
   background-color: var(--ayurhq-orange);
   color: #ffffff;
-  padding: 10px 18px;
+  padding: 8px 18px 8px 8px !important;
   border-radius: 999px;
   font-weight: 600;
   font-size: 14px;
@@ -759,7 +759,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.25s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   border: none;
 }
 
@@ -769,11 +769,23 @@
   box-shadow: 0 6px 20px rgba(201, 79, 23, 0.35);
 }
 
-.ayurhq-floating-guruji svg {
+.ayurhq-floating-guruji__icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #FFF0D9 !important;
+  color: #C8521B !important;
+}
+
+.ayurhq-floating-guruji__icon-wrapper svg {
   fill: none;
   stroke: currentColor;
-  width: 16px;
-  height: 16px;
+  width: 14px !important;
+  height: 14px !important;
+  stroke-width: 26px !important;
 }
 
 /* Mobile Sticky CTA */

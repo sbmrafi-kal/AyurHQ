@@ -1010,7 +1010,7 @@
 
     /* ── Nav list spacing ── */
     .is-ayurveda-page .menu-list {
-      --menu-horizontal-gap: 48px !important;
+      --menu-horizontal-gap: 80px !important;
     }
 
     /* ── Nav link defaults ── */
@@ -1027,19 +1027,19 @@
       padding-inline: 6px !important;
       font-size: 14px !important;
       font-weight: 500 !important;
-      gap: 18px !important;
+      gap: 8px !important;
     }
 
     /* ── Icons ── */
     .is-ayurveda-page .menu-icon svg {
-      width: 27px !important;
-      height: 27px !important;
+      width: 21px !important;
+      height: 21px !important;
       stroke-width: 1.6px !important;
       stroke: currentColor !important;
     }
     .is-ayurveda-page .menu-icon--ayurveda svg {
-      width: 27px !important;
-      height: 27px !important;
+      width: 21px !important;
+      height: 21px !important;
       fill: currentColor !important;
       stroke: none !important;
     }
@@ -1057,8 +1057,8 @@
       width: auto !important;
     }
     .is-ayurveda-page .custom-logo-icon {
-      width: 22px !important;
-      height: 28px !important;
+      width: 28px !important;
+      height: 34px !important;
     }
     .is-ayurveda-page .custom-logo-text {
       font-size: 22px !important;
@@ -1066,11 +1066,13 @@
     }
 
     /* ── Right side: language selector ── */
-    .is-ayurveda-page .dropdown-localization__button {
+    .is-ayurveda-page .dropdown-localization__button,
+    .is-ayurveda-page .dropdown-localization__button:hover {
       border: 1px solid #E3CFB4 !important;
       border-radius: 999px !important;
       padding: 7px 14px !important;
-      background: #FFFCF2 !important;
+      background: #FFFFFF !important;
+      background-color: #FFFFFF !important;
       color: #1e1e1e !important;
       font-size: 13px !important;
       font-weight: 500 !important;
@@ -1112,7 +1114,7 @@
 
   /* active tab pill – matches reference peach/orange pill */
   .is-ayurveda-page .menu-list__link--ayurveda-pill {
-    background-color: #FFF0E2 !important;
+    background-color: #FFF0D9 !important;
     border: none !important;
     border-radius: 999px !important;
     padding: 8px 18px !important;
@@ -1178,7 +1180,8 @@
 
   @media screen and (max-width: 749px) {
     #header-component .header__drawer,
-    #header-component .search-action {
+    #header-component .search-action,
+    #header-component .header-menu {
       display: none !important;
     }
 
@@ -1219,14 +1222,16 @@
       min-width: 44px;
     }
 
-    #header-component .dropdown-localization__button {
-      border: 1px solid #eadcc8;
-      border-radius: 999px;
-      padding: 10px 16px;
-      background: #FFFCF2;
-      color: #1e1e1e;
-      font-weight: 600;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+    #header-component .dropdown-localization__button,
+    #header-component .dropdown-localization__button:hover {
+      border: 1px solid #eadcc8 !important;
+      border-radius: 999px !important;
+      padding: 10px 16px !important;
+      background: #FFFFFF !important;
+      background-color: #FFFFFF !important;
+      color: #1e1e1e !important;
+      font-weight: 600 !important;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
     }
 
     #header-component .dropdown-localization__button .svg-wrapper.icon-caret {

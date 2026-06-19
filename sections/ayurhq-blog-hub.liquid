@@ -1,7 +1,173 @@
 {{ 'ayurhq-blog-hub.css' | asset_url | stylesheet_tag }}
 
 <div class="ayurhq-blog-wrapper">
-  
+  {%- if current_tags != blank -%}
+    {%- assign topic_title = "" -%}
+    {%- assign topic_hindi = "" -%}
+    {%- assign topic_count = 0 -%}
+    {%- assign current_tag = current_tags.first -%}
+    {%- case current_tag -%}
+      {%- when 'digestion' -%}
+        {%- assign topic_title = "Digestion & gut" -%}
+        {%- assign topic_hindi = "पाचन" -%}
+        {%- assign topic_count = 24 -%}
+      {%- when 'food' -%}
+        {%- assign topic_title = "Food & kitchen" -%}
+        {%- assign topic_hindi = "आहार" -%}
+        {%- assign topic_count = 16 -%}
+      {%- when 'herbs' -%}
+        {%- assign topic_title = "Herbs & remedies" -%}
+        {%- assign topic_hindi = "औषधि" -%}
+        {%- assign topic_count = 10 -%}
+      {%- when 'weight' -%}
+        {%- assign topic_title = "Weight & cravings" -%}
+        {%- assign topic_hindi = "वजन और लालच" -%}
+        {%- assign topic_count = 13 -%}
+      {%- when 'immunity' -%}
+        {%- assign topic_title = "Immunity" -%}
+        {%- assign topic_hindi = "रोग-प्रतिरोध" -%}
+        {%- assign topic_count = 15 -%}
+      {%- when 'seasons' -%}
+        {%- assign topic_title = "Seasons & routine" -%}
+        {%- assign topic_hindi = "ऋतुचर्या" -%}
+        {%- assign topic_count = 11 -%}
+      {%- when 'sleep' -%}
+        {%- assign topic_title = "Sleep & energy" -%}
+        {%- assign topic_hindi = "नींद और ऊर्जा" -%}
+        {%- assign topic_count = 14 -%}
+      {%- when 'mind' -%}
+        {%- assign topic_title = "Mind & calm" -%}
+        {%- assign topic_hindi = "मन और शांति" -%}
+        {%- assign topic_count = 14 -%}
+      {%- when 'habits' -%}
+        {%- assign topic_title = "Daily habits" -%}
+        {%- assign topic_hindi = "दिनचर्या" -%}
+        {%- assign topic_count = 16 -%}
+      {%- when 'joints' -%}
+        {%- assign topic_title = "Joints & body" -%}
+        {%- assign topic_hindi = "जोड़ और शरीर" -%}
+        {%- assign topic_count = 17 -%}
+      {%- when 'skin' -%}
+        {%- assign topic_title = "Skin & glow" -%}
+        {%- assign topic_hindi = "त्वचा" -%}
+        {%- assign topic_count = 16 -%}
+      {%- when 'hair' -%}
+        {%- assign topic_title = "Hair & scalp" -%}
+        {%- assign topic_hindi = "बाल" -%}
+        {%- assign topic_count = 11 -%}
+      {%- when 'eyes' -%}
+        {%- assign topic_title = "Eyes, ears & mouth" -%}
+        {%- assign topic_hindi = "आँख, कान, मुँह" -%}
+        {%- assign topic_count = 11 -%}
+      {%- when 'womens' -%}
+        {%- assign topic_title = "Women's wellbeing" -%}
+        {%- assign topic_hindi = "स्त्री-स्वास्थ्य" -%}
+        {%- assign topic_count = 13 -%}
+      {%- when 'mens' -%}
+        {%- assign topic_title = "Men's wellbeing" -%}
+        {%- assign topic_hindi = "पुरुष-स्वास्थ्य" -%}
+        {%- assign topic_count = 9 -%}
+      {%- when 'children' -%}
+        {%- assign topic_title = "Children's care" -%}
+        {%- assign topic_hindi = "बच्चों की देखभाल" -%}
+        {%- assign topic_count = 13 -%}
+      {%- when 'elder' -%}
+        {%- assign topic_title = "Elder care" -%}
+        {%- assign topic_hindi = "बुजुर्गों की देखभाल" -%}
+        {%- assign topic_count = 11 -%}
+      {%- when 'basics' -%}
+        {%- assign topic_title = "Ayurveda basics" -%}
+        {%- assign topic_hindi = "आयुर्वेद की बुनियाद" -%}
+        {%- assign topic_count = 16 -%}
+      {%- else -%}
+        {%- assign topic_title = current_tag | replace: '-', ' ' | capitalize -%}
+        {%- assign topic_hindi = "" -%}
+        {%- assign topic_count = blog.articles.size -%}
+    {%- endcase -%}
+
+    <header class="ayurhq-topic-header">
+      <div class="ayurhq-topic-header-container">
+        <a class="ayurhq-topic-back-link" href="{{ blog.url }}#guides">
+          <span>←</span> All topics
+        </a>
+        <div class="ayurhq-topic-header-title-row">
+          <h1 class="ayurhq-topic-header-title">{{ topic_title }}</h1>
+          {%- if topic_hindi != blank -%}
+            <span class="ayurhq-topic-header-hindi" lang="hi">{{ topic_hindi }}</span>
+          {%- endif -%}
+        </div>
+        <p class="ayurhq-topic-header-count">{{ topic_count }} articles</p>
+      </div>
+    </header>
+
+    <div class="ayurhq-topic-content-container">
+      <div class="ayurhq-topic-articles-grid">
+        {%- if blog.articles.size > 0 -%}
+          {%- for article in blog.articles -%}
+            <a href="{{ article.url }}" class="ayurhq-topic-article-card group">
+              <div class="ayurhq-topic-article-card__image-wrapper">
+                {%- if article.image != blank -%}
+                  {{ article.image | image_url: width: 500 | image_tag: loading: 'lazy', class: 'ayurhq-topic-article-card__image' }}
+                {%- else -%}
+                  <div class="ayurhq-topic-article-card__placeholder"></div>
+                {%- endif -%}
+                <div class="ayurhq-topic-article-card__accent-line"></div>
+              </div>
+              <div class="ayurhq-topic-article-card__info">
+                <h2 class="ayurhq-topic-article-card__title">{{ article.title }}</h2>
+                <p class="ayurhq-topic-article-card__excerpt">{{ article.excerpt | default: article.content | strip_html | truncatewords: 22 }}</p>
+                {%- if article.metafields.custom.read_time != blank -%}
+                  <div class="ayurhq-topic-article-card__read-time">{{ article.metafields.custom.read_time.value }}</div>
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          {%- if current_tag == 'digestion' -%}
+            {%- assign mock_titles_str = "Acidity and heartburn|Gas and bloating|Easing constipation|Heaviness after meals|Agni: your digestive fire|Ama: the toxins, explained|Ginger for digestion|CCF tea: cumin, coriander, fennel|Saunf and ajwain after meals|A short walk after meals|Why an early, lighter dinner|How and when to eat|Loose motions and what to eat|Feeling nauseous and how to settle it|What your tongue says about your health|No appetite and not feeling hungry|Intestinal worms and how to deal with them|Overeating and that stuffed, indigested feeling|Hangover and that heavy feeling|Sour burps & bad breath|Stomach pain & cramps|Piles, bleeding and comfort|Signs your digestion is off|Motion sickness & travel" -%}
+            {%- assign mock_titles = mock_titles_str | split: "|" -%}
+            {%- assign mock_excerpts_str = "A calm, plain-language look at why acidity and heartburn happen, what Ayurveda sees behind that burning feeling, and a few everyday habits the tradition suggests you can start today.|A plain-language look at how Ayurveda understands gas and bloating, and the simple daily habits the old texts suggest to feel lighter after meals.|What Ayurveda sees behind constipation, and gentle everyday habits around food, routine, and calm that the tradition suggests for smoother digestion.|Why food can sit heavy after a meal, how Ayurveda understands it through digestion and ama, and a few calm everyday habits the tradition suggests.|A plain-language guide to agni, the digestive fire at the centre of Ayurveda, and the simple everyday habits the old texts suggest to keep it steady.|A plain-language guide to what Ayurveda means by ama, why weak digestion is said to create it, and a few gentle everyday habits the old texts suggest.|Learn how Ayurveda understands sluggish digestion and a few simple, everyday ginger and meal habits the classical texts suggest to support a steadier appetite.|A calm, everyday look at the classic cumin-coriander-fennel brew: what Ayurveda sees behind a heavy, bloated, sluggish belly, and gentle habits you can start sipping today.|Why so many Indian homes reach for fennel and ajwain after a meal, what Ayurveda sees behind that heavy, gassy, bloated feeling, and a few calm habits you can try today.|Why a gentle walk after eating may help you feel lighter, and the simple, everyday habits Ayurveda suggests for steady digestion.|Why Ayurveda links a heavy, late dinner to morning heaviness, and the simple food and routine habits the tradition suggests for easier digestion.|A plain guide to the Ayurvedic idea that how and when you eat matters as much as what you eat, with simple habits you can try at your next meal.|Loose motions, called atisara in Ayurveda, are the body flushing out what it cannot digest. The classical texts read them as a sign of weak digestive fire, and the gentle way back is rest, warm fluids, and simple binding foods like rice and buttermilk.|That queasy, about-to-be-sick feeling has a name in Ayurveda: chhardi. Here is the classical view, and the small kitchen habits that settle a turning stomach.|Your tongue carries a daily health report that Ayurvedic physicians have been reading for centuries. A few seconds each morning with a mirror can tell you a great deal about digestion, dosha balance, and the state of your body's inner fire.|When hunger quietly disappears, Ayurveda sees it as a signal from the digestive fire, not just a mood or a busy schedule. Here is what the classical texts say, and how to gently coax appetite back.|Intestinal worms and how to deal with them.|Overeating and that stuffed, indigested feeling.|Hangover and that heavy feeling.|Sour burps & bad breath.|Stomach pain & cramps.|Piles, bleeding and comfort.|Signs your digestion is off.|Motion sickness & travel" -%}
+            {%- assign mock_excerpts = mock_excerpts_str | split: "|" -%}
+            {%- assign mock_times_str = "5 min read|4 min read|5 min read|4 min read|5 min read|5 min read|5 min read|4 min read|4 min read|4 min read|4 min read|5 min read|4 min read|4 min read|4 min read|4 min read|4 min read|5 min read|4 min read|4 min read|5 min read|4 min read|5 min read|4 min read" -%}
+            {%- assign mock_times = mock_times_str | split: "|" -%}
+            {%- assign mock_handles_str = "acidity-heartburn|gas-and-bloating|constipation-relief|heaviness-after-meals|what-is-agni|what-is-ama|ginger-for-digestion|ccf-tea|saunf-ajwain-after-meals|walk-after-meals|why-an-early-dinner|how-and-when-to-eat|loose-motions-diarrhea|nausea-and-vomiting|reading-your-tongue|low-appetite-no-hunger|worms-in-kids-and-adults|overeating-and-indigestion|hangover-and-heavy-feeling|sour-burps-bad-breath|stomach-pain-cramps|piles-bleeding-and-comfort|signs-your-digestion-is-off|motion-sickness-travel" -%}
+            {%- assign mock_handles = mock_handles_str | split: "|" -%}
+
+            {%- for mock_title in mock_titles -%}
+              {%- assign m_idx = forloop.index0 -%}
+              {%- assign m_handle = mock_handles[m_idx] -%}
+              {%- assign m_excerpt = mock_excerpts[m_idx] -%}
+              {%- assign m_time = mock_times[m_idx] -%}
+              <a href="{{ blog.url }}/{{ m_handle }}" class="ayurhq-topic-article-card group">
+                <div class="ayurhq-topic-article-card__image-wrapper">
+                  <img src="{{ 'ayurhq-topic-digestion.webp' | asset_url }}" alt="{{ mock_title }}" class="ayurhq-topic-article-card__image" loading="lazy" width="300" height="200">
+                  <div class="ayurhq-topic-article-card__accent-line"></div>
+                </div>
+                <div class="ayurhq-topic-article-card__info">
+                  <h2 class="ayurhq-topic-article-card__title">{{ mock_title }}</h2>
+                  <p class="ayurhq-topic-article-card__excerpt">{{ m_excerpt }}</p>
+                  <div class="ayurhq-topic-article-card__read-time">{{ m_time }}</div>
+                </div>
+              </a>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              <div class="ayurhq-topic-article-card ayurhq-topic-article-card--empty">
+                <div class="ayurhq-topic-article-card__image-wrapper">
+                  <div class="ayurhq-topic-article-card__placeholder"></div>
+                  <div class="ayurhq-topic-article-card__accent-line"></div>
+                </div>
+                <div class="ayurhq-topic-article-card__info">
+                  <h2 class="ayurhq-topic-article-card__title">Coming soon</h2>
+                  <p class="ayurhq-topic-article-card__excerpt">Articles on this topic are currently being prepared. Check back soon for guides and practices.</p>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- else -%}
   <!-- Hero Banner -->
   <header class="ayurhq-blog-hero">
     <div class="ayurhq-blog-hero-container">
@@ -205,10 +371,8 @@
           <div class="ayurhq-blog-featured-card__content">
             <div class="ayurhq-blog-featured-card__meta">
               <span class="ayurhq-blog-featured-card__badge">FEATURED</span>
-              <span class="ayurhq-blog-featured-card__read-time">• 4 min read</span>
             </div>
             <h3 class="ayurhq-blog-featured-card__title">Acidity and heartburn</h3>
-            <p class="ayurhq-blog-article-card__hindi-title">अम्लता और छाती में जलन</p>
             <p class="ayurhq-blog-featured-card__excerpt">
               A calm, plain-language look at why acidity and heartburn happen, what Ayurveda sees behind that burning feeling, and a few everyday habits the tradition suggests you can start today.
             </p>
@@ -251,7 +415,7 @@
             {%- assign fallback_count = fallback_counts[forloop.index0] -%}
             {%- assign fallback_handle = fallback_handles[forloop.index0] -%}
             
-            <a href="/blogs/ayurveda/topic/{{ fallback_handle }}" class="ayurhq-blog-topic-card">
+            <a href="{{ blog.url }}/tagged/{{ fallback_handle }}" class="ayurhq-blog-topic-card">
               <div class="ayurhq-blog-topic-card__image-wrapper">
                 {%- assign image_filename = 'ayurhq-topic-' | append: fallback_handle | append: '.webp' -%}
                 <img src="{{ image_filename | asset_url }}" alt="{{ fallback_title }}" class="ayurhq-blog-topic-card__image" loading="lazy" width="300" height="200">
@@ -317,17 +481,17 @@
       </div>
     </div>
   </section>
+  {%- endif -%}
 </div>
 
 <!-- Floating Ask Guruji CTA -->
 {%- if section.settings.show_ask_guruji and section.settings.ask_guruji_link != blank -%}
   <a href="{{ section.settings.ask_guruji_link }}" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
-      <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
-      <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
-      <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
-    </svg>
+    <span class="ayurhq-floating-guruji__icon-wrapper">
+      <svg viewBox="-1 0 412 500" width="20" height="24" fill="none" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M 205 14 C 202 80, 167 112, 149.5 150 C 127 182, 105.5 225, 105.5 278 C 105.5 322, 133 362, 156 384 C 168 393, 150 400, 125 404 C 95 402, 20 407, 12 445 C 6 466, 38 486, 88 487.5 C 138 489, 180 468, 205 426 L 205 398 C 215 388, 243.5 358, 243.5 318 C 242 286, 208 246, 205 228 C 202 246, 168 286, 166.5 318 C 166.5 358, 195 388, 205 398 L 205 426 C 230 468, 272 489, 322 487.5 C 372 486, 404 466, 398 445 C 390 407, 315 402, 285 404 C 260 400, 242 393, 254 384 C 277 362, 304.5 322, 304.5 278 C 304.5 225, 283 182, 260.5 150 C 243 112, 208 80, 205 14 Z M 126 404 C 146 414, 160 432, 170 448 M 284 404 C 264 414, 250 432, 240 448" />
+      </svg>
+    </span>
     <span>{{ section.settings.ask_guruji_label | default: 'Ask Guruji' }}</span>
   </a>
 {%- endif -%}
