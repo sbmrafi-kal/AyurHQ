@@ -1,21 +1,34 @@
 
+{%- assign is_ayurveda_page = false -%}
+{%- if request.path contains '/ayurveda' or request.path contains '/articles/' or template.suffix contains 'ayurveda' -%}
+  {%- assign is_ayurveda_page = true -%}
+{%- endif -%}
+
 <ul class="inline-policy-list list-unstyled">
-  {% if shop.policies.size > 0 %}
-    {%- for policy in shop.policies -%}
-      {%- if policy != blank -%}
-        <li>
-          <a href="{{ policy.url }}" class="footer-utilities__text">
-            {{- policy.title | escape -}}
-          </a>
-        </li>
-      {%- endif -%}
-    {%- endfor -%}
-  {% else %}
+  {% if is_ayurveda_page %}
     <li><a href="/pages/legal-center" class="footer-utilities__text">Legal center</a></li>
     <li><a href="/policies/terms-of-service" class="footer-utilities__text">Terms</a></li>
     <li><a href="/policies/privacy-policy" class="footer-utilities__text">Privacy</a></li>
     <li><a href="/policies/refund-policy" class="footer-utilities__text">Refund policy</a></li>
     <li><a href="/pages/health-disclaimer" class="footer-utilities__text">Health disclaimer</a></li>
+  {% else %}
+    {% if shop.policies.size > 0 %}
+      {%- for policy in shop.policies -%}
+        {%- if policy != blank -%}
+          <li>
+            <a href="{{ policy.url }}" class="footer-utilities__text">
+              {{- policy.title | escape -}}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    {% else %}
+      <li><a href="/pages/legal-center" class="footer-utilities__text">Legal center</a></li>
+      <li><a href="/policies/terms-of-service" class="footer-utilities__text">Terms</a></li>
+      <li><a href="/policies/privacy-policy" class="footer-utilities__text">Privacy</a></li>
+      <li><a href="/policies/refund-policy" class="footer-utilities__text">Refund policy</a></li>
+      <li><a href="/pages/health-disclaimer" class="footer-utilities__text">Health disclaimer</a></li>
+    {% endif %}
   {% endif %}
 </ul>
 

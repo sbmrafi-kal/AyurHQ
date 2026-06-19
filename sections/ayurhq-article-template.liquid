@@ -4,19 +4,13 @@
   <div class="ayurhq-article-container">
     
     <!-- Navigation Back Pill -->
-    <nav class="ayurhq-article-back-nav">
-      <a href="{{ blog.url }}" class="ayurhq-article-back-pill">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        <span>Back to {{ blog.title }}</span>
-      </a>
-    </nav>
-
-    <!-- Large Rounded Hero Image -->
     {%- if article.image != blank -%}
       <div class="ayurhq-article-hero">
+        <nav class="ayurhq-article-back-nav">
+          <a href="{{ blog.url }}" class="ayurhq-article-back-pill">
+            <span>← Ayurveda</span>
+          </a>
+        </nav>
         <div class="ayurhq-article-hero__image-wrapper">
           {{ article.image | image_url: width: 1120 | image_tag: 
             loading: 'eager', 
@@ -26,6 +20,12 @@
           }}
         </div>
       </div>
+    {%- else -%}
+      <nav class="ayurhq-article-back-nav no-hero-image">
+        <a href="{{ blog.url }}" class="ayurhq-article-back-pill">
+          <span>← Ayurveda</span>
+        </a>
+      </nav>
     {%- endif -%}
 
     <div class="ayurhq-article-layout">
@@ -82,26 +82,80 @@
         <!-- Visual Explainer Block -->
         {%- if article.metafields.custom.visual_explainer.value != blank -%}
           {%- assign explainer = article.metafields.custom.visual_explainer.value -%}
-          <section class="ayurhq-article-explainer">
-            {%- if explainer.eyebrow != blank -%}
-              <span class="ayurhq-article-explainer__eyebrow">{{ explainer.eyebrow }}</span>
-            {%- endif -%}
-            {%- if explainer.heading != blank -%}
-              <h2 class="ayurhq-article-explainer__heading">{{ explainer.heading }}</h2>
-            {%- endif -%}
-            {%- if explainer.image != blank -%}
-              <div class="ayurhq-article-explainer__image-wrapper">
-                {{ explainer.image | image_url: width: 600 | image_tag: 
-                  loading: 'lazy', 
-                  class: 'ayurhq-article-explainer__image',
-                  widths: '300, 450, 600, 750'
-                }}
+          {%- assign downcase_heading = explainer.heading | downcase -%}
+          {%- assign downcase_eyebrow = explainer.eyebrow | downcase -%}
+          {%- if downcase_heading contains 'agni' or downcase_heading contains 'digestive fire' or downcase_eyebrow contains 'agni' or downcase_eyebrow contains 'digestive fire' -%}
+            <section class="ayurhq-article-explainer ayurhq-agni-card">
+              {%- if explainer.eyebrow != blank -%}
+                <span class="ayurhq-article-explainer__eyebrow">{{ explainer.eyebrow }}</span>
+              {%- endif -%}
+              {%- if explainer.heading != blank -%}
+                <h2 class="ayurhq-article-explainer__heading">{{ explainer.heading }}</h2>
+              {%- endif -%}
+              
+              <div class="ayurhq-agni-card-content">
+                <div class="ayurhq-agni-gauge-wrapper">
+                  <svg class="ayurhq-agni-gauge" viewBox="0 0 200 110" width="200" height="110">
+                    <!-- Left Arc: Low / manda (Blue #2E5B93) -->
+                    <path d="M 20 90 A 80 80 0 0 1 70 20.72" fill="none" stroke="#2E5B93" stroke-width="12" stroke-linecap="round" />
+                    <!-- Middle region: Balanced / sama (Soft Beige #EADCC8) -->
+                    <path d="M 70 20.72 A 80 80 0 0 1 130 20.72" fill="none" stroke="#EADCC8" stroke-width="12" />
+                    <!-- Right Arc: Sharp / tikshna (Orange #C8521B) -->
+                    <path d="M 130 20.72 A 80 80 0 0 1 180 90" fill="none" stroke="#C8521B" stroke-width="12" stroke-linecap="round" />
+                    
+                    <!-- Gauge Center Cap (Black) -->
+                    <circle cx="100" cy="90" r="8" fill="#1F1E1C" />
+                    
+                    <!-- Needle pointing straight up for balanced -->
+                    <line x1="100" y1="90" x2="100" y2="35" stroke="#1F1E1C" stroke-width="4" stroke-linecap="round" />
+                  </svg>
+                </div>
+                
+                <div class="ayurhq-agni-legend">
+                  <div class="ayurhq-agni-legend-item">
+                    <span class="ayurhq-agni-dot" style="background-color: #2E5B93;"></span>
+                    <span class="ayurhq-agni-legend-bold">Low</span>
+                    <span class="ayurhq-agni-legend-gray">manda</span>
+                  </div>
+                  <div class="ayurhq-agni-legend-item">
+                    <span class="ayurhq-agni-dot" style="background-color: #EADCC8;"></span>
+                    <span class="ayurhq-agni-legend-bold">Balanced</span>
+                    <span class="ayurhq-agni-legend-gray">sama</span>
+                  </div>
+                  <div class="ayurhq-agni-legend-item">
+                    <span class="ayurhq-agni-dot" style="background-color: #C8521B;"></span>
+                    <span class="ayurhq-agni-legend-bold">Sharp</span>
+                    <span class="ayurhq-agni-legend-gray">tikshna</span>
+                  </div>
+                </div>
               </div>
-            {%- endif -%}
-            {%- if explainer.description != blank -%}
-              <p class="ayurhq-article-explainer__desc">{{ explainer.description | newline_to_br }}</p>
-            {%- endif -%}
-          </section>
+
+              {%- if explainer.description != blank -%}
+                <p class="ayurhq-article-explainer__desc">{{ explainer.description | newline_to_br }}</p>
+              {%- endif -%}
+            </section>
+          {%- else -%}
+            <section class="ayurhq-article-explainer">
+              {%- if explainer.eyebrow != blank -%}
+                <span class="ayurhq-article-explainer__eyebrow">{{ explainer.eyebrow }}</span>
+              {%- endif -%}
+              {%- if explainer.heading != blank -%}
+                <h2 class="ayurhq-article-explainer__heading">{{ explainer.heading }}</h2>
+              {%- endif -%}
+              {%- if explainer.image != blank -%}
+                <div class="ayurhq-article-explainer__image-wrapper">
+                  {{ explainer.image | image_url: width: 600 | image_tag: 
+                    loading: 'lazy', 
+                    class: 'ayurhq-article-explainer__image',
+                    widths: '300, 450, 600, 750'
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if explainer.description != blank -%}
+                <p class="ayurhq-article-explainer__desc">{{ explainer.description | newline_to_br }}</p>
+              {%- endif -%}
+            </section>
+          {%- endif -%}
         {%- endif -%}
 
         <!-- Main Article Content Body -->

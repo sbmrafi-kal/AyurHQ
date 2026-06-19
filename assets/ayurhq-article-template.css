@@ -33,6 +33,17 @@
 
 /* Back Button Pill */
 .ayurhq-article-back-nav {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  margin-bottom: 0;
+}
+
+.ayurhq-article-back-nav.no-hero-image {
+  position: relative;
+  top: auto;
+  left: auto;
   margin-bottom: 30px;
 }
 
@@ -41,34 +52,50 @@
   align-items: center;
   gap: 8px;
   padding: 8px 20px;
-  background-color: var(--ayurhq-cream-card-light);
+  background-color: #ffffff;
   border: 1px solid var(--ayurhq-border);
   border-radius: 999px;
   text-decoration: none;
-  color: var(--ayurhq-muted-text);
+  color: var(--ayurhq-dark-text);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.25s ease;
 }
 
 .ayurhq-article-back-pill:hover {
   color: var(--ayurhq-orange);
-  background-color: var(--ayurhq-cream-card-dark);
+  background-color: var(--ayurhq-cream-card-light);
   border-color: var(--ayurhq-orange);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 /* Hero Section */
 .ayurhq-article-hero {
+  position: relative;
   margin-bottom: 50px;
 }
 
 .ayurhq-article-hero__image-wrapper {
+  position: relative;
   width: 100%;
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 8px 35px rgba(234, 220, 200, 0.15);
   margin-bottom: 40px;
   border: 1px solid var(--ayurhq-border);
+}
+
+.ayurhq-article-hero__image-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(255, 253, 248, 0) 0%, var(--ayurhq-bg) 100%);
+  pointer-events: none;
 }
 
 .ayurhq-article-hero__image {
@@ -299,6 +326,74 @@
   color: var(--ayurhq-body-text);
   line-height: 1.7;
   margin: 0;
+}
+
+/* Agni Card Explainer */
+.ayurhq-agni-card {
+  text-align: left !important;
+}
+
+.ayurhq-agni-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin: 32px 0;
+}
+
+.ayurhq-agni-gauge-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.ayurhq-agni-gauge {
+  display: block;
+}
+
+.ayurhq-agni-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ayurhq-agni-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.ayurhq-agni-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.ayurhq-agni-legend-bold {
+  font-weight: 750;
+  color: var(--ayurhq-dark-text);
+}
+
+.ayurhq-agni-legend-gray {
+  color: var(--ayurhq-muted-text);
+}
+
+@media (max-width: 768px) {
+  .ayurhq-agni-card-content {
+    flex-direction: column;
+    gap: 32px;
+    margin: 24px 0;
+  }
+  .ayurhq-agni-legend {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 }
 
 /* Pull Quote */
@@ -749,6 +844,33 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
+  /* Mobile Typography Specs */
+  .ayurhq-article-header__title {
+    font-size: 40px !important;
+    line-height: 1.08 !important;
+    font-weight: 800 !important;
+  }
+  .ayurhq-article-body {
+    font-size: 25px !important;
+    line-height: 1.65 !important;
+    color: var(--ayurhq-body-text) !important;
+  }
+  .ayurhq-article-body h2,
+  .ayurhq-article-body h3,
+  .ayurhq-article-body h4 {
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    text-transform: lowercase !important;
+  }
+  .ayurhq-article-body p {
+    margin-bottom: 32px !important;
+  }
+  .ayurhq-article-body > p:first-of-type::first-letter {
+    font-size: 5rem !important;
+    line-height: 0.85 !important;
+    margin-top: 8px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -759,7 +881,7 @@
     border-radius: 18px;
   }
   .ayurhq-article-header__title {
-    font-size: 28px;
+    font-size: 40px !important;
   }
   .ayurhq-article-header__hindi {
     font-size: 18px;

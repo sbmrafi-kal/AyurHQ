@@ -1,0 +1,104 @@
+/* Mobile Bottom Navigation Bar Styles */
+
+.ayurhq-bottom-nav-container {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .ayurhq-bottom-nav-container {
+    display: block;
+  }
+
+  .ayurhq-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 80px;
+    background-color: #fffdf8;
+    border-top: 1px solid #eadcc8;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -4px 15px rgba(75, 48, 20, 0.05);
+    box-sizing: border-box;
+  }
+
+  .ayurhq-bottom-nav__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #8a8174;
+    font-size: 11px;
+    font-weight: 600;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+    transition: color 0.2s ease;
+  }
+
+  .ayurhq-bottom-nav__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+    color: inherit;
+    transition: transform 0.2s ease;
+  }
+
+  .ayurhq-bottom-nav__icon svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2px;
+  }
+
+  /* Active State (Ayurveda is active) */
+  .ayurhq-bottom-nav__item--active {
+    color: #c8521b;
+  }
+
+  /* Raised Guruji Button */
+  .ayurhq-bottom-nav__item--guruji {
+    justify-content: flex-end;
+    padding-bottom: 10px;
+  }
+
+  .ayurhq-bottom-nav__item--guruji .ayurhq-bottom-nav__icon {
+    position: absolute;
+    top: -16px;
+    background-color: #c8521b;
+    color: #ffffff;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(201, 82, 27, 0.3);
+    margin-bottom: 0;
+    transform: translateY(0);
+    z-index: 1001;
+  }
+
+  .ayurhq-bottom-nav__item--guruji .ayurhq-bottom-nav__icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2px;
+  }
+
+  .ayurhq-bottom-nav__item--guruji .ayurhq-bottom-nav__icon:hover {
+    background-color: #a83f12;
+  }
+
+  .ayurhq-bottom-nav__item--guruji span {
+    color: #c8521b;
+    font-weight: 700;
+  }
+
+  /* Extra space at the bottom of the body so bottom nav doesn't cover content */
+  body.is-ayurveda-page {
+    padding-bottom: 100px !important;
+  }
+}

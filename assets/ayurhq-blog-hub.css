@@ -410,15 +410,18 @@
     grid-template-columns: 1fr;
     gap: 30px;
   }
+
   .ayurhq-care-path-item {
     grid-template-columns: 1fr;
     gap: 12px;
     align-items: flex-start;
   }
+
   .ayurhq-care-path-item__content {
     grid-column: 1;
     grid-row: 1;
   }
+
   .ayurhq-care-path-item__meta {
     grid-column: 1;
     grid-row: 2;
@@ -426,19 +429,23 @@
     text-align: left;
     gap: 8px;
   }
+
   .ayurhq-daily-rhythm-grid {
     grid-template-columns: 1fr;
     gap: 30px;
   }
+
   .ayurhq-daily-rhythm-list {
     padding: 24px;
   }
+
   .ayurhq-daily-rhythm-item {
     display: flex;
     flex-direction: column;
     gap: 6px;
     padding: 16px 0;
   }
+
   .ayurhq-daily-rhythm-item__meta {
     align-items: flex-start;
     text-align: left;
@@ -935,39 +942,50 @@
   .ayurhq-blog-hero {
     padding: 40px 24px;
   }
+
   .ayurhq-blog-hero__heading {
     font-size: 38px;
   }
+
   .ayurhq-blog-featured-card {
     grid-template-columns: 1fr;
   }
+
   .ayurhq-blog-featured-card__image-wrapper {
     min-height: 300px;
   }
+
   .ayurhq-blog-featured-card__content {
     padding: 30px 24px;
   }
+
   .ayurhq-blog-featured-card__title {
     font-size: 28px;
   }
+
   .ayurhq-blog-topic-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
+
   .ayurhq-blog-article-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
+
   .ayurhq-blog-consultation {
     padding: 40px 24px;
   }
+
   .ayurhq-blog-consultation-container {
     grid-template-columns: 1fr;
     gap: 32px;
   }
+
   .ayurhq-blog-consultation__heading {
     font-size: 28px;
   }
+
   .ayurhq-blog-consultation__right {
     padding: 24px;
   }
@@ -977,20 +995,25 @@
   .ayurhq-blog-wrapper {
     padding: 40px 0;
   }
+
   .ayurhq-blog-hero__heading {
     font-size: 32px;
   }
+
   .ayurhq-blog-hero__subheading {
     font-size: 16px;
   }
+
   .ayurhq-blog-topic-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
   .ayurhq-blog-article-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
   .ayurhq-floating-guruji {
     bottom: 16px;
     right: 16px;
@@ -1021,19 +1044,19 @@
 }
 
 /* Hide other blocks (like social icons) in footer utilities on Ayurveda pages */
-.is-ayurveda-page .footer-utilities .utilities > *:not(:has(.footer-utilities__group-copyright)):not(:has(.inline-policy-list)):not(.footer-utilities__group-copyright):not(.inline-policy-list) {
+.is-ayurveda-page .footer-utilities .utilities>*:not(:has(.footer-utilities__group-copyright)):not(:has(.inline-policy-list)):not(.footer-utilities__group-copyright):not(.inline-policy-list) {
   display: none !important;
 }
 
-.is-ayurveda-page .footer-utilities .utilities > *:has(.footer-utilities__group-copyright),
-.is-ayurveda-page .footer-utilities .utilities > .footer-utilities__group-copyright {
+.is-ayurveda-page .footer-utilities .utilities>*:has(.footer-utilities__group-copyright),
+.is-ayurveda-page .footer-utilities .utilities>.footer-utilities__group-copyright {
   flex: 1 !important;
   text-align: left !important;
   justify-self: start !important;
 }
 
-.is-ayurveda-page .footer-utilities .utilities > *:has(.inline-policy-list),
-.is-ayurveda-page .footer-utilities .utilities > .inline-policy-list {
+.is-ayurveda-page .footer-utilities .utilities>*:has(.inline-policy-list),
+.is-ayurveda-page .footer-utilities .utilities>.inline-policy-list {
   flex: 1 !important;
   display: flex !important;
   justify-content: flex-end !important;
@@ -1048,9 +1071,9 @@
     gap: 16px !important;
     padding-bottom: 32px !important;
   }
-  
-  .is-ayurveda-page .footer-utilities .utilities > *:has(.inline-policy-list),
-  .is-ayurveda-page .footer-utilities .utilities > .inline-policy-list {
+
+  .is-ayurveda-page .footer-utilities .utilities>*:has(.inline-policy-list),
+  .is-ayurveda-page .footer-utilities .utilities>.inline-policy-list {
     justify-content: flex-start !important;
     justify-self: start !important;
   }
@@ -1072,7 +1095,7 @@
 
 .ayurhq-blog-hero__heading {
   max-width: 720px;
-  font-size: 60px;
+  font-size: 48px;
   line-height: 1.08;
   margin-bottom: 16px;
 }

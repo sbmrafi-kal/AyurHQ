@@ -1,0 +1,285 @@
+{% comment %}
+  Renders a custom inline SVG watercolor-style illustration based on topic_index.
+  Usage: {% render 'ayurhq-watercolor-svg', topic_index: index %}
+{% endcomment %}
+
+{%- case topic_index -%}
+  {%- when 1 -%}
+    <!-- Digestion & Gut: Leaf with veins (Green/yellow gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-digest" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E2F0D9" />
+          <stop offset="70%" stop-color="#A2D794" />
+          <stop offset="100%" stop-color="#4E9F3D" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#F4FAF1" />
+      <path d="M50,20 C65,40 72,60 50,80 C28,60 35,40 50,20 Z" fill="url(#grad-digest)" opacity="0.85" />
+      <path d="M50,20 L50,80 M50,35 Q60,42 62,38 M50,48 Q62,56 64,52 M50,60 Q58,68 60,64 M50,35 Q40,42 38,38 M50,48 Q38,56 36,52 M50,60 Q42,68 40,64" stroke="#FFF" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.75" />
+    </svg>
+
+  {%- when 2 -%}
+    <!-- Food & Kitchen: Steam rising from a bowl (Orange/yellow gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-food" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFF0D9" />
+          <stop offset="60%" stop-color="#F2C17D" />
+          <stop offset="100%" stop-color="#C8521B" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FFF8F0" />
+      <path d="M25,50 C25,65 35,75 50,75 C65,75 75,65 75,50 L25,50 Z" fill="url(#grad-food)" opacity="0.85" />
+      <path d="M22,50 L78,50" stroke="#EADCC8" stroke-width="2" stroke-linecap="round" />
+      <path d="M38,42 Q42,32 38,24 M50,44 Q54,30 50,20 M62,42 Q66,32 62,24" stroke="#C8521B" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.6" />
+    </svg>
+
+  {%- when 3 -%}
+    <!-- Herbs & Remedies: Mortar and pestle (Saffron/gold gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-herbs" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFF5E4" />
+          <stop offset="60%" stop-color="#E8A064" />
+          <stop offset="100%" stop-color="#B35412" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FFFBF7" />
+      <path d="M30,45 C30,65 40,75 50,75 C60,75 70,65 70,45 L30,45 Z" fill="url(#grad-herbs)" opacity="0.85" />
+      <path d="M26,45 L74,45" stroke="#EADCC8" stroke-width="2" stroke-linecap="round" />
+      <path d="M60,30 L45,55" stroke="#B35412" stroke-width="5" stroke-linecap="round" opacity="0.9" />
+    </svg>
+
+  {%- when 4 -%}
+    <!-- Weight & Cravings: Balance scale (Teal/blue gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-weight" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E0F2F1" />
+          <stop offset="70%" stop-color="#4DB6AC" />
+          <stop offset="100%" stop-color="#00695C" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#EBF9F7" />
+      <path d="M50,25 L50,75 M30,35 L70,35 M50,35 L50,25" stroke="url(#grad-weight)" stroke-width="3" stroke-linecap="round" fill="none" />
+      <path d="M30,35 L22,55 C22,60 38,60 38,55 Z" fill="url(#grad-weight)" opacity="0.7" />
+      <path d="M70,35 L62,55 C62,60 78,60 78,55 Z" fill="url(#grad-weight)" opacity="0.7" />
+    </svg>
+
+  {%- when 5 -%}
+    <!-- Immunity: Glowing Sun (Golden sun gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-imm" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFFBE7" />
+          <stop offset="60%" stop-color="#FCD24A" />
+          <stop offset="100%" stop-color="#D48A04" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FFFDF2" />
+      <circle cx="50" cy="50" r="18" fill="url(#grad-imm)" opacity="0.9" />
+      <path d="M50,15 L50,24 M50,76 L50,85 M15,50 L24,50 M76,50 L85,50 M25,25 L32,32 M68,68 L75,75 M75,25 L68,32 M32,68 L25,75" stroke="#D48A04" stroke-width="2.5" stroke-linecap="round" opacity="0.7" />
+    </svg>
+
+  {%- when 6 -%}
+    <!-- Seasons & Routine: Leaf showing transition (Saffron to green-yellow) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-seasons" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FCE38A" />
+          <stop offset="50%" stop-color="#F38181" />
+          <stop offset="100%" stop-color="#95E1D3" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#F8FAFA" />
+      <path d="M50,18 C70,35 68,65 50,82 C32,65 30,35 50,18 Z" fill="url(#grad-seasons)" opacity="0.85" />
+      <path d="M50,18 L50,82" stroke="#FFF" stroke-width="2" opacity="0.6" />
+    </svg>
+
+  {%- when 7 -%}
+    <!-- Sleep & Energy: Crescent moon with stars (Indigo-purple gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-sleep" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E8EAF6" />
+          <stop offset="60%" stop-color="#7986CB" />
+          <stop offset="100%" stop-color="#283593" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#F5F6FC" />
+      <path d="M40,25 C58,25 68,38 68,54 C68,70 54,80 38,76 C48,72 52,60 50,48 C48,36 40,28 40,25 Z" fill="url(#grad-sleep)" opacity="0.85" />
+      <polygon points="72,25 74,30 79,30 75,33 77,38 72,35 67,38 69,33 65,30 70,30" fill="#7986CB" opacity="0.7" />
+    </svg>
+
+  {%- when 8 -%}
+    <!-- Lotus flower (Soft pink-orange gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-mind" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFF0F0" />
+          <stop offset="60%" stop-color="#FFAAA6" />
+          <stop offset="100%" stop-color="#D45D79" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FFFDFD" />
+      <path d="M50,75 C25,60 30,35 50,40" fill="url(#grad-mind)" opacity="0.7" />
+      <path d="M50,75 C75,60 70,35 50,40" fill="url(#grad-mind)" opacity="0.7" />
+      <path d="M50,78 C35,55 50,22 50,22 C50,22 65,55 50,78 Z" fill="url(#grad-mind)" opacity="0.95" />
+    </svg>
+
+  {%- when 9 -%}
+    <!-- Daily Habits: Water pot / pitcher (Teal-green gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-habits" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E8F5E9" />
+          <stop offset="60%" stop-color="#81C784" />
+          <stop offset="100%" stop-color="#2E7D32" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#F4FAF4" />
+      <path d="M40,25 L60,25 L60,32 L40,32 Z" fill="#2E7D32" opacity="0.8" />
+      <path d="M30,45 C30,32 38,32 50,32 C62,32 70,32 70,45 C70,65 65,75 50,75 C35,75 30,65 30,45 Z" fill="url(#grad-habits)" opacity="0.85" />
+    </svg>
+
+  {%- when 10 -%}
+    <!-- Joints & Body: Connection / Flowing circles (Soft green gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-joints" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F1F8E9" />
+          <stop offset="60%" stop-color="#9CCC65" />
+          <stop offset="100%" stop-color="#558B2F" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FAFCF9" />
+      <circle cx="50" cy="35" r="10" fill="url(#grad-joints)" opacity="0.9" />
+      <path d="M50,48 C30,48 20,68 20,78 L80,78 C80,68 70,48 50,48 Z" fill="url(#grad-joints)" opacity="0.75" />
+    </svg>
+
+  {%- when 11 -%}
+    <!-- Skin & Glow: Glowing Drop (Amber-rose gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-skin" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFF3E0" />
+          <stop offset="60%" stop-color="#FFB74D" />
+          <stop offset="100%" stop-color="#F57C00" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FFFDF9" />
+      <path d="M50,22 C50,22 72,48 72,62 C72,74 62,80 50,80 C38,80 28,74 28,62 C28,48 50,22 50,22 Z" fill="url(#grad-skin)" opacity="0.85" />
+      <circle cx="44" cy="58" r="4" fill="#FFF" opacity="0.6" />
+    </svg>
+
+  {%- when 12 -%}
+    <!-- Hair & Scalp: Flowing roots / comb (Brown-gold gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-hair" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#EFEBE9" />
+          <stop offset="60%" stop-color="#A1887F" />
+          <stop offset="100%" stop-color="#4E342E" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FAF9F9" />
+      <path d="M25,25 Q35,70 50,75 Q65,70 75,25" stroke="url(#grad-hair)" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85" />
+      <path d="M35,25 Q42,60 50,65 Q58,60 65,25" stroke="url(#grad-hair)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.6" />
+    </svg>
+
+  {%- when 13 -%}
+    <!-- Eyes, Ears & Mouth: Glowing drops (Amber-yellow gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-senses" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFFDE7" />
+          <stop offset="60%" stop-color="#FFF176" />
+          <stop offset="100%" stop-color="#FBC02D" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FFFDF8" />
+      <path d="M22,50 Q50,22 78,50 Q50,78 22,50 Z" fill="url(#grad-senses)" opacity="0.6" />
+      <circle cx="50" cy="50" r="12" fill="#FFF" />
+      <circle cx="50" cy="50" r="7" fill="#FBC02D" />
+    </svg>
+
+  {%- when 14 -%}
+    <!-- Women’s Wellbeing: Lotus/womb abstract shape (Deep pink-rose gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-women" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FCE4EC" />
+          <stop offset="60%" stop-color="#F06292" />
+          <stop offset="100%" stop-color="#C2185B" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FCF8FA" />
+      <path d="M50,25 C30,42 30,68 50,80 C70,68 70,42 50,25 Z" fill="url(#grad-women)" opacity="0.8" />
+      <circle cx="50" cy="48" r="8" fill="#FFF" opacity="0.8" />
+    </svg>
+
+  {%- when 15 -%}
+    <!-- Men’s Wellbeing: Sun/leaf abstract shape (Amber-blue gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-men" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E0F2F1" />
+          <stop offset="60%" stop-color="#4DD0E1" />
+          <stop offset="100%" stop-color="#006064" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#F4FAFB" />
+      <path d="M50,20 L80,50 L50,80 L20,50 Z" fill="url(#grad-men)" opacity="0.8" />
+      <circle cx="50" cy="50" r="10" fill="#FFF" opacity="0.8" />
+    </svg>
+
+  {%- when 16 -%}
+    <!-- Children’s Care: Small Sprout (Bright green gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-kids" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E8F8F5" />
+          <stop offset="60%" stop-color="#A3E4D7" />
+          <stop offset="100%" stop-color="#117A65" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#F4FAF9" />
+      <path d="M50,75 L50,45 Q40,35 32,45 M50,55 Q62,42 68,52" stroke="url(#grad-kids)" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9" />
+      <path d="M32,45 C30,35 40,32 40,32 Z" fill="url(#grad-kids)" opacity="0.75" />
+      <path d="M68,52 C65,42 55,42 55,42 Z" fill="url(#grad-kids)" opacity="0.75" />
+    </svg>
+
+  {%- when 17 -%}
+    <!-- Elder Care: Mature strong tree (Warm bronze-brown gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-elder" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#EFEBE9" />
+          <stop offset="60%" stop-color="#8D6E63" />
+          <stop offset="100%" stop-color="#3E2723" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FAF9F9" />
+      <path d="M48,75 L52,75 L52,55 L48,55 Z" fill="#3E2723" opacity="0.8" />
+      <circle cx="50" cy="42" r="16" fill="url(#grad-elder)" opacity="0.85" />
+      <circle cx="38" cy="46" r="12" fill="url(#grad-elder)" opacity="0.75" />
+      <circle cx="62" cy="46" r="12" fill="url(#grad-elder)" opacity="0.75" />
+    </svg>
+
+  {%- when 18 -%}
+    <!-- Ayurveda Basics: Sacred flame (Saffron-gold gradient) -->
+    <svg viewBox="0 0 100 100" class="ayurhq-topic-svg">
+      <defs>
+        <linearGradient id="grad-basics" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFE082" />
+          <stop offset="60%" stop-color="#FF8F00" />
+          <stop offset="100%" stop-color="#D84315" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="42" fill="#FFFDF9" />
+      <path d="M50,18 C50,18 70,42 70,58 C70,72 58,80 50,80 C42,80 30,72 30,58 C30,42 50,18 50,18 Z" fill="url(#grad-basics)" opacity="0.85" />
+      <path d="M50,32 C50,32 60,48 60,58 C60,65 55,70 50,70 C45,70 40,65 40,58 C40,48 50,32 50,32 Z" fill="#FFF" opacity="0.7" />
+    </svg>
+
+{%- endcase -%}

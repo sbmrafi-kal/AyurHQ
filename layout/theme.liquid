@@ -6,6 +6,12 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    {%- liquid
+      assign is_ayurveda_page = false
+      if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+        assign is_ayurveda_page = true
+      endif
+    -%}
     {% if request.page_type == 'index' and request.design_mode == false %}
       {%- assign target_blog = blogs['ayurveda'] -%}
       {%- if target_blog == blank -%}
@@ -38,6 +44,9 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
+    {%- if is_ayurveda_page -%}
+      {{ 'ayurhq-bottom-nav.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
@@ -51,12 +60,6 @@
     {% # theme-check-enable RemoteAsset %}
   </head>
 
-  {%- liquid
-    assign is_ayurveda_page = false
-    if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
-      assign is_ayurveda_page = true
-    endif
-  -%}
   <body class="{% if is_ayurveda_page %}is-ayurveda-page {% endif %}page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
@@ -151,5 +154,85 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    {%- if is_ayurveda_page -%}
+      <div class="ayurhq-bottom-nav-container">
+        <nav class="ayurhq-bottom-nav" aria-label="Mobile Navigation">
+          
+          <!-- Today -->
+          {%- assign active_today = false -%}
+          {%- if request.path == '/blogs/ayurveda/today' or request.path == '/blogs/ayurveda/today/' -%}
+            {%- assign active_today = true -%}
+          {%- endif -%}
+          <a href="/blogs/ayurveda/today" class="ayurhq-bottom-nav__item{% if active_today %} ayurhq-bottom-nav__item--active{% endif %}">
+            <span class="ayurhq-bottom-nav__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2 18h20M16 18a4 4 0 00-8 0M12 5v4M6.34 9.34l2.83 2.83M17.66 9.34l-2.83 2.83" />
+              </svg>
+            </span>
+            <span>Today</span>
+          </a>
+
+          <!-- Yoga -->
+          {%- assign active_yoga = false -%}
+          {%- if request.path == '/blogs/ayurveda/yoga' or request.path == '/blogs/ayurveda/yoga/' -%}
+            {%- assign active_yoga = true -%}
+          {%- endif -%}
+          <a href="/blogs/ayurveda/yoga" class="ayurhq-bottom-nav__item{% if active_yoga %} ayurhq-bottom-nav__item--active{% endif %}">
+            <span class="ayurhq-bottom-nav__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7zM12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5zM12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5zM5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+              </svg>
+            </span>
+            <span>Yoga</span>
+          </a>
+
+          <!-- Guruji (Raised Center Button) -->
+          {%- assign active_guruji = false -%}
+          {%- if request.path == '/pages/consultation' or request.path == '/pages/consultation/' -%}
+            {%- assign active_guruji = true -%}
+          {%- endif -%}
+          <a href="/pages/consultation" class="ayurhq-bottom-nav__item ayurhq-bottom-nav__item--guruji{% if active_guruji %} ayurhq-bottom-nav__item--active{% endif %}">
+            <span class="ayurhq-bottom-nav__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7zM12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5zM12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5zM5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+              </svg>
+            </span>
+            <span>Guruji</span>
+          </a>
+
+          <!-- Gyaan -->
+          {%- assign active_gyaan = false -%}
+          {%- if request.path == '/blogs/ayurveda/gyaan' or request.path == '/blogs/ayurveda/gyaan/' -%}
+            {%- assign active_gyaan = true -%}
+          {%- endif -%}
+          <a href="/blogs/ayurveda/gyaan" class="ayurhq-bottom-nav__item{% if active_gyaan %} ayurhq-bottom-nav__item--active{% endif %}">
+            <span class="ayurhq-bottom-nav__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+              </svg>
+            </span>
+            <span>Gyaan</span>
+          </a>
+
+          <!-- Ayurveda (Active Link on Ayurveda Hub & Article templates) -->
+          {%- assign active_ayurveda = false -%}
+          {%- if request.path == '/blogs/ayurveda' or request.path == '/blogs/ayurveda/' or template.name == 'blog' or template.name == 'article' -%}
+            {%- unless active_today or active_yoga or active_gyaan or active_guruji -%}
+              {%- assign active_ayurveda = true -%}
+            {%- endunless -%}
+          {%- endif -%}
+          <a href="/blogs/ayurveda" class="ayurhq-bottom-nav__item{% if active_ayurveda %} ayurhq-bottom-nav__item--active{% endif %}">
+            <span class="ayurhq-bottom-nav__icon">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17 8C8 10 5.9 16.17 5.18 19.34L5 20h.66c3.17-.72 9.34-2.82 11.34-11.82C17.75 4.5 19 3 20 2c-1 1-2.5 2.25-6 3-2.12.45-3.53 1.5-4.14 2.88C11.5 6.5 14 5 17 5c1.5 0 2.75.25 3.5.75-.5.75-1.5 1.5-3.5 2.25z" />
+              </svg>
+            </span>
+            <span>Ayurveda</span>
+          </a>
+
+        </nav>
+      </div>
+    {%- endif -%}
   </body>
 </html>
