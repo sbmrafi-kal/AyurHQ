@@ -1,5 +1,16 @@
+{%- assign current_path = request.path -%}
+{%- if current_path == blank -%}
+  {%- if canonical_url contains '/blogs/' -%}
+    {%- assign blog_part = canonical_url | split: '/blogs/' | last | split: '?' | first -%}
+    {%- assign current_path = '/blogs/' | append: blog_part -%}
+  {%- elsif canonical_url contains '/pages/' -%}
+    {%- assign page_part = canonical_url | split: '/pages/' | last | split: '?' | first -%}
+    {%- assign current_path = '/pages/' | append: page_part -%}
+  {%- endif -%}
+{%- endif -%}
+
 {%- assign is_ayurveda_page = false -%}
-{%- if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/' or template.suffix contains 'ayurveda' -%}
+{%- if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/' or template.suffix contains 'ayurveda' -%}
   {%- assign is_ayurveda_page = true -%}
 {%- endif -%}
 

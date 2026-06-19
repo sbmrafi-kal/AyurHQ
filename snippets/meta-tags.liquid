@@ -108,7 +108,68 @@
 >
 
 <title>
-  {%- if request.page_type == 'blog' -%}
+  {%- assign custom_title = '' -%}
+  {%- assign current_path = request.path -%}
+  {%- if current_path == blank -%}
+    {%- if canonical_url contains '/blogs/' -%}
+      {%- assign blog_part = canonical_url | split: '/blogs/' | last | split: '?' | first -%}
+      {%- assign current_path = '/blogs/' | append: blog_part -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if current_path contains '/blogs/' -%}
+    {%- if current_path contains '/tagged/' or current_path contains '/tag/' -%}
+      {%- assign tag_part = current_path | split: '/tagged/' | last | split: '/tag/' | last | split: '?' | first | split: '/' | first | handle -%}
+      {%- if tag_part == 'digestion' or tag_part == 'digestion-gut' -%}
+        {%- assign custom_title = 'Digestion & gut' -%}
+      {%- elsif tag_part == 'food' or tag_part == 'food-kitchen' -%}
+        {%- assign custom_title = 'Food & kitchen' -%}
+      {%- elsif tag_part == 'herbs' or tag_part == 'herbs-remedies' -%}
+        {%- assign custom_title = 'Herbs & remedies' -%}
+      {%- elsif tag_part == 'weight' or tag_part == 'weight-cravings' -%}
+        {%- assign custom_title = 'Weight & cravings' -%}
+      {%- elsif tag_part == 'seasons' or tag_part == 'seasons-routine' -%}
+        {%- assign custom_title = 'Seasons & routine' -%}
+      {%- elsif tag_part == 'sleep' or tag_part == 'sleep-energy' -%}
+        {%- assign custom_title = 'Sleep & energy' -%}
+      {%- elsif tag_part == 'mind' or tag_part == 'mind-calm' -%}
+        {%- assign custom_title = 'Mind & calm' -%}
+      {%- elsif tag_part == 'habits' or tag_part == 'daily-habits' -%}
+        {%- assign custom_title = 'Daily habits' -%}
+      {%- elsif tag_part == 'joints' or tag_part == 'joints-body' -%}
+        {%- assign custom_title = 'Joints & body' -%}
+      {%- elsif tag_part == 'skin' or tag_part == 'skin-glow' -%}
+        {%- assign custom_title = 'Skin & glow' -%}
+      {%- elsif tag_part == 'hair' or tag_part == 'hair-scalp' -%}
+        {%- assign custom_title = 'Hair & scalp' -%}
+      {%- elsif tag_part == 'eyes' or tag_part == 'eyes-ears-mouth' -%}
+        {%- assign custom_title = 'Eyes, ears & mouth' -%}
+      {%- elsif tag_part == 'womens' or tag_part == 'womens-wellbeing' -%}
+        {%- assign custom_title = "Women's wellbeing" -%}
+      {%- elsif tag_part == 'mens' or tag_part == 'mens-wellbeing' -%}
+        {%- assign custom_title = "Men's wellbeing" -%}
+      {%- elsif tag_part == 'children' or tag_part == 'childrens-care' -%}
+        {%- assign custom_title = "Children's care" -%}
+      {%- elsif tag_part == 'elder' or tag_part == 'elder-care' -%}
+        {%- assign custom_title = 'Elder care' -%}
+      {%- elsif tag_part == 'basics' or tag_part == 'ayurveda-basics' -%}
+        {%- assign custom_title = 'Ayurveda basics' -%}
+      {%- else -%}
+        {%- assign custom_title = tag_part | replace: '-', ' ' | capitalize -%}
+      {%- endif -%}
+      {%- assign custom_title = custom_title | append: ' · Ayurveda' -%}
+    {%- else -%}
+      {%- assign parts = current_path | split: '/' -%}
+      {%- assign last_part = parts | last | split: '?' | first -%}
+      {%- if last_part != 'news' and last_part != 'ayurveda' and last_part != blank -%}
+        {%- assign custom_title = last_part | replace: '-', ' ' | capitalize | append: ' · Ayurveda' -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if custom_title != blank -%}
+    {{ custom_title }} &ndash; {{ shop.name }}
+  {%- elsif request.page_type == 'blog' -%}
     Blogs - AyurHQ
   {%- else -%}
     {{ page_title }}

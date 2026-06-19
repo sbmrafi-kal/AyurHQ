@@ -8,6 +8,17 @@
 
 {% liquid
   assign block_settings = block.settings
+
+  assign current_path = request.path
+  if current_path == blank
+    if canonical_url contains '/blogs/'
+      assign blog_part = canonical_url | split: '/blogs/' | last | split: '?' | first
+      assign current_path = '/blogs/' | append: blog_part
+    elsif canonical_url contains '/pages/'
+      assign page_part = canonical_url | split: '/pages/' | last | split: '?' | first
+      assign current_path = '/pages/' | append: page_part
+    endif
+  endif
 %}
 
 {% case variant %}
@@ -30,7 +41,7 @@
     {% if block_settings.navigation_bar == true %}
       {% liquid
         assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/'
+        if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/'
           assign is_ayurveda_page = true
         endif
         assign current_blog_url = blogs['ayurveda'].url
@@ -57,11 +68,13 @@
                 {%- assign title_downcase = title | downcase -%}
                 {%- assign is_active = false -%}
                 {%- assign url_with_slash = item_url | append: '/' -%}
-                {%- if request.path == item_url or request.path == url_with_slash -%}
+                {%- if current_path == item_url or current_path == url_with_slash -%}
                   {%- assign is_active = true -%}
                 {%- elsif title_downcase == 'ayurveda' and template.name == 'blog' and blog.url == current_blog_url -%}
                   {%- assign is_active = true -%}
                 {%- elsif title_downcase == 'ayurveda' and template.name == 'article' -%}
+                  {%- assign is_active = true -%}
+                {%- elsif title_downcase == 'ayurveda' and template.name == '404' and current_path contains '/blogs/' -%}
                   {%- assign is_active = true -%}
                 {%- endif -%}
                 <li>
@@ -224,7 +237,7 @@
     {% capture children %}
       {% liquid
         assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/'
+        if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/'
           assign is_ayurveda_page = true
         endif
         assign current_blog_url = blogs['ayurveda'].url
@@ -240,7 +253,14 @@
           {%- assign item_url = mock_urls[forloop.index0] -%}
           {%- assign title_downcase = title | downcase -%}
           {%- assign is_active = false -%}
-          {%- if title_downcase == 'ayurveda' -%}
+          {%- assign url_with_slash = item_url | append: '/' -%}
+          {%- if current_path == item_url or current_path == url_with_slash -%}
+            {%- assign is_active = true -%}
+          {%- elsif title_downcase == 'ayurveda' and template.name == 'blog' and blog.url == current_blog_url -%}
+            {%- assign is_active = true -%}
+          {%- elsif title_downcase == 'ayurveda' and template.name == 'article' -%}
+            {%- assign is_active = true -%}
+          {%- elsif title_downcase == 'ayurveda' and template.name == '404' and current_path contains '/blogs/' -%}
             {%- assign is_active = true -%}
           {%- endif -%}
           <li

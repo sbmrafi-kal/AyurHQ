@@ -26,6 +26,14 @@
 <div id="js-ayurhq-normal-blog-content">
 
   
+  {%- assign current_blog_url = blog.url -%}
+  {%- if current_blog_url == blank -%}
+    {%- assign current_blog_url = blogs['ayurveda'].url -%}
+  {%- endif -%}
+  {%- if current_blog_url == blank -%}
+    {%- assign current_blog_url = blogs['news'].url | default: '/blogs/news' -%}
+  {%- endif -%}
+
   {%- assign all_tags = "digestion,food,herbs,weight,immunity,seasons,sleep,mind,habits,joints,skin,hair,eyes,womens,mens,children,elder,basics" | split: "," -%}
   {%- assign is_tag_page = false -%}
   {%- if current_tags != blank -%}
@@ -221,7 +229,50 @@
         {%- assign t_images = "what-is-ayurveda.webp|vata-pitta-kapha-explained.webp|know-your-dosha.webp|yoga-and-ayurveda.webp|what-ayurveda-is-not.webp|detox-myth-vs-panchakarma.webp|daily-routine-dinacharya.webp|prakriti-vs-vikriti.webp|holding-natural-urges.webp|good-conduct-sadvritta-wellbeing.webp|seasonal-routine-ritucharya.webp|what-the-seven-dhatus-are.webp|what-the-three-malas-are.webp|dosha-and-the-clock.webp|what-is-prakriti-body-type.webp|what-are-dhatus-body-tissues.webp" -%}
     {%- endcase -%}
 
-    {%- if is_tag_page and current_tag == t -%}
+    {%- assign current_tag_handle = current_tag | handle -%}
+    {%- assign t_handle = t | handle -%}
+    {%- assign matches_tag = false -%}
+    {%- if current_tag_handle == t_handle -%}
+      {%- assign matches_tag = true -%}
+    {%- else -%}
+      {%- if t == 'digestion' and current_tag_handle == 'digestion-gut' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'food' and current_tag_handle == 'food-kitchen' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'herbs' and current_tag_handle == 'herbs-remedies' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'weight' and current_tag_handle == 'weight-cravings' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'seasons' and current_tag_handle == 'seasons-routine' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'sleep' and current_tag_handle == 'sleep-energy' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'mind' and current_tag_handle == 'mind-calm' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'habits' and current_tag_handle == 'daily-habits' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'joints' and current_tag_handle == 'joints-body' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'skin' and current_tag_handle == 'skin-glow' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'hair' and current_tag_handle == 'hair-scalp' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'eyes' and current_tag_handle == 'eyes-ears-mouth' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'womens' and current_tag_handle == 'womens-wellbeing' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'mens' and current_tag_handle == 'mens-wellbeing' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'children' and current_tag_handle == 'childrens-care' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'elder' and current_tag_handle == 'elder-care' -%}
+        {%- assign matches_tag = true -%}
+      {%- elsif t == 'basics' and current_tag_handle == 'ayurveda-basics' -%}
+        {%- assign matches_tag = true -%}
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if is_tag_page and matches_tag -%}
       {%- assign topic_title = t_title -%}
       {%- assign topic_hindi = t_hindi -%}
       {%- assign topic_count = t_count -%}
@@ -249,7 +300,7 @@
   {%- if is_tag_page -%}
     <header class="ayurhq-topic-header">
       <div class="ayurhq-topic-header-container">
-        <a class="ayurhq-topic-back-link" href="{{ blog.url }}#guides">
+        <a class="ayurhq-topic-back-link" href="{{ current_blog_url }}#guides">
           <span>←</span> All topics
         </a>
         <div class="ayurhq-topic-header-title-row">
@@ -300,7 +351,7 @@
               {%- assign m_excerpt = mock_excerpts[m_idx] -%}
               {%- assign m_time = mock_times[m_idx] -%}
               {%- assign m_image = mock_images[m_idx] -%}
-              <a href="{{ blog.url | default: current_blog.url }}/{{ m_handle }}" class="ayurhq-topic-article-card group">
+              <a href="{{ current_blog_url }}/{{ m_handle }}" class="ayurhq-topic-article-card group">
                 <div class="ayurhq-topic-article-card__image-wrapper">
                   {%- if m_image contains '.webp' or m_image contains '.png' or m_image contains '.jpg' or m_image contains '.jpeg' -%}
                     <img src="https://stage.dhyanhq.com/art/ayurveda/articles/{{ m_image }}" alt="{{ mock_title }}" class="ayurhq-topic-article-card__image" loading="lazy" width="300" height="200">
@@ -489,7 +540,7 @@
             <p class="ayurhq-blog-featured-card__excerpt">
               A calm, plain-language look at why acidity and heartburn happen, what Ayurveda sees behind that burning feeling, and a few everyday habits the tradition suggests you can start today.
             </p>
-            <a href="{{ blog.url }}/acidity-heartburn" class="ayurhq-blog-featured-card__cta">
+            <a href="{{ current_blog_url }}/acidity-heartburn" class="ayurhq-blog-featured-card__cta">
               Read this first &rarr;
             </a>
           </div>
@@ -528,7 +579,7 @@
             {%- assign fallback_count = fallback_counts[forloop.index0] -%}
             {%- assign fallback_handle = fallback_handles[forloop.index0] -%}
             
-            <a href="{{ blog.url }}/tagged/{{ fallback_handle }}" class="ayurhq-blog-topic-card">
+            <a href="{{ current_blog_url }}/tagged/{{ fallback_handle }}" class="ayurhq-blog-topic-card">
               <div class="ayurhq-blog-topic-card__image-wrapper">
                 {%- assign image_filename = 'ayurhq-topic-' | append: fallback_handle | append: '.webp' -%}
                 <img src="{{ image_filename | asset_url }}" alt="{{ fallback_title }}" class="ayurhq-blog-topic-card__image" loading="lazy" width="300" height="200">
@@ -620,8 +671,37 @@
         if (tagIndex === -1) tagIndex = parts.indexOf('tag');
         
         const tagHandle = tagIndex !== -1 && parts[tagIndex + 1] ? parts[tagIndex + 1] : '';
-        if (tagHandle && window.AYURHQ_FALLBACK_TOPICS && window.AYURHQ_FALLBACK_TOPICS[tagHandle]) {
-          const data = window.AYURHQ_FALLBACK_TOPICS[tagHandle];
+        
+        // Normalize tag handle to match the keys of window.AYURHQ_FALLBACK_TOPICS
+        let normalizedTag = tagHandle;
+        const mappings = {
+          'digestion-gut': 'digestion',
+          'food-kitchen': 'food',
+          'herbs-remedies': 'herbs',
+          'weight-cravings': 'weight',
+          'seasons-routine': 'seasons',
+          'sleep-energy': 'sleep',
+          'mind-calm': 'mind',
+          'daily-habits': 'habits',
+          'joints-body': 'joints',
+          'skin-glow': 'skin',
+          'hair-scalp': 'hair',
+          'eyes-ears-mouth': 'eyes',
+          'womens-wellbeing': 'womens',
+          'mens-wellbeing': 'mens',
+          'childrens-care': 'children',
+          'elder-care': 'elder',
+          'ayurveda-basics': 'basics'
+        };
+        if (mappings[normalizedTag]) {
+          normalizedTag = mappings[normalizedTag];
+        }
+
+        if (normalizedTag && window.AYURHQ_FALLBACK_TOPICS && window.AYURHQ_FALLBACK_TOPICS[normalizedTag]) {
+          const data = window.AYURHQ_FALLBACK_TOPICS[normalizedTag];
+          
+          // Set dynamic browser tab title
+          document.title = data.title + ' · Ayurveda · DhyanHQ';
           
           // Hide normal content, show fallback
           const normalContent = document.getElementById('js-ayurhq-normal-blog-content');

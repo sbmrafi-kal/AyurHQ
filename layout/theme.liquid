@@ -7,8 +7,19 @@
 >
   <head>
     {%- liquid
+      assign current_path = request.path
+      if current_path == blank
+        if canonical_url contains '/blogs/'
+          assign blog_part = canonical_url | split: '/blogs/' | last | split: '?' | first
+          assign current_path = '/blogs/' | append: blog_part
+        elsif canonical_url contains '/pages/'
+          assign page_part = canonical_url | split: '/pages/' | last | split: '?' | first
+          assign current_path = '/pages/' | append: page_part
+        endif
+      endif
+
       assign is_ayurveda_page = false
-      if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/'
+      if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/'
         assign is_ayurveda_page = true
       endif
       assign current_blog_url = blogs['ayurveda'].url
@@ -196,7 +207,7 @@
           <!-- Today -->
           {%- assign active_today = false -%}
           {%- assign today_path = current_blog_url | append: '/today' -%}
-          {%- if request.path == today_path or request.path == today_path | append: '/' -%}
+          {%- if current_path == today_path or current_path == today_path | append: '/' -%}
             {%- assign active_today = true -%}
           {%- endif -%}
           <a href="{{ today_path }}" class="ayurhq-bottom-nav__item{% if active_today %} ayurhq-bottom-nav__item--active{% endif %}">
@@ -207,11 +218,11 @@
             </span>
             <span>Today</span>
           </a>
-
+ 
           <!-- Yoga -->
           {%- assign active_yoga = false -%}
           {%- assign yoga_path = current_blog_url | append: '/yoga' -%}
-          {%- if request.path == yoga_path or request.path == yoga_path | append: '/' -%}
+          {%- if current_path == yoga_path or current_path == yoga_path | append: '/' -%}
             {%- assign active_yoga = true -%}
           {%- endif -%}
           <a href="{{ yoga_path }}" class="ayurhq-bottom-nav__item{% if active_yoga %} ayurhq-bottom-nav__item--active{% endif %}">
@@ -222,10 +233,10 @@
             </span>
             <span>Yoga</span>
           </a>
-
+ 
           <!-- Guruji (Raised Center Button) -->
           {%- assign active_guruji = false -%}
-          {%- if request.path == '/pages/consultation' or request.path == '/pages/consultation/' -%}
+          {%- if current_path == '/pages/consultation' or current_path == '/pages/consultation/' -%}
             {%- assign active_guruji = true -%}
           {%- endif -%}
           <a href="/pages/consultation" class="ayurhq-bottom-nav__item ayurhq-bottom-nav__item--guruji{% if active_guruji %} ayurhq-bottom-nav__item--active{% endif %}">
@@ -236,11 +247,11 @@
             </span>
             <span>Guruji</span>
           </a>
-
+ 
           <!-- Gyaan -->
           {%- assign active_gyaan = false -%}
           {%- assign gyaan_path = current_blog_url | append: '/gyaan' -%}
-          {%- if request.path == gyaan_path or request.path == gyaan_path | append: '/' -%}
+          {%- if current_path == gyaan_path or current_path == gyaan_path | append: '/' -%}
             {%- assign active_gyaan = true -%}
           {%- endif -%}
           <a href="{{ gyaan_path }}" class="ayurhq-bottom-nav__item{% if active_gyaan %} ayurhq-bottom-nav__item--active{% endif %}">
@@ -251,10 +262,10 @@
             </span>
             <span>Gyaan</span>
           </a>
-
+ 
           <!-- Ayurveda (Active Link on Ayurveda Hub & Article templates) -->
           {%- assign active_ayurveda = false -%}
-          {%- if request.path == current_blog_url or request.path == current_blog_url | append: '/' or template.name == 'blog' or template.name == 'article' or template.name == '404' -%}
+          {%- if current_path == current_blog_url or current_path == current_blog_url | append: '/' or template.name == 'blog' or template.name == 'article' or template.name == '404' -%}
             {%- unless active_today or active_yoga or active_gyaan or active_guruji -%}
               {%- assign active_ayurveda = true -%}
             {%- endunless -%}
