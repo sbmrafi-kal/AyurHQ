@@ -71,7 +71,7 @@
     >
       {% liquid
         assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/'
           assign is_ayurveda_page = true
         endif
       %}

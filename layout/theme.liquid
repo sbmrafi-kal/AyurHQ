@@ -8,8 +8,12 @@
   <head>
     {%- liquid
       assign is_ayurveda_page = false
-      if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+      if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/'
         assign is_ayurveda_page = true
+      endif
+      assign current_blog_url = blogs['ayurveda'].url
+      if current_blog_url == blank
+        assign current_blog_url = blogs['news'].url | default: '/blogs/news'
       endif
     -%}
     {% if request.page_type == 'index' and request.design_mode == false %}
@@ -142,7 +146,37 @@
       data-product-transition="{{ settings.transition_to_main_product }}"
       data-template="{{ template }}"
     >
-      {{ content_for_layout }}
+      {%- if template.name == '404' -%}
+        <div id="ayurhq-404-article-wrapper" style="display: none;">
+          {%- section 'ayurhq-article-template' -%}
+        </div>
+        <div id="ayurhq-404-blog-hub-wrapper" style="display: none;">
+          {%- section 'ayurhq-blog-hub' -%}
+        </div>
+        <div id="ayurhq-404-default-wrapper">
+          {{ content_for_layout }}
+        </div>
+        
+        <script>
+          (function() {
+            var path = window.location.pathname;
+            if (path.includes('/blogs/')) {
+              var defaultWrapper = document.getElementById('ayurhq-404-default-wrapper');
+              if (defaultWrapper) defaultWrapper.style.display = 'none';
+              
+              if (path.includes('/tagged/') || path.includes('/tag/')) {
+                var blogWrapper = document.getElementById('ayurhq-404-blog-hub-wrapper');
+                if (blogWrapper) blogWrapper.style.display = 'block';
+              } else {
+                var articleWrapper = document.getElementById('ayurhq-404-article-wrapper');
+                if (articleWrapper) articleWrapper.style.display = 'block';
+              }
+            }
+          })();
+        </script>
+      {%- else -%}
+        {{ content_for_layout }}
+      {%- endif -%}
     </main>
 
     <footer>
@@ -161,10 +195,11 @@
           
           <!-- Today -->
           {%- assign active_today = false -%}
-          {%- if request.path == '/blogs/ayurveda/today' or request.path == '/blogs/ayurveda/today/' -%}
+          {%- assign today_path = current_blog_url | append: '/today' -%}
+          {%- if request.path == today_path or request.path == today_path | append: '/' -%}
             {%- assign active_today = true -%}
           {%- endif -%}
-          <a href="/blogs/ayurveda/today" class="ayurhq-bottom-nav__item{% if active_today %} ayurhq-bottom-nav__item--active{% endif %}">
+          <a href="{{ today_path }}" class="ayurhq-bottom-nav__item{% if active_today %} ayurhq-bottom-nav__item--active{% endif %}">
             <span class="ayurhq-bottom-nav__icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M2 18h20M16 18a4 4 0 00-8 0M12 5v4M6.34 9.34l2.83 2.83M17.66 9.34l-2.83 2.83" />
@@ -175,10 +210,11 @@
 
           <!-- Yoga -->
           {%- assign active_yoga = false -%}
-          {%- if request.path == '/blogs/ayurveda/yoga' or request.path == '/blogs/ayurveda/yoga/' -%}
+          {%- assign yoga_path = current_blog_url | append: '/yoga' -%}
+          {%- if request.path == yoga_path or request.path == yoga_path | append: '/' -%}
             {%- assign active_yoga = true -%}
           {%- endif -%}
-          <a href="/blogs/ayurveda/yoga" class="ayurhq-bottom-nav__item{% if active_yoga %} ayurhq-bottom-nav__item--active{% endif %}">
+          <a href="{{ yoga_path }}" class="ayurhq-bottom-nav__item{% if active_yoga %} ayurhq-bottom-nav__item--active{% endif %}">
             <span class="ayurhq-bottom-nav__icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7zM12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5zM12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5zM5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
@@ -203,10 +239,11 @@
 
           <!-- Gyaan -->
           {%- assign active_gyaan = false -%}
-          {%- if request.path == '/blogs/ayurveda/gyaan' or request.path == '/blogs/ayurveda/gyaan/' -%}
+          {%- assign gyaan_path = current_blog_url | append: '/gyaan' -%}
+          {%- if request.path == gyaan_path or request.path == gyaan_path | append: '/' -%}
             {%- assign active_gyaan = true -%}
           {%- endif -%}
-          <a href="/blogs/ayurveda/gyaan" class="ayurhq-bottom-nav__item{% if active_gyaan %} ayurhq-bottom-nav__item--active{% endif %}">
+          <a href="{{ gyaan_path }}" class="ayurhq-bottom-nav__item{% if active_gyaan %} ayurhq-bottom-nav__item--active{% endif %}">
             <span class="ayurhq-bottom-nav__icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
@@ -217,12 +254,12 @@
 
           <!-- Ayurveda (Active Link on Ayurveda Hub & Article templates) -->
           {%- assign active_ayurveda = false -%}
-          {%- if request.path == '/blogs/ayurveda' or request.path == '/blogs/ayurveda/' or template.name == 'blog' or template.name == 'article' -%}
+          {%- if request.path == current_blog_url or request.path == current_blog_url | append: '/' or template.name == 'blog' or template.name == 'article' or template.name == '404' -%}
             {%- unless active_today or active_yoga or active_gyaan or active_guruji -%}
               {%- assign active_ayurveda = true -%}
             {%- endunless -%}
           {%- endif -%}
-          <a href="/blogs/ayurveda" class="ayurhq-bottom-nav__item{% if active_ayurveda %} ayurhq-bottom-nav__item--active{% endif %}">
+          <a href="{{ current_blog_url }}" class="ayurhq-bottom-nav__item{% if active_ayurveda %} ayurhq-bottom-nav__item--active{% endif %}">
             <span class="ayurhq-bottom-nav__icon">
               <svg fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17 8C8 10 5.9 16.17 5.18 19.34L5 20h.66c3.17-.72 9.34-2.82 11.34-11.82C17.75 4.5 19 3 20 2c-1 1-2.5 2.25-6 3-2.12.45-3.53 1.5-4.14 2.88C11.5 6.5 14 5 17 5c1.5 0 2.75.25 3.5.75-.5.75-1.5 1.5-3.5 2.25z" />

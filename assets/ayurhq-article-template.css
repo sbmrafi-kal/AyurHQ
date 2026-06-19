@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 :root {
-  --ayurhq-bg: #fffdf8;
+  --ayurhq-bg: #ffffff;
   --ayurhq-cream-card-light: #fff8ef;
   --ayurhq-cream-card-dark: #fff7ea;
   --ayurhq-border: #eadcc8;
@@ -773,19 +773,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: #FFF0D9 !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
   color: #C8521B !important;
 }
 
 .ayurhq-floating-guruji__icon-wrapper svg {
-  fill: none;
-  stroke: currentColor;
-  width: 14px !important;
-  height: 14px !important;
-  stroke-width: 26px !important;
+  fill: none !important;
+  stroke: #C8521B !important;
+  width: 16px !important;
+  height: 16px !important;
+  stroke-width: 28px !important;
 }
 
 /* Mobile Sticky CTA */

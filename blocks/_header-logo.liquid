@@ -5,7 +5,7 @@
   assign use_inverse_logo = false
 
   assign is_ayurveda_page = false
-  if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news' or template.suffix contains 'ayurveda'
+  if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/' or template.suffix contains 'ayurveda'
     assign is_ayurveda_page = true
   endif
 

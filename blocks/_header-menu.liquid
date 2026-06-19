@@ -30,8 +30,12 @@
     {% if block_settings.navigation_bar == true %}
       {% liquid
         assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/'
           assign is_ayurveda_page = true
+        endif
+        assign current_blog_url = blogs['ayurveda'].url
+        if current_blog_url == blank
+          assign current_blog_url = blogs['news'].url | default: '/blogs/news'
         endif
       %}
       <div
@@ -46,7 +50,8 @@
           >
             {% if is_ayurveda_page %}
               {%- assign mock_titles = "Today,Yoga,Guruji,Gyaan,Ayurveda" | split: "," -%}
-              {%- assign mock_urls = "/blogs/ayurveda/today,/blogs/ayurveda/yoga,/pages/consultation,/blogs/ayurveda/gyaan,/blogs/ayurveda" | split: "," -%}
+              {%- assign mock_urls_str = current_blog_url | append: '/today,' | append: current_blog_url | append: '/yoga,/pages/consultation,' | append: current_blog_url | append: '/gyaan,' | append: current_blog_url -%}
+              {%- assign mock_urls = mock_urls_str | split: "," -%}
               {%- for title in mock_titles -%}
                 {%- assign item_url = mock_urls[forloop.index0] -%}
                 {%- assign title_downcase = title | downcase -%}
@@ -54,7 +59,7 @@
                 {%- assign url_with_slash = item_url | append: '/' -%}
                 {%- if request.path == item_url or request.path == url_with_slash -%}
                   {%- assign is_active = true -%}
-                {%- elsif title_downcase == 'ayurveda' and template.name == 'blog' and blog.url == '/blogs/ayurveda' -%}
+                {%- elsif title_downcase == 'ayurveda' and template.name == 'blog' and blog.url == current_blog_url -%}
                   {%- assign is_active = true -%}
                 {%- elsif title_downcase == 'ayurveda' and template.name == 'article' -%}
                   {%- assign is_active = true -%}
@@ -219,13 +224,18 @@
     {% capture children %}
       {% liquid
         assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/'
           assign is_ayurveda_page = true
+        endif
+        assign current_blog_url = blogs['ayurveda'].url
+        if current_blog_url == blank
+          assign current_blog_url = blogs['news'].url | default: '/blogs/news'
         endif
       %}
       {% if is_ayurveda_page %}
         {%- assign mock_titles = "Today,Yoga,Gyaan,Ayurveda" | split: "," -%}
-        {%- assign mock_urls = "/blogs/ayurveda/today,/blogs/ayurveda/yoga,/blogs/ayurveda/gyaan,/blogs/ayurveda" | split: "," -%}
+        {%- assign mock_urls_str = current_blog_url | append: '/today,' | append: current_blog_url | append: '/yoga,' | append: current_blog_url | append: '/gyaan,' | append: current_blog_url -%}
+        {%- assign mock_urls = mock_urls_str | split: "," -%}
         {%- for title in mock_titles -%}
           {%- assign item_url = mock_urls[forloop.index0] -%}
           {%- assign title_downcase = title | downcase -%}
@@ -974,8 +984,8 @@
     .is-ayurveda-page .header__row {
       background-color: #FFFCF2 !important;
       background: #FFFCF2 !important;
-      min-height: 64px !important;
-      height: 64px !important;
+      min-height: 58px !important;
+      height: 58px !important;
     }
     .is-ayurveda-page .header__row {
       border-bottom: 1px solid #E3CFB4 !important;
@@ -983,8 +993,8 @@
 
     /* ── Inner container ── */
     .is-ayurveda-page #header-component .header__row--top .header__columns {
-      min-height: 64px !important;
-      height: 64px !important;
+      min-height: 58px !important;
+      height: 58px !important;
       padding-block: 0 !important;
       max-width: 1260px !important;
       margin: 0 auto !important;
@@ -1010,7 +1020,7 @@
 
     /* ── Nav list spacing ── */
     .is-ayurveda-page .menu-list {
-      --menu-horizontal-gap: 80px !important;
+      --menu-horizontal-gap: 110px !important;
     }
 
     /* ── Nav link defaults ── */
@@ -1069,11 +1079,11 @@
     .is-ayurveda-page .dropdown-localization__button,
     .is-ayurveda-page .dropdown-localization__button:hover {
       border: 1px solid #E3CFB4 !important;
-      border-radius: 999px !important;
+      border-radius: 8px !important;
       padding: 7px 14px !important;
       background: #FFFFFF !important;
       background-color: #FFFFFF !important;
-      color: #1e1e1e !important;
+      color: #1A1A1A !important;
       font-size: 13px !important;
       font-weight: 500 !important;
       height: 36px !important;
@@ -1098,7 +1108,7 @@
     }
     .is-ayurveda-page .account-button__text,
     .is-ayurveda-page .account-button__icon {
-      color: #1F3763 !important;
+      color: #2F5A96 !important;
       font-size: 14px !important;
       font-weight: 600 !important;
     }
@@ -1370,6 +1380,9 @@
     body {
       padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
     }
+  }
+  .is-ayurveda-page .header__navigation-bar-row {
+    display: none !important;
   }
 {% endstylesheet %}
 

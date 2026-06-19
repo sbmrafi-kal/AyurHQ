@@ -19,15 +19,17 @@
       <div class="ayurhq-blog-topic-card__image-placeholder"></div>
     {%- endif -%}
     <div class="ayurhq-blog-topic-card__content">
-      <h3 class="ayurhq-blog-topic-card__title">{{ tc.title }}</h3>
-      <div class="ayurhq-blog-topic-card__footer">
-        {%- if tc.hindi_title != blank -%}
-          <span class="ayurhq-blog-topic-card__hindi">{{ tc.hindi_title }}</span>
-        {%- endif -%}
+      <h3 class="ayurhq-blog-topic-card__title">
+        {{ tc.title }}
         {%- if tc.article_count != blank -%}
           <span class="ayurhq-blog-topic-card__count">{{ tc.article_count | split: ' ' | first }}</span>
         {%- endif -%}
-      </div>
+      </h3>
+      {%- if tc.hindi_title != blank -%}
+        <div class="ayurhq-blog-topic-card__footer">
+          <span class="ayurhq-blog-topic-card__hindi">{{ tc.hindi_title }}</span>
+        </div>
+      {%- endif -%}
     </div>
   </a>
 {%- endif -%}
