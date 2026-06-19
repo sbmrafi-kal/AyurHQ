@@ -20,18 +20,28 @@
         <div class="ayurhq-article-related-card__image-placeholder"></div>
       {%- endif -%}
       <div class="ayurhq-article-related-card__content">
-        <div class="ayurhq-article-related-card__meta">
-          {%- if article.tags.size > 0 -%}
+        {%- if article.tags.size > 0 -%}
+          <div class="ayurhq-article-related-card__tag-wrapper">
             <span class="ayurhq-article-related-card__tag">{{ article.tags[0] }}</span>
-            <span class="ayurhq-article-related-card__separator">•</span>
-          {%- endif -%}
-          {%- if article.metafields.custom.read_time != blank -%}
-            <span class="ayurhq-article-related-card__read-time">{{ article.metafields.custom.read_time.value }}</span>
-          {%- endif -%}
-        </div>
+          </div>
+        {%- endif -%}
+        
         <h4 class="ayurhq-article-related-card__title">{{ article.title }}</h4>
+        
         {%- if article.metafields.custom.hindi_title != blank -%}
           <p class="ayurhq-article-related-card__hindi">{{ article.metafields.custom.hindi_title.value }}</p>
+        {%- endif -%}
+
+        {%- if article.excerpt != blank -%}
+          <p class="ayurhq-article-related-card__excerpt">{{ article.excerpt | strip_html | truncatewords: 20 }}</p>
+        {%- else -%}
+          <p class="ayurhq-article-related-card__excerpt">{{ article.content | strip_html | truncatewords: 20 }}</p>
+        {%- endif -%}
+
+        {%- if article.metafields.custom.read_time != blank -%}
+          <div class="ayurhq-article-related-card__footer">
+            <span class="ayurhq-article-related-card__read-time">{{ article.metafields.custom.read_time.value }} read</span>
+          </div>
         {%- endif -%}
       </div>
     </a>

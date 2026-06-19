@@ -28,6 +28,12 @@
 
   {% when 'navigation_bar' %}
     {% if block_settings.navigation_bar == true %}
+      {% liquid
+        assign is_ayurveda_page = false
+        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+          assign is_ayurveda_page = true
+        endif
+      %}
       <div
         class="menu-list menu-list--mobile{% if transparent == blank %} color-{{ block_settings.color_scheme_navigation_bar }}{% endif %}"
         style="--menu-horizontal-gap: 15px; --mobile-nav-margin: auto;"
@@ -38,20 +44,151 @@
             class="menu-list__list list-unstyled"
             role="list"
           >
-            {% for link in block_settings.menu.links %}
-              <li>
-                <a
-                  href="{{ link.url }}"
-                  id="MenuItem-{{ link.handle }}"
-                  class="menu-list__item"
-                  {% if link.current %}
-                    aria-current="page"
-                  {% endif %}
-                >
-                  {{- link.title -}}
-                </a>
-              </li>
-            {% endfor %}
+            {% if is_ayurveda_page %}
+              {%- assign mock_titles = "Today,Yoga,Guruji,Gyaan,Ayurveda" | split: "," -%}
+              {%- assign mock_urls = "/blogs/ayurveda/today,/blogs/ayurveda/yoga,/pages/consultation,/blogs/ayurveda/gyaan,/blogs/ayurveda" | split: "," -%}
+              {%- for title in mock_titles -%}
+                {%- assign item_url = mock_urls[forloop.index0] -%}
+                {%- assign title_downcase = title | downcase -%}
+                {%- assign is_active = false -%}
+                {%- assign url_with_slash = item_url | append: '/' -%}
+                {%- if request.path == item_url or request.path == url_with_slash -%}
+                  {%- assign is_active = true -%}
+                {%- elsif title_downcase == 'ayurveda' and template.name == 'blog' and blog.url == '/blogs/ayurveda' -%}
+                  {%- assign is_active = true -%}
+                {%- elsif title_downcase == 'ayurveda' and template.name == 'article' -%}
+                  {%- assign is_active = true -%}
+                {%- endif -%}
+                <li>
+                  <a
+                    href="{{ item_url }}"
+                    id="MenuItemMobile-{{ title_downcase }}"
+                    class="menu-list__link{% if is_active %} menu-list__link--active{% endif %}{% if title_downcase == 'ayurveda' %} menu-list__link--ayurveda-pill{% endif %}{% if title_downcase == 'guruji' %} menu-list__link--guruji{% endif %}"
+                    {% if is_active %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    <span class="menu-list__link-title">
+                      {%- if title_downcase == 'today' -%}
+                        <span class="menu-icon menu-icon--today">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 18h20" />
+                            <path d="M16 18a4 4 0 0 0-8 0" />
+                            <path d="M12 5v4" />
+                            <path d="M6.34 9.34l2.83 2.83" />
+                            <path d="M17.66 9.34l-2.83 2.83" />
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'yoga' -%}
+                        <span class="menu-icon menu-icon--yoga">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
+                            <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
+                            <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
+                            <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'guruji' -%}
+                        <span class="menu-icon menu-icon--guruji">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
+                            <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
+                            <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
+                            <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'gyaan' -%}
+                        <span class="menu-icon menu-icon--gyaan">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'ayurveda' -%}
+                        <span class="menu-icon menu-icon--ayurveda">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 8C8 10 5.9 16.17 5.18 19.34L5 20h.66c3.17-.72 9.34-2.82 11.34-11.82C17.75 4.5 19 3 20 2c-1 1-2.5 2.25-6 3-2.12.45-3.53 1.5-4.14 2.88C11.5 6.5 14 5 17 5c1.5 0 2.75.25 3.5.75-.5.75-1.5 1.5-3.5 2.25z"/>
+                          </svg>
+                        </span>
+                      {%- endif -%}
+                      {{- title -}}
+                    </span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            {% else %}
+              {% for link in block_settings.menu.links %}
+                {%- assign title_downcase = link.title | downcase -%}
+                <li>
+                  <a
+                    href="{{ link.url }}"
+                    id="MenuItemMobile-{{ link.handle }}"
+                    class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}{% if title_downcase == 'ayurveda' %} menu-list__link--ayurveda-pill{% endif %}{% if title_downcase == 'guruji' %} menu-list__link--guruji{% endif %}"
+                    {% if link.current %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    <span class="menu-list__link-title">
+                      {%- if title_downcase == 'today' -%}
+                        <span class="menu-icon menu-icon--today">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 18h20" />
+                            <path d="M16 18a4 4 0 0 0-8 0" />
+                            <path d="M12 5v4" />
+                            <path d="M6.34 9.34l2.83 2.83" />
+                            <path d="M17.66 9.34l-2.83 2.83" />
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'yoga' -%}
+                        <span class="menu-icon menu-icon--yoga">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
+                            <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
+                            <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
+                            <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'guruji' -%}
+                        <span class="menu-icon menu-icon--guruji">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
+                            <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
+                            <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
+                            <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'gyaan' -%}
+                        <span class="menu-icon menu-icon--gyaan">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'ayurveda' -%}
+                        <span class="menu-icon menu-icon--ayurveda">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 8C8 10 5.9 16.17 5.18 19.34L5 20h.66c3.17-.72 9.34-2.82 11.34-11.82C17.75 4.5 19 3 20 2c-1 1-2.5 2.25-6 3-2.12.45-3.53 1.5-4.14 2.88C11.5 6.5 14 5 17 5c1.5 0 2.75.25 3.5.75-.5.75-1.5 1.5-3.5 2.25z"/>
+                          </svg>
+                        </span>
+                      {%- elsif title_downcase == 'home' -%}
+                        <span class="menu-icon menu-icon--home">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        </span>
+                      {%- elsif title_downcase == 'catalog' -%}
+                        <span class="menu-icon menu-icon--catalog">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </span>
+                      {%- elsif title_downcase == 'contact' -%}
+                        <span class="menu-icon menu-icon--contact">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </span>
+                      {%- endif -%}
+                      {{- link.title -}}
+                    </span>
+                  </a>
+                </li>
+              {% endfor %}
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -1097,24 +1234,43 @@
       color: #c94f17;
     }
 
-    #header-component .menu-list--mobile .menu-list__link--guruji.menu-list__link--active {
+    #header-component .menu-list--mobile .menu-list__link--guruji {
       width: 72px;
       height: 72px;
       margin-top: -26px;
       padding: 10px 8px 8px;
       border-radius: 50%;
       background: #c94f17;
-      color: #ffffff;
+      color: #ffffff !important;
       box-shadow: 0 14px 28px rgba(201, 79, 23, 0.26);
       transform: translateY(-2px);
     }
 
-    #header-component .menu-list--mobile .menu-list__link--guruji.menu-list__link--active .menu-icon {
-      color: #ffffff;
+    #header-component .menu-list--mobile .menu-list__link--guruji .menu-icon {
+      color: #ffffff !important;
     }
 
-    #header-component .menu-list--mobile .menu-list__link--guruji.menu-list__link--active .menu-list__link-title {
-      gap: 5px;
+    #header-component .menu-list--mobile .menu-list__link--guruji .menu-list__link-title {
+      gap: 5px !important;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link--guruji:hover,
+    #header-component .menu-list--mobile .menu-list__link--guruji.menu-list__link--active {
+      color: #ffffff !important;
+      background: #c94f17;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link--ayurveda-pill,
+    #header-component .menu-list--mobile .menu-list__link--ayurveda-pill:hover {
+      background-color: transparent !important;
+      border: none !important;
+      padding: 6px 0 4px !important;
+      margin-block: 0 !important;
+      height: auto !important;
+      font-weight: inherit !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
 
     body {

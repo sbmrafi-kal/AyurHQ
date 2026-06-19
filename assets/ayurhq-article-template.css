@@ -186,6 +186,18 @@
 .ayurhq-article-body h3 { font-size: 24px; }
 .ayurhq-article-body p { margin-bottom: 24px; }
 
+/* Drop Cap style for body */
+.ayurhq-article-body > p:first-of-type::first-letter {
+  font-family: var(--ayurhq-font-body);
+  font-size: 3.8rem;
+  font-weight: 700;
+  color: var(--ayurhq-orange);
+  float: left;
+  line-height: 0.9;
+  margin-right: 12px;
+  margin-top: 4px;
+}
+
 .ayurhq-article-body a {
   color: var(--ayurhq-blue-link);
   text-decoration: underline;
@@ -218,16 +230,26 @@
 
 .ayurhq-article-glance__list {
   margin: 0;
-  padding-left: 20px;
+  padding: 0;
+  list-style-type: none;
 }
 
 .ayurhq-article-glance__item {
   margin-bottom: 12px;
   line-height: 1.6;
+  position: relative;
+  padding-left: 28px;
 }
 
-.ayurhq-article-glance__item::marker {
+.ayurhq-article-glance__item::before {
+  content: "✓";
   color: var(--ayurhq-orange);
+  font-weight: 700;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 /* Visual Explainer */
@@ -281,31 +303,25 @@
 
 /* Pull Quote */
 .ayurhq-article-quote {
-  margin: 50px 0;
-  padding: 40px;
-  border-top: 1px solid var(--ayurhq-border);
-  border-bottom: 1px solid var(--ayurhq-border);
-  text-align: center;
+  margin: 40px 0;
+  padding: 10px 0 10px 24px;
+  border: none;
+  border-left: 4px solid var(--ayurhq-orange);
+  text-align: left;
   position: relative;
 }
 
 .ayurhq-article-quote__text {
   font-family: var(--ayurhq-font-title);
-  font-size: 28px;
+  font-size: 22px;
   font-style: italic;
   color: var(--ayurhq-dark-text);
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
 }
 
 .ayurhq-article-quote__author {
-  font-size: 14px;
-  text-transform: uppercase;
-  color: var(--ayurhq-orange);
-  letter-spacing: 0.1em;
-  margin-top: 16px;
-  display: block;
-  font-weight: 600;
+  display: none;
 }
 
 /* Tips section ("Try this today") */
@@ -313,38 +329,61 @@
   margin-bottom: 50px;
 }
 
+.ayurhq-article-tips-card {
+  background-color: var(--ayurhq-cream-card-light);
+  border: 1px solid var(--ayurhq-border);
+  border-radius: 24px;
+  padding: 36px;
+  box-shadow: 0 4px 15px rgba(234, 220, 200, 0.08);
+}
+
 .ayurhq-article-tips__heading {
   font-family: var(--ayurhq-font-title);
   font-size: 26px;
   color: var(--ayurhq-dark-text);
-  margin-bottom: 24px;
+  margin: 0 0 24px 0;
 }
 
 .ayurhq-article-tips__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 40px;
+}
+
+.ayurhq-article-tip-item {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
-.ayurhq-article-tip-card {
-  background-color: var(--ayurhq-cream-card-light);
-  border: 1px solid var(--ayurhq-border);
-  border-radius: 22px;
-  padding: 24px;
-  box-shadow: 0 4px 15px rgba(234, 220, 200, 0.08);
-}
-
-.ayurhq-article-tip-card__title {
+.ayurhq-article-tip-item__title {
   font-size: 18px;
   font-weight: 600;
-  color: var(--ayurhq-orange);
-  margin: 0 0 10px 0;
+  color: var(--ayurhq-dark-text);
+  margin: 0 0 8px 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
-.ayurhq-article-tip-card__desc {
+.ayurhq-tip-check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ayurhq-orange);
+  color: var(--ayurhq-orange);
+  flex-shrink: 0;
+}
+
+.ayurhq-tip-check-icon svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 3px;
+}
+
+.ayurhq-article-tip-item__desc {
   font-size: 15px;
   line-height: 1.7;
   margin: 0;
@@ -365,8 +404,8 @@
 
 .ayurhq-article-ingredients__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 .ayurhq-article-ingredient-card {
@@ -399,7 +438,11 @@
 }
 
 .ayurhq-article-ingredient-card__title-row {
-  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 
 .ayurhq-article-ingredient-card__name {
@@ -407,14 +450,16 @@
   font-weight: 600;
   color: var(--ayurhq-dark-text);
   margin: 0;
+  display: inline;
 }
 
 .ayurhq-article-ingredient-card__sanskrit {
   font-family: var(--ayurhq-font-title);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--ayurhq-orange);
   margin: 0;
   font-style: italic;
+  display: inline;
 }
 
 .ayurhq-article-ingredient-card__desc {
@@ -441,34 +486,30 @@
   margin: 0 0 20px 0;
 }
 
-.ayurhq-article-definitions__list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.ayurhq-article-definitions__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 40px;
 }
 
 .ayurhq-article-definition-item {
-  border-bottom: 1px dashed var(--ayurhq-border);
-  padding-bottom: 16px;
-}
-
-.ayurhq-article-definition-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.6;
 }
 
 .ayurhq-article-definition-item__term {
   font-weight: 600;
   color: var(--ayurhq-orange);
-  margin-bottom: 4px;
   font-size: 16px;
+  display: inline;
 }
 
 .ayurhq-article-definition-item__desc {
   font-size: 15px;
-  margin: 0;
-  line-height: 1.6;
   color: var(--ayurhq-body-text);
+  display: inline;
 }
 
 /* Sources Block */
@@ -494,13 +535,14 @@
 /* Medical Disclaimer */
 .ayurhq-article-disclaimer {
   background-color: var(--ayurhq-cream-card-light);
-  border: 1px dashed var(--ayurhq-border);
+  border: 1px solid var(--ayurhq-border);
   border-radius: 16px;
   padding: 20px;
   margin-top: 40px;
   font-size: 13px;
   color: var(--ayurhq-muted-text);
   line-height: 1.6;
+  text-align: center;
 }
 
 /* Related Articles Section */
@@ -523,6 +565,9 @@
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(234, 220, 200, 0.08);
   transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .ayurhq-article-related-card:hover {
@@ -532,7 +577,9 @@
 .ayurhq-article-related-card__link {
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .ayurhq-article-related-card__image-wrapper {
@@ -548,12 +595,22 @@
 
 .ayurhq-article-related-card__content {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  box-sizing: border-box;
 }
 
-.ayurhq-article-related-card__meta {
-  font-size: 12px;
-  color: var(--ayurhq-muted-text);
+.ayurhq-article-related-card__tag-wrapper {
   margin-bottom: 8px;
+}
+
+.ayurhq-article-related-card__tag {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--ayurhq-orange);
+  letter-spacing: 0.05em;
 }
 
 .ayurhq-article-related-card__title {
@@ -568,8 +625,26 @@
   font-family: var(--ayurhq-font-title);
   font-size: 13px;
   color: var(--ayurhq-muted-text);
-  margin: 0;
+  margin: 0 0 8px 0;
   font-style: italic;
+}
+
+.ayurhq-article-related-card__excerpt {
+  font-size: 14px;
+  color: var(--ayurhq-body-text);
+  line-height: 1.5;
+  margin: 8px 0 16px 0;
+}
+
+.ayurhq-article-related-card__footer {
+  border-top: 1px solid #f5ede2;
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+.ayurhq-article-related-card__read-time {
+  font-size: 12px;
+  color: var(--ayurhq-muted-text);
 }
 
 /* Floating CTA Ask Guruji */
@@ -663,6 +738,17 @@
   .ayurhq-article-wrapper {
     padding-bottom: 120px; /* add spacing so content isn't cut off by sticky CTA */
   }
+  .ayurhq-article-tips__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .ayurhq-article-tips-card {
+    padding: 24px;
+  }
+  .ayurhq-article-definitions__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -687,17 +773,9 @@
   .ayurhq-article-quote__text {
     font-size: 20px;
   }
-  .ayurhq-article-tip-card {
-    padding: 20px;
-  }
   .ayurhq-article-ingredient-card {
-    padding: 20px;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .ayurhq-article-definitions {
-    padding: 24px;
+    padding: 16px;
+    gap: 16px;
   }
   .ayurhq-article-related__grid {
     grid-template-columns: 1fr;

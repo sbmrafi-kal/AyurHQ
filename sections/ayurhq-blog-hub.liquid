@@ -50,19 +50,6 @@
   <div class="ayurhq-blog-main-content">
     <div class="ayurhq-blog-container">
       <section class="ayurhq-blog-editorial">
-        <div class="ayurhq-blog-editorial__spacer" aria-hidden="true"></div>
-
-        <article class="ayurhq-blog-editorial__feature">
-          <div class="ayurhq-blog-editorial__feature-header">
-            <h2 class="ayurhq-blog-editorial__feature-title">{{ section.settings.path4_title }}</h2>
-            <span class="ayurhq-blog-editorial__feature-tags">{{ section.settings.path4_tags }}</span>
-          </div>
-          <p class="ayurhq-blog-editorial__feature-text">{{ section.settings.path4_desc }}</p>
-          <a href="{{ section.settings.path4_link | default: '#' }}" class="ayurhq-blog-editorial__feature-link">
-            {{ section.settings.path4_label }}
-          </a>
-        </article>
-
         {%- if section.settings.show_care_paths -%}
           <div class="ayurhq-blog-editorial__teaser">
             <span class="ayurhq-blog-editorial__teaser-eyebrow">{{ section.settings.care_paths_eyebrow }}</span>
@@ -72,57 +59,201 @@
 
           <div class="ayurhq-blog-editorial__list" aria-label="Care paths">
             <article class="ayurhq-blog-editorial__row">
-              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path1_tags }}</div>
               <div class="ayurhq-blog-editorial__row-body">
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path1_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path1_desc }}</p>
               </div>
+              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path1_tags }}</div>
+              {%- if section.settings.path1_link != blank -%}
+                <a href="{{ section.settings.path1_link }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path1_label | default: 'Begin with asana' }}
+                </a>
+              {%- endif -%}
             </article>
 
             <article class="ayurhq-blog-editorial__row">
-              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path2_tags }}</div>
               <div class="ayurhq-blog-editorial__row-body">
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path2_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path2_desc }}</p>
               </div>
+              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path2_tags }}</div>
+              {%- if section.settings.path2_link != blank -%}
+                <a href="{{ section.settings.path2_link }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path2_label | default: 'Go to yoga nidra' }}
+                </a>
+              {%- endif -%}
             </article>
 
             <article class="ayurhq-blog-editorial__row">
-              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path3_tags }}</div>
               <div class="ayurhq-blog-editorial__row-body">
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path3_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path3_desc }}</p>
               </div>
+              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path3_tags }}</div>
+              {%- if section.settings.path3_link != blank -%}
+                <a href="{{ section.settings.path3_link }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path3_label | default: 'Start with breath' }}
+                </a>
+              {%- endif -%}
+            </article>
+
+            <article class="ayurhq-blog-editorial__row">
+              <div class="ayurhq-blog-editorial__row-body">
+                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path4_title }}</h3>
+                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path4_desc }}</p>
+              </div>
+              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path4_tags }}</div>
+              {%- if section.settings.path4_link != blank -%}
+                <a href="{{ section.settings.path4_link }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path4_label | default: 'See the day rhythm' }}
+                </a>
+              {%- else -%}
+                <a href="#" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path4_label | default: 'See the day rhythm' }}
+                </a>
+              {%- endif -%}
             </article>
           </div>
         {%- endif -%}
       </section>
 
-      <section class="ayurhq-blog-guides" id="guides">
-        <div class="ayurhq-section-header ayurhq-section-header--sparse">
-          <h2 class="ayurhq-blog-guides__title">All Guides &amp; Wisdom</h2>
-        </div>
+      <!-- Daily Rhythm Section -->
+      {%- if section.settings.show_daily_rhythm -%}
+        <section class="ayurhq-blog-daily-rhythm">
+          <div class="ayurhq-daily-rhythm-grid">
+            <div class="ayurhq-daily-rhythm-teaser">
+              <span class="ayurhq-daily-rhythm-teaser__eyebrow">{{ section.settings.daily_rhythm_eyebrow }}</span>
+              <h2 class="ayurhq-daily-rhythm-teaser__heading">{{ section.settings.daily_rhythm_heading }}</h2>
+              <p class="ayurhq-daily-rhythm-teaser__text">{{ section.settings.daily_rhythm_text }}</p>
+            </div>
 
-        {%- if blog.articles.size > 0 -%}
-          <div class="ayurhq-blog-guides__grid">
-            {%- for article in blog.articles limit: 6 -%}
-              <a class="ayurhq-blog-guides__card" href="{{ article.url }}">
-                <div class="ayurhq-blog-guides__card-meta">
-                  {%- if article.tags.size > 0 -%}
-                    <span class="ayurhq-blog-guides__card-tag">{{ article.tags | first }}</span>
-                  {%- endif -%}
-                  {%- if article.metafields.custom.read_time != blank -%}
-                    <span class="ayurhq-blog-guides__card-read-time">{{ article.metafields.custom.read_time.value }} read</span>
-                  {%- endif -%}
-                </div>
-                <h3 class="ayurhq-blog-guides__card-title">{{ article.title }}</h3>
-                <p class="ayurhq-blog-guides__card-text">
-                  {{ article.excerpt | default: article.content | strip_html | truncatewords: 22 }}
-                </p>
+            <div class="ayurhq-daily-rhythm-list" aria-label="Daily rhythm">
+              {%- for i in (1..4) -%}
+                {%- assign rhythm_label_key = 'rhythm' | append: i | append: '_label' -%}
+                {%- assign rhythm_title_key = 'rhythm' | append: i | append: '_title' -%}
+                {%- assign rhythm_desc_key = 'rhythm' | append: i | append: '_desc' -%}
+                
+                {%- assign rhythm_label = section.settings[rhythm_label_key] -%}
+                {%- assign rhythm_title = section.settings[rhythm_title_key] -%}
+                {%- assign rhythm_desc = section.settings[rhythm_desc_key] -%}
+
+                {%- if rhythm_title != blank -%}
+                  <div class="ayurhq-daily-rhythm-item">
+                    <div class="ayurhq-daily-rhythm-item__meta">
+                      <span class="ayurhq-daily-rhythm-item__tags">{{ rhythm_label }}</span>
+                    </div>
+                    <div class="ayurhq-daily-rhythm-item__content">
+                      <h3 class="ayurhq-daily-rhythm-item__title">{{ rhythm_title }}</h3>
+                      <p class="ayurhq-daily-rhythm-item__desc">{{ rhythm_desc }}</p>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+
+      <!-- Featured Article Section -->
+      {%- assign featured_article = blog.metafields.custom.featured_article.value -%}
+      {%- if featured_article != blank -%}
+        <section class="ayurhq-blog-featured">
+          <div class="ayurhq-section-header">
+            <span class="ayurhq-section-eyebrow">READ · पढ़ें</span>
+            <h2 class="ayurhq-blog-section-title">Everyday Ayurveda, explained simply</h2>
+          </div>
+
+          <div class="ayurhq-blog-featured-card">
+            <div class="ayurhq-blog-featured-card__image-wrapper">
+              {%- if featured_article.image != blank -%}
+                {{ featured_article.image | image_url: width: 1000 | image_tag: 
+                  loading: 'lazy', 
+                  class: 'ayurhq-blog-featured-card__image' 
+                }}
+              {%- endif -%}
+            </div>
+            <div class="ayurhq-blog-featured-card__content">
+              <div class="ayurhq-blog-featured-card__meta">
+                <span class="ayurhq-blog-featured-card__badge">FEATURED</span>
+                {%- if featured_article.metafields.custom.read_time != blank -%}
+                  <span class="ayurhq-blog-featured-card__read-time">• {{ featured_article.metafields.custom.read_time.value }} read</span>
+                {%- endif -%}
+              </div>
+              <h3 class="ayurhq-blog-featured-card__title">{{ featured_article.title }}</h3>
+              {%- if featured_article.metafields.custom.hindi_title != blank -%}
+                <p class="ayurhq-blog-article-card__hindi-title">{{ featured_article.metafields.custom.hindi_title.value }}</p>
+              {%- endif -%}
+              <p class="ayurhq-blog-featured-card__excerpt">
+                {{ featured_article.excerpt | default: featured_article.content | strip_html | truncatewords: 30 }}
+              </p>
+              <a href="{{ featured_article.url }}" class="ayurhq-blog-featured-card__cta">
+                Read this first &rarr;
               </a>
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+
+      <!-- Topic Shelf Section -->
+      {%- assign topic_cards = blog.metafields.custom.topic_cards.value -%}
+      {%- if topic_cards != blank -%}
+        <section class="ayurhq-blog-topics">
+          <div class="ayurhq-section-header">
+            <span class="ayurhq-section-eyebrow">BROWSE · विषय</span>
+            <h2 class="ayurhq-blog-section-title">Find your topic</h2>
+            <p class="ayurhq-section-subheading">The full library, sorted into shelves you can actually navigate. {{ blog.articles_count | default: 250 }} articles</p>
+          </div>
+
+          <div class="ayurhq-blog-topic-grid">
+            {%- for topic_card in topic_cards -%}
+              {%- render 'ayurhq-topic-card', topic_card: topic_card -%}
             {%- endfor -%}
           </div>
-        {%- endif -%}
+        </section>
+      {%- endif -%}
+
+      <!-- Vaidya Consult CTA Section -->
+      {%- assign consult_heading = blog.metafields.custom.consultation_heading.value | default: "Book a consultation with a vaidya" -%}
+      {%- assign consult_text = blog.metafields.custom.consultation_text.value | default: "When personal guidance is needed, the intake stays simple and the plan returns to your daily rhythm instead of becoming another disconnected PDF." -%}
+      {%- assign consult_label = blog.metafields.custom.consultation_cta_label.value | default: "WhatsApp consults opening soon" -%}
+      {%- assign consult_link = blog.metafields.custom.consultation_cta_link.value | default: "#" -%}
+
+      <section class="ayurhq-blog-consultation">
+        <div class="ayurhq-blog-consultation-container">
+          <div class="ayurhq-blog-consultation__left">
+            <span class="ayurhq-blog-consultation__eyebrow">VAIDYA CONSULT</span>
+            <h2 class="ayurhq-blog-consultation__heading">{{ consult_heading }}</h2>
+            <p class="ayurhq-blog-consultation__text">{{ consult_text }}</p>
+            <a href="{{ consult_link }}" class="ayurhq-consultation-btn">{{ consult_label }}</a>
+          </div>
+
+          <div class="ayurhq-blog-consultation__right">
+            <div class="ayurhq-consultation-step">
+              <span class="ayurhq-consultation-step__num">01</span>
+              <div class="ayurhq-consultation-step__content">
+                <h3 class="ayurhq-consultation-step__title">Share the pattern</h3>
+                <p class="ayurhq-consultation-step__desc">Sleep, appetite, digestion, pain, energy and current routine.</p>
+              </div>
+            </div>
+            <div class="ayurhq-consultation-step">
+              <span class="ayurhq-consultation-step__num">02</span>
+              <div class="ayurhq-consultation-step__content">
+                <h3 class="ayurhq-consultation-step__title">Receive a small plan</h3>
+                <p class="ayurhq-consultation-step__desc">Food timing, practice adjustments and one or two daily changes.</p>
+              </div>
+            </div>
+            <div class="ayurhq-consultation-step">
+              <span class="ayurhq-consultation-step__num">03</span>
+              <div class="ayurhq-consultation-step__content">
+                <h3 class="ayurhq-consultation-step__title">Fold it into Today</h3>
+                <p class="ayurhq-consultation-step__desc">The plan points back to classes, breath and quiet reminders already inside DhyanHQ.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="ayurhq-consultation-disclaimer">
+          Ayurveda guidance on DhyanHQ is supportive care, not emergency or diagnostic medical treatment.
+        </p>
       </section>
     </div>
   </div>

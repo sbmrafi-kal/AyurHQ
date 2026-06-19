@@ -115,27 +115,30 @@
             <p class="ayurhq-article-quote__text">
               “{{ article.metafields.custom.pull_quote.value | newline_to_br }}”
             </p>
-            <span class="ayurhq-article-quote__author">Ayurvedic Principle</span>
           </blockquote>
         {%- endif -%}
 
         <!-- Tip Card Section ("Try this today") -->
         {%- if article.metafields.custom.try_this_today.value != blank -%}
           <section class="ayurhq-article-tips">
-            <h2 class="ayurhq-article-tips__heading">Try This Today</h2>
-            <div class="ayurhq-article-tips__grid">
-              {%- for tip in article.metafields.custom.try_this_today.value -%}
-                {%- assign tip_val = tip.value -%}
-                <div class="ayurhq-article-tip-card">
-                  <h3 class="ayurhq-article-tip-card__title">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    {{ tip_val.title }}
-                  </h3>
-                  <p class="ayurhq-article-tip-card__desc">{{ tip_val.description | newline_to_br }}</p>
-                </div>
-              {%- endfor -%}
+            <div class="ayurhq-article-tips-card">
+              <h2 class="ayurhq-article-tips__heading">Try This Today</h2>
+              <div class="ayurhq-article-tips__grid">
+                {%- for tip in article.metafields.custom.try_this_today.value -%}
+                  {%- assign tip_val = tip.value -%}
+                  <div class="ayurhq-article-tip-item">
+                    <h3 class="ayurhq-article-tip-item__title">
+                      <span class="ayurhq-tip-check-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </span>
+                      {{ tip_val.title }}
+                    </h3>
+                    <p class="ayurhq-article-tip-item__desc">{{ tip_val.description | newline_to_br }}</p>
+                  </div>
+                {%- endfor -%}
+              </div>
             </div>
           </section>
         {%- endif -%}
@@ -175,12 +178,12 @@
         {%- if article.metafields.custom.words_to_know.value != blank -%}
           <section class="ayurhq-article-definitions">
             <h2 class="ayurhq-article-definitions__heading">Words to Know</h2>
-            <div class="ayurhq-article-definitions__list">
+            <div class="ayurhq-article-definitions__grid">
               {%- for def in article.metafields.custom.words_to_know.value -%}
                 {%- assign def_val = def.value -%}
                 <div class="ayurhq-article-definition-item">
-                  <h3 class="ayurhq-article-definition-item__term">{{ def_val.term }}</h3>
-                  <p class="ayurhq-article-definition-item__desc">{{ def_val.definition | newline_to_br }}</p>
+                  <span class="ayurhq-article-definition-item__term">{{ def_val.term }}. </span>
+                  <span class="ayurhq-article-definition-item__desc">{{ def_val.definition }}</span>
                 </div>
               {%- endfor -%}
             </div>
