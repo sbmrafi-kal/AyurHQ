@@ -964,88 +964,163 @@
     color: #c94f17;
   }
 
-  /* Compact navbar sizing on desktop */
+  /* Compact navbar sizing on desktop – matches Blog_main_01 reference */
   @media screen and (min-width: 750px) {
+    /* ── Header shell ── */
+    .is-ayurveda-page #header-component {
+      border-top: 2px solid #242424 !important;
+    }
     .is-ayurveda-page #header-component,
     .is-ayurveda-page .header__row {
-      background-color: #FFFDF8 !important;
-      border-bottom: 1px solid #EADCC8 !important;
-      min-height: 60px !important;
-      height: 60px !important;
+      background-color: #FFFCF2 !important;
+      background: #FFFCF2 !important;
+      min-height: 64px !important;
+      height: 64px !important;
     }
+    .is-ayurveda-page .header__row {
+      border-bottom: 1px solid #E3CFB4 !important;
+    }
+
+    /* ── Inner container ── */
     .is-ayurveda-page #header-component .header__row--top .header__columns {
-      min-height: 60px !important;
-      height: 60px !important;
-      padding-block: 0px !important;
-      max-width: 1120px !important;
+      min-height: 64px !important;
+      height: 64px !important;
+      padding-block: 0 !important;
+      max-width: 1260px !important;
       margin: 0 auto !important;
-      padding-inline: 0 !important;
       width: 100% !important;
       box-sizing: border-box !important;
       grid-template-columns: 1fr auto 1fr !important;
+      align-items: center !important;
     }
-    @media screen and (max-width: 1168px) {
+    @media screen and (min-width: 750px) {
       .is-ayurveda-page #header-component .header__row--top .header__columns {
-        padding-inline: 24px !important;
+        padding-inline: 40px !important;
       }
     }
+
+    /* ── Columns ── */
     .is-ayurveda-page .header__column--center {
       justify-content: center !important;
-      padding-inline-start: 0px !important;
+      padding-inline-start: 0 !important;
     }
     .is-ayurveda-page .header__column--center header-menu:only-child .overflow-menu::part(list) {
       justify-content: center !important;
     }
+
+    /* ── Nav list spacing ── */
     .is-ayurveda-page .menu-list {
-      --menu-horizontal-gap: 20px !important;
+      --menu-horizontal-gap: 48px !important;
     }
+
+    /* ── Nav link defaults ── */
     .is-ayurveda-page .menu-list__link {
-      font-size: 13px !important;
+      font-size: 14px !important;
       letter-spacing: 0.01em !important;
-      color: #8d8177 !important;
+      color: #7A6E64 !important;
     }
-    .is-ayurveda-page .menu-list__link--active,
+    .is-ayurveda-page .menu-list__link--active:not(.menu-list__link--ayurveda-pill),
     .is-ayurveda-page .menu-list__link:hover {
       color: #1e1e1e !important;
     }
     .is-ayurveda-page .menu-list__link-title {
-      padding-inline: 4px !important;
-      font-size: 13px !important;
+      padding-inline: 6px !important;
+      font-size: 14px !important;
       font-weight: 500 !important;
-      gap: 5px !important;
+      gap: 18px !important;
     }
+
+    /* ── Icons ── */
     .is-ayurveda-page .menu-icon svg {
-      width: 14px !important;
-      height: 14px !important;
-      stroke-width: 1.5px !important;
+      width: 27px !important;
+      height: 27px !important;
+      stroke-width: 1.6px !important;
       stroke: currentColor !important;
     }
     .is-ayurveda-page .menu-icon--ayurveda svg {
-      width: 14px !important;
-      height: 14px !important;
+      width: 27px !important;
+      height: 27px !important;
       fill: currentColor !important;
+      stroke: none !important;
     }
-    /* Logo scaling in compact header */
+    .is-ayurveda-page .menu-icon--yoga svg {
+      stroke: none !important;
+    }
+
+    /* ── Logo ── */
     .is-ayurveda-page .header-logo {
-      --header-logo-image-width: 110px !important;
+      --header-logo-image-width: 120px !important;
       --header-logo-image-height: auto !important;
     }
     .is-ayurveda-page .header-logo img {
-      max-height: 22px !important;
+      max-height: 24px !important;
       width: auto !important;
+    }
+    .is-ayurveda-page .custom-logo-icon {
+      width: 22px !important;
+      height: 28px !important;
+    }
+    .is-ayurveda-page .custom-logo-text {
+      font-size: 22px !important;
+      letter-spacing: -0.4px !important;
+    }
+
+    /* ── Right side: language selector ── */
+    .is-ayurveda-page .dropdown-localization__button {
+      border: 1px solid #E3CFB4 !important;
+      border-radius: 999px !important;
+      padding: 7px 14px !important;
+      background: #FFFCF2 !important;
+      color: #1e1e1e !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      height: 36px !important;
+      min-height: 36px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+    }
+    .is-ayurveda-page .dropdown-localization__button .svg-wrapper.icon-caret {
+      margin-left: 2px !important;
+    }
+
+    /* ── Right side: sign-in ── */
+    .is-ayurveda-page .account-button {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      width: auto !important;
+      height: auto !important;
+      padding: 0 !important;
+    }
+    .is-ayurveda-page .account-button__text,
+    .is-ayurveda-page .account-button__icon {
+      color: #1F3763 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+    }
+    .is-ayurveda-page shopify-account:not(:defined) {
+      min-width: auto !important;
+      height: auto !important;
+    }
+    .is-ayurveda-page header-actions {
+      gap: 16px !important;
+      align-items: center !important;
     }
   }
 
-  /* active tab pill */
+  /* active tab pill – matches reference peach/orange pill */
   .is-ayurveda-page .menu-list__link--ayurveda-pill {
     background-color: #FFF0E2 !important;
     border: none !important;
     border-radius: 999px !important;
-    padding: 6px 16px !important;
+    padding: 8px 18px !important;
     margin-block: auto !important;
-    height: 32px !important;
+    height: 36px !important;
     color: #C8521B !important;
     font-weight: 600 !important;
+    font-size: 14px !important;
     display: inline-flex !important;
     align-items: center !important;
     transition: all 0.2s ease-in-out !important;
@@ -1053,9 +1128,11 @@
   .is-ayurveda-page .menu-list__link--ayurveda-pill .menu-list__link-title {
     padding-inline: 0 !important;
     color: #C8521B !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
   }
   .is-ayurveda-page .menu-list__link--ayurveda-pill .menu-icon svg {
-    stroke: #C8521B !important;
+    stroke: none !important;
     fill: #C8521B !important;
   }
   .is-ayurveda-page .menu-list__link--ayurveda-pill:hover {
@@ -1079,18 +1156,18 @@
   }
 
   #header-component {
-    background-color: #fffdf8 !important;
-    background: #fffdf8 !important;
+    background-color: #FFFCF2 !important;
+    background: #FFFCF2 !important;
   }
   .header__row {
-    border-bottom: 1px solid #eadcc8 !important;
-    background-color: #fffdf8 !important;
-    background: #fffdf8 !important;
+    border-bottom: 1px solid #E3CFB4 !important;
+    background-color: #FFFCF2 !important;
+    background: #FFFCF2 !important;
   }
   .header__underlay-closed,
   .header__underlay-open {
-    background: #fffdf8 !important;
-    background-color: #fffdf8 !important;
+    background: #FFFCF2 !important;
+    background-color: #FFFCF2 !important;
   }
 
   @media screen and (min-width: 750px) {
@@ -1146,7 +1223,7 @@
       border: 1px solid #eadcc8;
       border-radius: 999px;
       padding: 10px 16px;
-      background: #fffdf8;
+      background: #FFFCF2;
       color: #1e1e1e;
       font-weight: 600;
       box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
@@ -1159,7 +1236,7 @@
     #header-component .account-button,
     #header-component .action__cart,
     #header-component .cart-drawer__dialog {
-      background: #fffdf8;
+      background: #FFFCF2;
     }
 
     #header-component .account-button {
@@ -1188,7 +1265,7 @@
       bottom: 0;
       z-index: var(--layer-sticky);
       display: block;
-      background: #fffdf8;
+      background: #FFFCF2;
       border-top: 1px solid #eadcc8;
       box-shadow: 0 -8px 24px rgba(201, 79, 23, 0.08);
       padding: 8px 10px calc(env(safe-area-inset-bottom, 0px) + 8px);

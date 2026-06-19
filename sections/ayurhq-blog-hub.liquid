@@ -46,11 +46,11 @@
     </div>
   </header>
 
-  <!-- White Content Overlap -->
-  <div class="ayurhq-blog-main-content">
-    <div class="ayurhq-blog-container">
-      <section class="ayurhq-blog-editorial">
-        {%- if section.settings.show_care_paths -%}
+  <!-- Care Paths Section -->
+  {%- if section.settings.show_care_paths -%}
+    <section class="ayurhq-blog-care-paths-section">
+      <div class="ayurhq-blog-container">
+        <div class="ayurhq-blog-editorial">
           <div class="ayurhq-blog-editorial__teaser">
             <span class="ayurhq-blog-editorial__teaser-eyebrow">{{ section.settings.care_paths_eyebrow }}</span>
             <h2 class="ayurhq-blog-editorial__teaser-heading">{{ section.settings.care_paths_heading }}</h2>
@@ -114,111 +114,171 @@
               {%- endif -%}
             </article>
           </div>
-        {%- endif -%}
-      </section>
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
 
-      <!-- Daily Rhythm Section -->
-      {%- if section.settings.show_daily_rhythm -%}
-        <section class="ayurhq-blog-daily-rhythm">
-          <div class="ayurhq-daily-rhythm-grid">
-            <div class="ayurhq-daily-rhythm-teaser">
-              <span class="ayurhq-daily-rhythm-teaser__eyebrow">{{ section.settings.daily_rhythm_eyebrow }}</span>
-              <h2 class="ayurhq-daily-rhythm-teaser__heading">{{ section.settings.daily_rhythm_heading }}</h2>
-              <p class="ayurhq-daily-rhythm-teaser__text">{{ section.settings.daily_rhythm_text }}</p>
-            </div>
+  <!-- Daily Rhythm Section -->
+  {%- if section.settings.show_daily_rhythm -%}
+    <section class="ayurhq-blog-daily-rhythm-section">
+      <div class="ayurhq-blog-container">
+        <div class="ayurhq-daily-rhythm-grid">
+          <div class="ayurhq-daily-rhythm-teaser">
+            <span class="ayurhq-daily-rhythm-teaser__eyebrow">{{ section.settings.daily_rhythm_eyebrow }}</span>
+            <h2 class="ayurhq-daily-rhythm-teaser__heading">{{ section.settings.daily_rhythm_heading }}</h2>
+            <p class="ayurhq-daily-rhythm-teaser__text">{{ section.settings.daily_rhythm_text }}</p>
+          </div>
 
-            <div class="ayurhq-daily-rhythm-list" aria-label="Daily rhythm">
-              {%- for i in (1..4) -%}
-                {%- assign rhythm_label_key = 'rhythm' | append: i | append: '_label' -%}
-                {%- assign rhythm_title_key = 'rhythm' | append: i | append: '_title' -%}
-                {%- assign rhythm_desc_key = 'rhythm' | append: i | append: '_desc' -%}
-                
-                {%- assign rhythm_label = section.settings[rhythm_label_key] -%}
-                {%- assign rhythm_title = section.settings[rhythm_title_key] -%}
-                {%- assign rhythm_desc = section.settings[rhythm_desc_key] -%}
+          <div class="ayurhq-daily-rhythm-list" aria-label="Daily rhythm">
+            {%- for i in (1..4) -%}
+              {%- assign rhythm_label_key = 'rhythm' | append: i | append: '_label' -%}
+              {%- assign rhythm_title_key = 'rhythm' | append: i | append: '_title' -%}
+              {%- assign rhythm_desc_key = 'rhythm' | append: i | append: '_desc' -%}
+              
+              {%- assign rhythm_label = section.settings[rhythm_label_key] -%}
+              {%- assign rhythm_title = section.settings[rhythm_title_key] -%}
+              {%- assign rhythm_desc = section.settings[rhythm_desc_key] -%}
 
-                {%- if rhythm_title != blank -%}
-                  <div class="ayurhq-daily-rhythm-item">
-                    <div class="ayurhq-daily-rhythm-item__meta">
-                      <span class="ayurhq-daily-rhythm-item__tags">{{ rhythm_label }}</span>
-                    </div>
-                    <div class="ayurhq-daily-rhythm-item__content">
-                      <h3 class="ayurhq-daily-rhythm-item__title">{{ rhythm_title }}</h3>
-                      <p class="ayurhq-daily-rhythm-item__desc">{{ rhythm_desc }}</p>
-                    </div>
+              {%- if rhythm_title != blank -%}
+                <div class="ayurhq-daily-rhythm-item">
+                  <div class="ayurhq-daily-rhythm-item__meta">
+                    <span class="ayurhq-daily-rhythm-item__tags">{{ rhythm_label }}</span>
                   </div>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-          </div>
-        </section>
-      {%- endif -%}
-
-      <!-- Featured Article Section -->
-      {%- assign featured_article = blog.metafields.custom.featured_article.value -%}
-      {%- if featured_article != blank -%}
-        <section class="ayurhq-blog-featured">
-          <div class="ayurhq-section-header">
-            <span class="ayurhq-section-eyebrow">READ · पढ़ें</span>
-            <h2 class="ayurhq-blog-section-title">Everyday Ayurveda, explained simply</h2>
-          </div>
-
-          <div class="ayurhq-blog-featured-card">
-            <div class="ayurhq-blog-featured-card__image-wrapper">
-              {%- if featured_article.image != blank -%}
-                {{ featured_article.image | image_url: width: 1000 | image_tag: 
-                  loading: 'lazy', 
-                  class: 'ayurhq-blog-featured-card__image' 
-                }}
+                  <div class="ayurhq-daily-rhythm-item__content">
+                    <h3 class="ayurhq-daily-rhythm-item__title">{{ rhythm_title }}</h3>
+                    <p class="ayurhq-daily-rhythm-item__desc">{{ rhythm_desc }}</p>
+                  </div>
+                </div>
               {%- endif -%}
-            </div>
-            <div class="ayurhq-blog-featured-card__content">
-              <div class="ayurhq-blog-featured-card__meta">
-                <span class="ayurhq-blog-featured-card__badge">FEATURED</span>
-                {%- if featured_article.metafields.custom.read_time != blank -%}
-                  <span class="ayurhq-blog-featured-card__read-time">• {{ featured_article.metafields.custom.read_time.value }} read</span>
-                {%- endif -%}
-              </div>
-              <h3 class="ayurhq-blog-featured-card__title">{{ featured_article.title }}</h3>
-              {%- if featured_article.metafields.custom.hindi_title != blank -%}
-                <p class="ayurhq-blog-article-card__hindi-title">{{ featured_article.metafields.custom.hindi_title.value }}</p>
-              {%- endif -%}
-              <p class="ayurhq-blog-featured-card__excerpt">
-                {{ featured_article.excerpt | default: featured_article.content | strip_html | truncatewords: 30 }}
-              </p>
-              <a href="{{ featured_article.url }}" class="ayurhq-blog-featured-card__cta">
-                Read this first &rarr;
-              </a>
-            </div>
-          </div>
-        </section>
-      {%- endif -%}
-
-      <!-- Topic Shelf Section -->
-      {%- assign topic_cards = blog.metafields.custom.topic_cards.value -%}
-      {%- if topic_cards != blank -%}
-        <section class="ayurhq-blog-topics">
-          <div class="ayurhq-section-header">
-            <span class="ayurhq-section-eyebrow">BROWSE · विषय</span>
-            <h2 class="ayurhq-blog-section-title">Find your topic</h2>
-            <p class="ayurhq-section-subheading">The full library, sorted into shelves you can actually navigate. {{ blog.articles_count | default: 250 }} articles</p>
-          </div>
-
-          <div class="ayurhq-blog-topic-grid">
-            {%- for topic_card in topic_cards -%}
-              {%- render 'ayurhq-topic-card', topic_card: topic_card -%}
             {%- endfor -%}
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <!-- Featured Article Section -->
+  <section class="ayurhq-blog-featured-section">
+    <div class="ayurhq-blog-container">
+      <div class="ayurhq-section-header">
+        <span class="ayurhq-section-eyebrow">READ · पढ़ें</span>
+        <h2 class="ayurhq-blog-section-title">Everyday Ayurveda, explained simply</h2>
+      </div>
+
+      {%- assign featured_article = blog.metafields.custom.featured_article.value -%}
+      {%- if featured_article != blank -%}
+        <div class="ayurhq-blog-featured-card">
+          <div class="ayurhq-blog-featured-card__image-wrapper">
+            {%- if featured_article.image != blank -%}
+              {{ featured_article.image | image_url: width: 1000 | image_tag: 
+                loading: 'lazy', 
+                class: 'ayurhq-blog-featured-card__image' 
+              }}
+            {%- endif -%}
+          </div>
+          <div class="ayurhq-blog-featured-card__content">
+            <div class="ayurhq-blog-featured-card__meta">
+              <span class="ayurhq-blog-featured-card__badge">FEATURED</span>
+              {%- if featured_article.metafields.custom.read_time != blank -%}
+                <span class="ayurhq-blog-featured-card__read-time">• {{ featured_article.metafields.custom.read_time.value }} read</span>
+              {%- endif -%}
+            </div>
+            <h3 class="ayurhq-blog-featured-card__title">{{ featured_article.title }}</h3>
+            {%- if featured_article.metafields.custom.hindi_title != blank -%}
+              <p class="ayurhq-blog-article-card__hindi-title">{{ featured_article.metafields.custom.hindi_title.value }}</p>
+            {%- endif -%}
+            <p class="ayurhq-blog-featured-card__excerpt">
+              {{ featured_article.excerpt | default: featured_article.content | strip_html | truncatewords: 30 }}
+            </p>
+            <a href="{{ featured_article.url }}" class="ayurhq-blog-featured-card__cta">
+              Read this first &rarr;
+            </a>
+          </div>
+        </div>
+      {%- else -%}
+        {% comment %} Fallback Featured Card {% endcomment %}
+        <div class="ayurhq-blog-featured-card">
+          <div class="ayurhq-blog-featured-card__image-wrapper">
+            <img src="{{ 'ayurhq-featured-acidity.webp' | asset_url }}" alt="Acidity and heartburn" class="ayurhq-blog-featured-card__image" loading="lazy" width="800" height="600">
+          </div>
+          <div class="ayurhq-blog-featured-card__content">
+            <div class="ayurhq-blog-featured-card__meta">
+              <span class="ayurhq-blog-featured-card__badge">FEATURED</span>
+              <span class="ayurhq-blog-featured-card__read-time">• 4 min read</span>
+            </div>
+            <h3 class="ayurhq-blog-featured-card__title">Acidity and heartburn</h3>
+            <p class="ayurhq-blog-article-card__hindi-title">अम्लता और छाती में जलन</p>
+            <p class="ayurhq-blog-featured-card__excerpt">
+              A calm, plain-language look at why acidity and heartburn happen, what Ayurveda sees behind that burning feeling, and a few everyday habits the tradition suggests you can start today.
+            </p>
+            <a href="/blogs/ayurveda/acidity-and-heartburn" class="ayurhq-blog-featured-card__cta">
+              Read this first &rarr;
+            </a>
+          </div>
+        </div>
       {%- endif -%}
+    </div>
+  </section>
 
-      <!-- Vaidya Consult CTA Section -->
-      {%- assign consult_heading = blog.metafields.custom.consultation_heading.value | default: "Book a consultation with a vaidya" -%}
-      {%- assign consult_text = blog.metafields.custom.consultation_text.value | default: "When personal guidance is needed, the intake stays simple and the plan returns to your daily rhythm instead of becoming another disconnected PDF." -%}
-      {%- assign consult_label = blog.metafields.custom.consultation_cta_label.value | default: "WhatsApp consults opening soon" -%}
-      {%- assign consult_link = blog.metafields.custom.consultation_cta_link.value | default: "#" -%}
+  <!-- Topic Shelf Section -->
+  <section class="ayurhq-blog-topics-section">
+    <div class="ayurhq-blog-container">
+      <div class="ayurhq-section-header">
+        <span class="ayurhq-section-eyebrow">BROWSE · विषय</span>
+        <h2 class="ayurhq-blog-section-title">Find your topic</h2>
+        <p class="ayurhq-section-subheading">The full library, sorted into shelves you can actually navigate. {{ blog.articles_count | default: 250 }} articles</p>
+      </div>
 
-      <section class="ayurhq-blog-consultation">
+      <div class="ayurhq-blog-topic-grid">
+        {%- assign topic_cards = blog.metafields.custom.topic_cards.value -%}
+        {%- if topic_cards != blank -%}
+          {%- for topic_card in topic_cards -%}
+            {%- render 'ayurhq-topic-card', topic_card: topic_card -%}
+          {%- endfor -%}
+        {%- else -%}
+          {% comment %} Fallback hardcoded topic grid of 18 categories – pipe-delimited to avoid splitting entries that contain commas {% endcomment %}
+          {%- assign fallback_titles_str = "Digestion & gut|Food & kitchen|Herbs & remedies|Weight & cravings|Immunity|Seasons & routine|Sleep & energy|Mind & calm|Daily habits|Joints & body|Skin & glow|Hair & scalp|Eyes, ears & mouth|Women's wellbeing|Men's wellbeing|Children's care|Elder care|Ayurveda basics" -%}
+          {%- assign fallback_titles = fallback_titles_str | split: "|" -%}
+          {%- assign fallback_hindis_str = "पाचन|आहार|औषधि|वजन और लालच|रोग-प्रतिरोध|ऋतुचर्या|नींद और ऊर्जा|मन और शांति|दिनचर्या|जोड़ और शरीर|त्वचा|बाल|आँख, कान, मुँह|स्त्री-स्वास्थ्य|पुरुष-स्वास्थ्य|बच्चों की देखभाल|बुजुर्गों की देखभाल|आयुर्वेद की बुनियाद" -%}
+          {%- assign fallback_hindis = fallback_hindis_str | split: "|" -%}
+          {%- assign fallback_counts = "24|16|10|13|15|11|14|14|16|17|16|11|11|13|9|13|11|16" | split: "|" -%}
+          {%- assign fallback_handles = "digestion|food|herbs|weight|immunity|seasons|sleep|mind|habits|joints|skin|hair|eyes|womens|mens|children|elder|basics" | split: "|" -%}
+
+          {%- for fallback_title in fallback_titles -%}
+            {%- assign idx = forloop.index -%}
+            {%- assign fallback_hindi = fallback_hindis[forloop.index0] -%}
+            {%- assign fallback_count = fallback_counts[forloop.index0] -%}
+            {%- assign fallback_handle = fallback_handles[forloop.index0] -%}
+            
+            <a href="/blogs/ayurveda/topic/{{ fallback_handle }}" class="ayurhq-blog-topic-card">
+              <div class="ayurhq-blog-topic-card__image-wrapper">
+                {%- assign image_filename = 'ayurhq-topic-' | append: fallback_handle | append: '.webp' -%}
+                <img src="{{ image_filename | asset_url }}" alt="{{ fallback_title }}" class="ayurhq-blog-topic-card__image" loading="lazy" width="300" height="200">
+              </div>
+              <div class="ayurhq-blog-topic-card__content">
+                <h3 class="ayurhq-blog-topic-card__title">{{ fallback_title }}</h3>
+                <div class="ayurhq-blog-topic-card__footer">
+                  <span class="ayurhq-blog-topic-card__hindi">{{ fallback_hindi }}</span>
+                  <span class="ayurhq-blog-topic-card__count">{{ fallback_count }}</span>
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- Vaidya Consult CTA Section -->
+  {%- assign consult_heading = blog.metafields.custom.consultation_heading.value | default: "Book a consultation with a vaidya" -%}
+  {%- assign consult_text = blog.metafields.custom.consultation_text.value | default: "When personal guidance is needed, the intake stays simple and the plan returns to your daily rhythm instead of becoming another disconnected PDF." -%}
+  {%- assign consult_label = blog.metafields.custom.consultation_cta_label.value | default: "WhatsApp consults opening soon" -%}
+  {%- assign consult_link = blog.metafields.custom.consultation_cta_link.value | default: "#" -%}
+
+  <section class="ayurhq-blog-consultation-section">
+    <div class="ayurhq-blog-container">
+      <div class="ayurhq-blog-consultation">
         <div class="ayurhq-blog-consultation-container">
           <div class="ayurhq-blog-consultation__left">
             <span class="ayurhq-blog-consultation__eyebrow">VAIDYA CONSULT</span>
@@ -254,9 +314,9 @@
         <p class="ayurhq-consultation-disclaimer">
           Ayurveda guidance on DhyanHQ is supportive care, not emergency or diagnostic medical treatment.
         </p>
-      </section>
+      </div>
     </div>
-  </div>
+  </section>
 </div>
 
 <!-- Floating Ask Guruji CTA -->
