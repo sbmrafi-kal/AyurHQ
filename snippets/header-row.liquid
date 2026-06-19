@@ -69,26 +69,88 @@
       class="header__column header__column--{{ column }}"
       data-testid="header-{{ row }}-{{ column }}"
     >
-      {% for key in items_array %}
-        {% unless key == blank %}
-          {% case key %}
-            {% when 'first' %}
-              {{ first }}
-            {% when 'logo' %}
-              {{ logo }}
-            {% when 'menu' %}
-              {{ menu }}
-            {% when 'localization' %}
-              {{ localization }}
-            {% when 'search' %}
-              {{ search }}
-            {% when 'drawer_search' %}
-              {{ drawer_search }}
-            {% when 'actions' %}
-              {{ actions }}
-          {% endcase %}
-        {% endunless %}
-      {% endfor %}
+      {% liquid
+        assign is_ayurveda_page = false
+        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+          assign is_ayurveda_page = true
+        endif
+      %}
+      {% if is_ayurveda_page and column == 'right' %}
+        <!-- Custom DhyanHQ Actions -->
+        <div class="dhyanhq-header-actions">
+          <!-- English Dropdown Selection -->
+          <div class="dhyanhq-dropdown dhyanhq-lang-dropdown">
+            <button class="dhyanhq-dropdown-btn">
+              <span>English</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-caret">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Sign in link -->
+          <a href="/account/login" class="dhyanhq-signin-link">Sign in</a>
+        </div>
+
+        <style>
+          .dhyanhq-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+          }
+          .dhyanhq-dropdown-btn {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #8d8177;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px;
+            font-weight: 500;
+          }
+          .dhyanhq-dropdown-btn svg {
+            margin-top: 1px;
+            width: 10px !important;
+            height: 10px !important;
+            stroke-width: 1.5px !important;
+          }
+          .dhyanhq-signin-link {
+            color: #8d8177;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+            padding: 4px;
+          }
+          .dhyanhq-signin-link:hover {
+            color: #c94f17;
+          }
+        </style>
+      {% else %}
+        {% for key in items_array %}
+          {% unless key == blank %}
+            {% case key %}
+              {% when 'first' %}
+                {{ first }}
+              {% when 'logo' %}
+                {{ logo }}
+              {% when 'menu' %}
+                {{ menu }}
+              {% when 'localization' %}
+                {{ localization }}
+              {% when 'search' %}
+                {{ search }}
+              {% when 'drawer_search' %}
+                {{ drawer_search }}
+              {% when 'actions' %}
+                {{ actions }}
+            {% endcase %}
+          {% endunless %}
+        {% endfor %}
+      {% endif %}
     </div>
   {%- endif -%}
 {%- endfor -%}

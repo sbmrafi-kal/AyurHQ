@@ -83,62 +83,177 @@
     %}
 
     {% capture children %}
-      {% for link in block_settings.menu.links %}
-        <li
-          role="presentation"
-          class="menu-list__list-item"
-          on:focus="/activate"
-          on:blur="/deactivate"
-          on:pointerenter="/activate"
-          on:pointerleave="/deactivate"
-        >
-          <a
-            href="{{ link.url }}"
-            data-skip-node-update="true"
-            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
-            {%- if link.links != blank -%}
-              aria-controls="submenu-{{ forloop.index }}"
-              aria-haspopup="true"
-              aria-expanded="false"
-            {%- endif -%}
-            {% if link.current %}
-              aria-current="page"
-            {% endif %}
-            ref="menuitem"
+      {% liquid
+        assign is_ayurveda_page = false
+        if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+          assign is_ayurveda_page = true
+        endif
+      %}
+      {% if is_ayurveda_page %}
+        {%- assign mock_titles = "Today,Yoga,Gyaan,Ayurveda" | split: "," -%}
+        {%- assign mock_urls = "/blogs/ayurveda/today,/blogs/ayurveda/yoga,/blogs/ayurveda/gyaan,/blogs/ayurveda" | split: "," -%}
+        {%- for title in mock_titles -%}
+          {%- assign item_url = mock_urls[forloop.index0] -%}
+          {%- assign title_downcase = title | downcase -%}
+          {%- assign is_active = false -%}
+          {%- if title_downcase == 'ayurveda' -%}
+            {%- assign is_active = true -%}
+          {%- endif -%}
+          <li
+            role="presentation"
+            class="menu-list__list-item"
+            on:focus="/activate"
+            on:blur="/deactivate"
+            on:pointerenter="/activate"
+            on:pointerleave="/deactivate"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
-          </a>
-          {%- if link.links != blank -%}
-            <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
-              <div
-                id="submenu-{{ forloop.index }}"
-                class="menu-list__submenu-inner"
-                style="{% render 'submenu-font-styles', settings: block_settings %}"
-              >
-                {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
-                <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
-                  <div
-                    class="mega-menu__grid"
-                    data-menu-grid-id="{{ list_id }}"
-                  >
-                    {% render 'mega-menu-list',
-                      parent_link: link,
-                      id: list_id,
-                      section: section,
-                      grid_columns_count: 6,
-                      grid_columns_count_tablet: 4,
-                      grid_columns_count_collection_images: 8,
-                      menu_content_type: menu_content_type,
-                      content_aspect_ratio: ratio,
-                      image_border_radius: image_border_radius
-                    %}
+            <a
+              href="{{ item_url }}"
+              data-skip-node-update="true"
+              class="menu-list__link{% if is_active %} menu-list__link--active{% endif %}{% if title_downcase == 'ayurveda' %} menu-list__link--ayurveda-pill{% endif %}"
+              ref="menuitem"
+            >
+              <span class="menu-list__link-title">
+                {%- if title_downcase == 'today' -%}
+                  <span class="menu-icon menu-icon--today">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 18h20" />
+                      <path d="M16 18a4 4 0 0 0-8 0" />
+                      <path d="M12 5v4" />
+                      <path d="M6.34 9.34l2.83 2.83" />
+                      <path d="M17.66 9.34l-2.83 2.83" />
+                    </svg>
+                  </span>
+                {%- elsif title_downcase == 'yoga' -%}
+                  <span class="menu-icon menu-icon--yoga">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
+                      <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
+                      <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
+                      <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+                    </svg>
+                  </span>
+                {%- elsif title_downcase == 'gyaan' -%}
+                  <span class="menu-icon menu-icon--gyaan">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                  </span>
+                {%- elsif title_downcase == 'ayurveda' -%}
+                  <span class="menu-icon menu-icon--ayurveda">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 5.18 19.34L5 20h.66c3.17-.72 9.34-2.82 11.34-11.82C17.75 4.5 19 3 20 2c-1 1-2.5 2.25-6 3-2.12.45-3.53 1.5-4.14 2.88C11.5 6.5 14 5 17 5c1.5 0 2.75.25 3.5.75-.5.75-1.5 1.5-3.5 2.25z"/></svg>
+                  </span>
+                {%- endif -%}
+                {{- title -}}
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      {% else %}
+        {% for link in block_settings.menu.links %}
+          <li
+            role="presentation"
+            class="menu-list__list-item"
+            on:focus="/activate"
+            on:blur="/deactivate"
+            on:pointerenter="/activate"
+            on:pointerleave="/deactivate"
+          >
+            {%- assign title_downcase = link.title | downcase -%}
+            <a
+              href="{{ link.url }}"
+              data-skip-node-update="true"
+              class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}{% if title_downcase == 'ayurveda' %} menu-list__link--ayurveda-pill{% endif %}"
+              {%- if link.links != blank -%}
+                aria-controls="submenu-{{ forloop.index }}"
+                aria-haspopup="true"
+                aria-expanded="false"
+              {%- endif -%}
+              {% if link.current %}
+                aria-current="page"
+              {% endif %}
+              ref="menuitem"
+            >
+              <span class="menu-list__link-title">
+                {%- if title_downcase == 'today' -%}
+                  <span class="menu-icon menu-icon--today">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 18h20" />
+                      <path d="M16 18a4 4 0 0 0-8 0" />
+                      <path d="M12 5v4" />
+                      <path d="M6.34 9.34l2.83 2.83" />
+                      <path d="M17.66 9.34l-2.83 2.83" />
+                    </svg>
+                  </span>
+                {%- elsif title_downcase == 'yoga' -%}
+                  <span class="menu-icon menu-icon--yoga">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
+                      <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
+                      <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
+                      <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
+                    </svg>
+                  </span>
+                {%- elsif title_downcase == 'gyaan' -%}
+                  <span class="menu-icon menu-icon--gyaan">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                  </span>
+                {%- elsif title_downcase == 'ayurveda' -%}
+                  <span class="menu-icon menu-icon--ayurveda">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 5.18 19.34L5 20h.66c3.17-.72 9.34-2.82 11.34-11.82C17.75 4.5 19 3 20 2c-1 1-2.5 2.25-6 3-2.12.45-3.53 1.5-4.14 2.88C11.5 6.5 14 5 17 5c1.5 0 2.75.25 3.5.75-.5.75-1.5 1.5-3.5 2.25z"/></svg>
+                  </span>
+                {%- elsif title_downcase == 'guruji' -%}
+                  <span class="menu-icon menu-icon--guruji">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12c0 2.21.72 4.25 1.94 5.92L3 22l4.28-1.07C8.83 21.46 10.37 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+                    </svg>
+                  </span>
+                {%- elsif title_downcase == 'home' -%}
+                  <span class="menu-icon menu-icon--home">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  </span>
+                {%- elsif title_downcase == 'catalog' -%}
+                  <span class="menu-icon menu-icon--catalog">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  </span>
+                {%- elsif title_downcase == 'contact' -%}
+                  <span class="menu-icon menu-icon--contact">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  </span>
+                {%- endif -%}
+                {{- link.title -}}
+              </span>
+            </a>
+            {%- if link.links != blank -%}
+              <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
+                <div
+                  id="submenu-{{ forloop.index }}"
+                  class="menu-list__submenu-inner"
+                  style="{% render 'submenu-font-styles', settings: block_settings %}"
+                >
+                  {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
+                  <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
+                    <div
+                      class="mega-menu__grid"
+                      data-menu-grid-id="{{ list_id }}"
+                    >
+                      {% render 'mega-menu-list',
+                        parent_link: link,
+                        id: list_id,
+                        section: section,
+                        grid_columns_count: 6,
+                        grid_columns_count_tablet: 4,
+                        grid_columns_count_collection_images: 8,
+                        menu_content_type: menu_content_type,
+                        content_aspect_ratio: ratio,
+                        image_border_radius: image_border_radius
+                      %}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          {%- endif -%}
-        </li>
-      {% endfor %}
+            {%- endif -%}
+          </li>
+        {% endfor %}
+      {% endif %}
       <li
         class="menu-list__list-item"
         role="presentation"
@@ -252,7 +367,7 @@
   }
 
   .menu-list {
-    --menu-horizontal-gap: var(--gap-xl);
+    --menu-horizontal-gap: 28px !important;
     --menu-vertical-gap: var(--gap-xl);
 
     display: flex;
@@ -684,6 +799,327 @@
   .mega-menu__submenu {
     /* preserves the inherited grid layout when this submenu wrapper is used */
     display: contents;
+  }
+
+  .menu-list__link-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .menu-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+  }
+  .menu-icon--today,
+  .menu-icon--yoga,
+  .menu-icon--gyaan,
+  .menu-icon--home,
+  .menu-icon--catalog,
+  .menu-icon--contact {
+    color: inherit;
+  }
+  .menu-icon--ayurveda {
+    color: #c94f17;
+  }
+
+  /* Compact navbar sizing on desktop */
+  @media screen and (min-width: 750px) {
+    .is-ayurveda-page #header-component .header__row--top .header__columns {
+      min-height: 56px !important;
+      padding-block: 8px !important;
+      max-width: 1120px !important;
+      margin: 0 auto !important;
+      padding-inline: 0 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      grid-template-columns: auto 1fr auto !important;
+    }
+    @media screen and (max-width: 1168px) {
+      .is-ayurveda-page #header-component .header__row--top .header__columns {
+        padding-inline: 24px !important;
+      }
+    }
+    .is-ayurveda-page .header__column--center {
+      justify-content: flex-start !important;
+      padding-inline-start: 40px !important;
+    }
+    .is-ayurveda-page .header__column--center header-menu:only-child .overflow-menu::part(list) {
+      justify-content: flex-start !important;
+    }
+    .is-ayurveda-page .menu-list {
+      --menu-horizontal-gap: 20px !important;
+    }
+    .is-ayurveda-page .menu-list__link {
+      font-size: 13px !important;
+      letter-spacing: 0.01em !important;
+      color: #8d8177 !important;
+    }
+    .is-ayurveda-page .menu-list__link--active,
+    .is-ayurveda-page .menu-list__link:hover {
+      color: #1e1e1e !important;
+    }
+    .is-ayurveda-page .menu-list__link-title {
+      padding-inline: 4px !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      gap: 5px !important;
+    }
+    .is-ayurveda-page .menu-icon svg {
+      width: 14px !important;
+      height: 14px !important;
+      stroke-width: 1.5px !important;
+      stroke: currentColor !important;
+    }
+    .is-ayurveda-page .menu-icon--ayurveda svg {
+      width: 14px !important;
+      height: 14px !important;
+      fill: currentColor !important;
+    }
+    /* Logo scaling in compact header */
+    .is-ayurveda-page .header-logo {
+      --header-logo-image-width: 110px !important;
+      --header-logo-image-height: auto !important;
+    }
+    .is-ayurveda-page .header-logo img {
+      max-height: 22px !important;
+      width: auto !important;
+    }
+  }
+
+  /* active tab pill */
+  .is-ayurveda-page .menu-list__link--ayurveda-pill {
+    background-color: #fff2e6 !important;
+    border: none !important;
+    border-radius: 20px !important;
+    padding: 5px 14px !important;
+    margin-block: auto !important;
+    height: 28px !important;
+    color: #c94f17 !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    transition: all 0.2s ease-in-out !important;
+  }
+  .is-ayurveda-page .menu-list__link--ayurveda-pill .menu-list__link-title {
+    padding-inline: 0 !important;
+    color: #c94f17 !important;
+  }
+  .is-ayurveda-page .menu-list__link--ayurveda-pill .menu-icon svg {
+    stroke: none !important;
+  }
+  .is-ayurveda-page .menu-list__link--ayurveda-pill:hover {
+    background-color: #ffe8d6 !important;
+    color: #b24112 !important;
+  }
+  .is-ayurveda-page .menu-list__link--ayurveda-pill:hover .menu-list__link-title {
+    color: #b24112 !important;
+  }
+
+  .menu-list__list-item {
+    justify-content: center;
+  }
+
+  .menu-list__link--guruji {
+    position: relative;
+  }
+
+  .menu-list__link--guruji .menu-icon--guruji {
+    color: #c94f17;
+  }
+
+  #header-component {
+    background-color: #fffdf8 !important;
+    background: #fffdf8 !important;
+  }
+  .header__row {
+    border-bottom: 1px solid #eadcc8 !important;
+    background-color: #fffdf8 !important;
+    background: #fffdf8 !important;
+  }
+  .header__underlay-closed,
+  .header__underlay-open {
+    background: #fffdf8 !important;
+    background-color: #fffdf8 !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    #header-component[data-menu-style='menu'] .header__navigation-bar-row {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #header-component .header__drawer,
+    #header-component .search-action {
+      display: none !important;
+    }
+
+    #header-component .dropdown-localization.mobile\\:hidden {
+      display: flex !important;
+      justify-self: end;
+    }
+
+    #header-component .header__row--top .header__columns {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      column-gap: 10px;
+      min-height: 60px;
+      padding-inline: 18px 14px;
+    }
+
+    #header-component .header-logo {
+      grid-column: 1;
+      justify-self: start;
+      gap: 6px;
+      transform: translateY(1px);
+    }
+
+    #header-component .dropdown-localization {
+      grid-column: 3;
+      justify-self: end;
+    }
+
+    #header-component header-actions {
+      grid-column: 4;
+      justify-self: end;
+    }
+
+    #header-component .header-actions__action,
+    #header-component .dropdown-localization__button {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    #header-component .dropdown-localization__button {
+      border: 1px solid #eadcc8;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: #fffdf8;
+      color: #1e1e1e;
+      font-weight: 600;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+    }
+
+    #header-component .dropdown-localization__button .svg-wrapper.icon-caret {
+      margin-left: 2px;
+    }
+
+    #header-component .account-button,
+    #header-component .action__cart,
+    #header-component .cart-drawer__dialog {
+      background: #fffdf8;
+    }
+
+    #header-component .account-button {
+      width: 44px;
+      min-width: 44px;
+      height: 44px;
+      border: 1px solid #c94f17;
+      border-radius: 999px;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+    }
+
+    #header-component .account-button__icon,
+    #header-component .account-button__text {
+      color: #c94f17;
+    }
+
+    #header-component .header-actions__cart-icon {
+      display: none !important;
+    }
+
+    #header-component .header__navigation-bar-row {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: var(--layer-sticky);
+      display: block;
+      background: #fffdf8;
+      border-top: 1px solid #eadcc8;
+      box-shadow: 0 -8px 24px rgba(201, 79, 23, 0.08);
+      padding: 8px 10px calc(env(safe-area-inset-bottom, 0px) + 8px);
+    }
+
+    #header-component .menu-list--mobile .menu-list__scroll-container {
+      overflow: visible;
+      mask-image: none;
+      padding-block: 0;
+    }
+
+    #header-component .menu-list--mobile .menu-list__list {
+      width: 100%;
+      margin-inline: 0;
+      gap: 0;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    #header-component .menu-list--mobile li {
+      flex: 1 1 0;
+      padding-block: 0;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link {
+      width: 100%;
+      min-height: 58px;
+      padding: 6px 0 4px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      color: #8d8177;
+      font-size: 11px;
+      line-height: 1.1;
+      border-radius: 18px;
+      transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link-title {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    #header-component .menu-list--mobile .menu-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link:hover {
+      color: #c94f17;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link--active {
+      color: #c94f17;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link--guruji.menu-list__link--active {
+      width: 72px;
+      height: 72px;
+      margin-top: -26px;
+      padding: 10px 8px 8px;
+      border-radius: 50%;
+      background: #c94f17;
+      color: #ffffff;
+      box-shadow: 0 14px 28px rgba(201, 79, 23, 0.26);
+      transform: translateY(-2px);
+    }
+
+    #header-component .menu-list--mobile .menu-list__link--guruji.menu-list__link--active .menu-icon {
+      color: #ffffff;
+    }
+
+    #header-component .menu-list--mobile .menu-list__link--guruji.menu-list__link--active .menu-list__link-title {
+      gap: 5px;
+    }
+
+    body {
+      padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+    }
   }
 {% endstylesheet %}
 

@@ -6,6 +6,17 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    {% if request.page_type == 'index' and request.design_mode == false %}
+      {%- assign target_blog = blogs['ayurveda'] -%}
+      {%- if target_blog == blank -%}
+        {%- assign target_blog = blogs['news'] -%}
+      {%- endif -%}
+      {%- if target_blog != blank -%}
+        <meta http-equiv="refresh" content="0;URL='{{ target_blog.url }}'" />
+        <script>window.location.replace("{{ target_blog.url }}");</script>
+      {%- endif -%}
+    {% endif %}
+
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
@@ -40,7 +51,13 @@
     {% # theme-check-enable RemoteAsset %}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  {%- liquid
+    assign is_ayurveda_page = false
+    if template.name == 'blog' or template.name == 'article' or request.path contains '/blogs/ayurveda' or request.path contains '/blogs/news'
+      assign is_ayurveda_page = true
+    endif
+  -%}
+  <body class="{% if is_ayurveda_page %}is-ayurveda-page {% endif %}page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}

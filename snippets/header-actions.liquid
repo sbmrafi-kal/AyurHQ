@@ -98,7 +98,7 @@
             slot="signed-out-avatar"
             class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}"
           >
-            {{ 'content.account_title' | t }}
+            Sign in
           </span>
 
           <span
@@ -277,13 +277,21 @@
   }
 
   .account-button {
-    /* Remove the background color from the color scheme, we want to inherit the color of the header */
-    background: transparent;
+    /* Match the rounded account control shown in the reference header */
+    background: #fffdf8;
+    border: 1px solid #c94f17;
+    border-radius: 999px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
   }
 
   .account-button__icon,
   .account-button__text {
-    color: var(--color-account-icon);
+    color: #c94f17;
     transition: color var(--header-content-transition-timing);
     -webkit-font-smoothing: antialiased;
   }
@@ -709,5 +717,10 @@
     .header__column--right .header-actions--text {
       margin-inline-start: 0;
     }
+  }
+
+  body:has(main[data-template*='blog']) .header-actions__cart-icon,
+  body:has(main[data-template*='article']) .header-actions__cart-icon {
+    display: none !important;
   }
 {% endstylesheet %}

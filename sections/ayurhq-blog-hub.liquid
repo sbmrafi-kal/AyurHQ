@@ -1,22 +1,24 @@
 {{ 'ayurhq-blog-hub.css' | asset_url | stylesheet_tag }}
 
 <div class="ayurhq-blog-wrapper">
-  <div class="ayurhq-blog-container">
-    
-    <!-- Hero Banner -->
-    <header class="ayurhq-blog-hero">
+  
+  <!-- Hero Banner -->
+  <header class="ayurhq-blog-hero">
+    <div class="ayurhq-blog-hero-container">
       {%- if blog.metafields.custom.hero_eyebrow != blank -%}
         <span class="ayurhq-blog-hero__eyebrow">{{ blog.metafields.custom.hero_eyebrow.value }}</span>
       {%- else -%}
-        <span class="ayurhq-blog-hero__eyebrow">AYURVEDIC WISDOM</span>
+        <span class="ayurhq-blog-hero__eyebrow">AYURVEDA INSIDE THE ASHRAM</span>
       {%- endif -%}
 
       <h1 class="ayurhq-blog-hero__heading">
-        {{ blog.metafields.custom.hero_heading.value | default: blog.title }}
+        {{ blog.metafields.custom.hero_heading.value | default: "आयुर्वेद · daily care for the body you practice with" }}
       </h1>
 
       {%- if blog.metafields.custom.hero_subheading != blank -%}
         <p class="ayurhq-blog-hero__subheading">{{ blog.metafields.custom.hero_subheading.value | newline_to_br }}</p>
+      {%- else -%}
+        <p class="ayurhq-blog-hero__subheading">Food, sleep, movement and seasonal routine brought into the same calm rhythm as your yoga and meditation.</p>
       {%- endif -%}
 
       <div class="ayurhq-blog-hero__actions">
@@ -24,110 +26,116 @@
           <a href="{{ blog.metafields.custom.primary_cta_link.value }}" class="ayurhq-blog-btn">
             {{ blog.metafields.custom.primary_cta_label.value }}
           </a>
+        {%- else -%}
+          <a href="#guides" class="ayurhq-blog-btn">Browse topics</a>
         {%- endif -%}
       </div>
 
-      {%- if blog.metafields.custom.topic_count_label != blank or blog.metafields.custom.read_count_label != blank -%}
-        <div class="ayurhq-blog-hero__stats">
-          {%- if blog.metafields.custom.topic_count_label != blank -%}
-            <span class="ayurhq-blog-hero__pill">{{ blog.metafields.custom.topic_count_label.value }}</span>
-          {%- endif -%}
-          {%- if blog.metafields.custom.read_count_label != blank -%}
-            <span class="ayurhq-blog-hero__pill">{{ blog.metafields.custom.read_count_label.value }}</span>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    </header>
+      <div class="ayurhq-blog-hero__stats">
+        {%- if blog.metafields.custom.topic_count_label != blank -%}
+          <span class="ayurhq-blog-hero__pill"><span class="ayurhq-blog-hero__pill-dot"></span>{{ blog.metafields.custom.topic_count_label.value }}</span>
+        {%- else -%}
+          <span class="ayurhq-blog-hero__pill"><span class="ayurhq-blog-hero__pill-dot"></span>Topics <strong>18</strong></span>
+        {%- endif -%}
+        {%- if blog.metafields.custom.read_count_label != blank -%}
+          <span class="ayurhq-blog-hero__pill"><span class="ayurhq-blog-hero__pill-dot"></span>{{ blog.metafields.custom.read_count_label.value }}</span>
+        {%- else -%}
+          <span class="ayurhq-blog-hero__pill"><span class="ayurhq-blog-hero__pill-dot"></span>Reads <strong>250</strong></span>
+        {%- endif -%}
+      </div>
+    </div>
+  </header>
 
-    <!-- Featured Section -->
-    {%- assign featured_article = blog.metafields.custom.featured_article.value -%}
-    {%- if featured_article == blank -%}
-      {%- assign featured_article = blog.articles.first -%}
-    {%- endif -%}
+  <!-- White Content Overlap -->
+  <div class="ayurhq-blog-main-content">
+    <div class="ayurhq-blog-container">
+      <section class="ayurhq-blog-editorial">
+        <div class="ayurhq-blog-editorial__spacer" aria-hidden="true"></div>
 
-    {%- if featured_article != blank -%}
-      <section class="ayurhq-blog-featured">
-        <h2 class="ayurhq-blog-section-title">Editor's Choice</h2>
-        <div class="ayurhq-blog-featured-card">
-          {%- if featured_article.image != blank -%}
-            <div class="ayurhq-blog-featured-card__image-wrapper">
-              {{ featured_article.image | image_url: width: 800 | image_tag: 
-                loading: 'eager', 
-                class: 'ayurhq-blog-featured-card__image',
-                sizes: '(min-width: 991px) 50vw, 100vw',
-                widths: '400, 600, 800, 1000'
-              }}
-            </div>
-          {%- endif -%}
-          <div class="ayurhq-blog-featured-card__content">
-            <div class="ayurhq-blog-featured-card__meta">
-              {%- if featured_article.tags.size > 0 -%}
-                <span>{{ featured_article.tags[0] }}</span>
-                <span>•</span>
-              {%- endif -%}
-              {%- if featured_article.metafields.custom.read_time != blank -%}
-                <span>{{ featured_article.metafields.custom.read_time.value }} read</span>
-              {%- endif -%}
-            </div>
-            <h3 class="ayurhq-blog-featured-card__title">{{ featured_article.title }}</h3>
-            <p class="ayurhq-blog-featured-card__excerpt">
-              {{ featured_article.excerpt | default: featured_article.content | strip_html | truncatewords: 35 }}
-            </p>
-            <a href="{{ featured_article.url }}" class="ayurhq-blog-featured-card__cta">
-              Read Editorial Article →
-            </a>
+        <article class="ayurhq-blog-editorial__feature">
+          <div class="ayurhq-blog-editorial__feature-header">
+            <h2 class="ayurhq-blog-editorial__feature-title">{{ section.settings.path4_title }}</h2>
+            <span class="ayurhq-blog-editorial__feature-tags">{{ section.settings.path4_tags }}</span>
           </div>
-        </div>
-      </section>
-    {%- endif -%}
-
-    <!-- Topic Cards Grid -->
-    {%- if blog.metafields.custom.topic_cards.value != blank -%}
-      <section class="ayurhq-blog-topics">
-        <h2 class="ayurhq-blog-section-title">Explore Topics</h2>
-        <div class="ayurhq-blog-topic-grid">
-          {%- for topic in blog.metafields.custom.topic_cards.value -%}
-            {%- render 'ayurhq-topic-card', topic_card: topic -%}
-          {%- endfor -%}
-        </div>
-      </section>
-    {%- endif -%}
-
-    <!-- All Articles list -->
-    <section class="ayurhq-blog-articles">
-      <h2 class="ayurhq-blog-section-title">All Guides & Wisdom</h2>
-      <div class="ayurhq-blog-article-grid">
-        {%- for article in blog.articles -%}
-          {%- if article.id != featured_article.id -%}
-            {%- render 'ayurhq-article-card', article: article -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </section>
-
-    <!-- Consultation CTA -->
-    {%- if blog.metafields.custom.consultation_heading != blank -%}
-      <section class="ayurhq-blog-consultation">
-        <h2 class="ayurhq-blog-consultation__heading">{{ blog.metafields.custom.consultation_heading.value }}</h2>
-        {%- if blog.metafields.custom.consultation_text != blank -%}
-          <p class="ayurhq-blog-consultation__text">{{ blog.metafields.custom.consultation_text.value | newline_to_br }}</p>
-        {%- endif -%}
-        {%- if blog.metafields.custom.consultation_cta_label != blank and blog.metafields.custom.consultation_cta_link != blank -%}
-          <a href="{{ blog.metafields.custom.consultation_cta_link.value }}" class="ayurhq-blog-btn">
-            {{ blog.metafields.custom.consultation_cta_label.value }}
+          <p class="ayurhq-blog-editorial__feature-text">{{ section.settings.path4_desc }}</p>
+          <a href="{{ section.settings.path4_link | default: '#' }}" class="ayurhq-blog-editorial__feature-link">
+            {{ section.settings.path4_label }}
           </a>
+        </article>
+
+        {%- if section.settings.show_care_paths -%}
+          <div class="ayurhq-blog-editorial__teaser">
+            <span class="ayurhq-blog-editorial__teaser-eyebrow">{{ section.settings.care_paths_eyebrow }}</span>
+            <h2 class="ayurhq-blog-editorial__teaser-heading">{{ section.settings.care_paths_heading }}</h2>
+            <p class="ayurhq-blog-editorial__teaser-text">{{ section.settings.care_paths_text }}</p>
+          </div>
+
+          <div class="ayurhq-blog-editorial__list" aria-label="Care paths">
+            <article class="ayurhq-blog-editorial__row">
+              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path1_tags }}</div>
+              <div class="ayurhq-blog-editorial__row-body">
+                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path1_title }}</h3>
+                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path1_desc }}</p>
+              </div>
+            </article>
+
+            <article class="ayurhq-blog-editorial__row">
+              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path2_tags }}</div>
+              <div class="ayurhq-blog-editorial__row-body">
+                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path2_title }}</h3>
+                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path2_desc }}</p>
+              </div>
+            </article>
+
+            <article class="ayurhq-blog-editorial__row">
+              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path3_tags }}</div>
+              <div class="ayurhq-blog-editorial__row-body">
+                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path3_title }}</h3>
+                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path3_desc }}</p>
+              </div>
+            </article>
+          </div>
         {%- endif -%}
       </section>
-    {%- endif -%}
 
+      <section class="ayurhq-blog-guides" id="guides">
+        <div class="ayurhq-section-header ayurhq-section-header--sparse">
+          <h2 class="ayurhq-blog-guides__title">All Guides &amp; Wisdom</h2>
+        </div>
+
+        {%- if blog.articles.size > 0 -%}
+          <div class="ayurhq-blog-guides__grid">
+            {%- for article in blog.articles limit: 6 -%}
+              <a class="ayurhq-blog-guides__card" href="{{ article.url }}">
+                <div class="ayurhq-blog-guides__card-meta">
+                  {%- if article.tags.size > 0 -%}
+                    <span class="ayurhq-blog-guides__card-tag">{{ article.tags | first }}</span>
+                  {%- endif -%}
+                  {%- if article.metafields.custom.read_time != blank -%}
+                    <span class="ayurhq-blog-guides__card-read-time">{{ article.metafields.custom.read_time.value }} read</span>
+                  {%- endif -%}
+                </div>
+                <h3 class="ayurhq-blog-guides__card-title">{{ article.title }}</h3>
+                <p class="ayurhq-blog-guides__card-text">
+                  {{ article.excerpt | default: article.content | strip_html | truncatewords: 22 }}
+                </p>
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </section>
+    </div>
   </div>
 </div>
 
 <!-- Floating Ask Guruji CTA -->
 {%- if section.settings.show_ask_guruji and section.settings.ask_guruji_link != blank -%}
   <a href="{{ section.settings.ask_guruji_link }}" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M12 2C6.48 2 2 6.48 2 12c0 2.21.72 4.25 1.94 5.92L3 22l4.28-1.07C8.83 21.46 10.37 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3c-1.5 3.5-2.5 5.5-5 7 2.5.5 4.5-1 5-3.5.5 2.5 2.5 4 5 3.5-2.5-1.5-3.5-3.5-5-7z" />
+      <path d="M12 7c-3.5 3-6.5 3-8 3.5 3.5 1.5 6.5.5 8-3.5z" />
+      <path d="M12 7c3.5 3 6.5 3 8 3.5-3.5 1.5-6.5.5-8-3.5z" />
+      <path d="M5 14c1 1.5 3 2.5 7 2.5s6-1 7-2.5" />
     </svg>
     <span>{{ section.settings.ask_guruji_label | default: 'Ask Guruji' }}</span>
   </a>
@@ -137,6 +145,282 @@
 {
   "name": "AyurHQ Ayurveda Blog Hub",
   "settings": [
+    {
+      "type": "header",
+      "content": "Care Paths Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_care_paths",
+      "label": "Show Care Paths Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "care_paths_eyebrow",
+      "label": "Care Paths Eyebrow",
+      "default": "CARE PATHS"
+    },
+    {
+      "type": "text",
+      "id": "care_paths_heading",
+      "label": "Care Paths Heading",
+      "default": "Start with what the body is saying"
+    },
+    {
+      "type": "textarea",
+      "id": "care_paths_text",
+      "label": "Care Paths Description",
+      "default": "Each path points to practice you can begin today, then deepens into food, rest and routine guidance."
+    },
+    {
+      "type": "header",
+      "content": "Daily Rhythm Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_daily_rhythm",
+      "label": "Show Daily Rhythm Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "daily_rhythm_eyebrow",
+      "label": "Daily Rhythm Eyebrow",
+      "default": "DAILY RHYTHM"
+    },
+    {
+      "type": "text",
+      "id": "daily_rhythm_heading",
+      "label": "Daily Rhythm Heading",
+      "default": "Care before symptoms get loud"
+    },
+    {
+      "type": "textarea",
+      "id": "daily_rhythm_text",
+      "label": "Daily Rhythm Description",
+      "default": "The Ayurveda tab is not a separate clinic shelf. It sits inside the ashram day: wake, eat, move, rest."
+    },
+    {
+      "type": "header",
+      "content": "Daily Rhythm - Step 1"
+    },
+    {
+      "type": "text",
+      "id": "rhythm1_label",
+      "label": "Step 1 Label",
+      "default": "MORNING"
+    },
+    {
+      "type": "text",
+      "id": "rhythm1_title",
+      "label": "Step 1 Title",
+      "default": "Warm water, light movement, steady breath"
+    },
+    {
+      "type": "textarea",
+      "id": "rhythm1_desc",
+      "label": "Step 1 Description",
+      "default": "Begin with a simple reset before the first class, especially on heavy or stiff mornings."
+    },
+    {
+      "type": "header",
+      "content": "Daily Rhythm - Step 2"
+    },
+    {
+      "type": "text",
+      "id": "rhythm2_label",
+      "label": "Step 2 Label",
+      "default": "MIDDAY"
+    },
+    {
+      "type": "text",
+      "id": "rhythm2_title",
+      "label": "Step 2 Title",
+      "default": "Make lunch the main meal"
+    },
+    {
+      "type": "textarea",
+      "id": "rhythm2_desc",
+      "label": "Step 2 Description",
+      "default": "Keep the strongest digestion window clean and unhurried; the rest of the day gets easier."
+    },
+    {
+      "type": "header",
+      "content": "Daily Rhythm - Step 3"
+    },
+    {
+      "type": "text",
+      "id": "rhythm3_label",
+      "label": "Step 3 Label",
+      "default": "EVENING"
+    },
+    {
+      "type": "text",
+      "id": "rhythm3_title",
+      "label": "Step 3 Title",
+      "default": "Lower stimulation before practice"
+    },
+    {
+      "type": "textarea",
+      "id": "rhythm3_desc",
+      "label": "Step 3 Description",
+      "default": "Move from work into breath, chanting or yoga nidra instead of carrying the whole day into sleep."
+    },
+    {
+      "type": "header",
+      "content": "Daily Rhythm - Step 4"
+    },
+    {
+      "type": "text",
+      "id": "rhythm4_label",
+      "label": "Step 4 Label",
+      "default": "WEEKLY"
+    },
+    {
+      "type": "text",
+      "id": "rhythm4_title",
+      "label": "Step 4 Title",
+      "default": "Notice one pattern, not ten"
+    },
+    {
+      "type": "textarea",
+      "id": "rhythm4_desc",
+      "label": "Step 4 Description",
+      "default": "Track the clearest signal: sleep, stool, hunger, pain or energy. Guidance becomes useful when it is specific."
+    },
+    {
+      "type": "header",
+      "content": "Path 1: Joints"
+    },
+    {
+      "type": "text",
+      "id": "path1_title",
+      "label": "Path 1 Title",
+      "default": "Joints, knees and back"
+    },
+    {
+      "type": "textarea",
+      "id": "path1_desc",
+      "label": "Path 1 Description",
+      "default": "Gentle movement, warm-up sequences and daily support for stiffness without turning practice into strain."
+    },
+    {
+      "type": "text",
+      "id": "path1_tags",
+      "label": "Path 1 Tags",
+      "default": "stiffness - pain - recovery"
+    },
+    {
+      "type": "url",
+      "id": "path1_link",
+      "label": "Path 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "path1_label",
+      "label": "Path 1 Link Label",
+      "default": "Begin with asana"
+    },
+    {
+      "type": "header",
+      "content": "Path 2: Sleep"
+    },
+    {
+      "type": "text",
+      "id": "path2_title",
+      "label": "Path 2 Title",
+      "default": "Sleep and evening quiet"
+    },
+    {
+      "type": "textarea",
+      "id": "path2_desc",
+      "label": "Path 2 Description",
+      "default": "Wind-down practice, lighter evening food rhythm and a softer close to the day."
+    },
+    {
+      "type": "text",
+      "id": "path2_tags",
+      "label": "Path 2 Tags",
+      "default": "late nights - restless sleep"
+    },
+    {
+      "type": "url",
+      "id": "path2_link",
+      "label": "Path 2 Link"
+    },
+    {
+      "type": "text",
+      "id": "path2_label",
+      "label": "Path 2 Link Label",
+      "default": "Go to yoga nidra"
+    },
+    {
+      "type": "header",
+      "content": "Path 3: Digestion"
+    },
+    {
+      "type": "text",
+      "id": "path3_title",
+      "label": "Path 3 Title",
+      "default": "Digestion and afternoon energy"
+    },
+    {
+      "type": "textarea",
+      "id": "path3_desc",
+      "label": "Path 3 Description",
+      "default": "Breath, meal order and simple kitchen choices for days that do not sag after lunch."
+    },
+    {
+      "type": "text",
+      "id": "path3_tags",
+      "label": "Path 3 Tags",
+      "default": "bloating - heaviness - 4pm dip"
+    },
+    {
+      "type": "url",
+      "id": "path3_link",
+      "label": "Path 3 Link"
+    },
+    {
+      "type": "text",
+      "id": "path3_label",
+      "label": "Path 3 Link Label",
+      "default": "Start with breath"
+    },
+    {
+      "type": "header",
+      "content": "Path 4: Seasonal"
+    },
+    {
+      "type": "text",
+      "id": "path4_title",
+      "label": "Path 4 Title",
+      "default": "Seasonal balance"
+    },
+    {
+      "type": "textarea",
+      "id": "path4_desc",
+      "label": "Path 4 Description",
+      "default": "Small adjustments for heat, rain and cold, tied to the classes already in your day."
+    },
+    {
+      "type": "text",
+      "id": "path4_tags",
+      "label": "Path 4 Tags",
+      "default": "weather shifts - travel - fatigue"
+    },
+    {
+      "type": "url",
+      "id": "path4_link",
+      "label": "Path 4 Link"
+    },
+    {
+      "type": "text",
+      "id": "path4_label",
+      "label": "Path 4 Link Label",
+      "default": "See the day rhythm"
+    },
     {
       "type": "header",
       "content": "Floating CTA Settings"

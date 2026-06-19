@@ -576,33 +576,34 @@
 .ayurhq-floating-guruji {
   position: fixed;
   bottom: 30px;
-  right: 30px;
+  right: 32px;
   z-index: 1000;
   background-color: var(--ayurhq-orange);
   color: #ffffff;
-  padding: 14px 28px;
+  padding: 10px 18px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
-  box-shadow: 0 6px 20px rgba(201, 79, 23, 0.35);
+  box-shadow: 0 4px 15px rgba(201, 79, 23, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.25s ease;
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid var(--ayurhq-border);
+  border: none;
 }
 
 .ayurhq-floating-guruji:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   background-color: var(--ayurhq-orange-hover);
-  box-shadow: 0 8px 25px rgba(201, 79, 23, 0.45);
+  box-shadow: 0 6px 20px rgba(201, 79, 23, 0.35);
 }
 
 .ayurhq-floating-guruji svg {
-  fill: currentColor;
-  width: 20px;
-  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  width: 16px;
+  height: 16px;
 }
 
 /* Mobile Sticky CTA */
@@ -653,6 +654,8 @@
   /* Push floating button up to avoid overlapping sticky CTA on mobile */
   .ayurhq-floating-guruji {
     bottom: 90px;
+    padding: 8px 16px;
+    font-size: 13px;
   }
   .ayurhq-mobile-sticky-cta {
     display: block;

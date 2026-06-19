@@ -9,10 +9,9 @@
   <a href="{{ tc.link | default: '#' }}" class="ayurhq-blog-topic-card">
     {%- if tc.image != blank -%}
       <div class="ayurhq-blog-topic-card__image-wrapper">
-        {{ tc.image | image_url: width: 300 | image_tag: 
+        {{ tc.image | image_url: width: 400 | image_tag: 
           loading: 'lazy', 
           sizes: '(min-width: 769px) 25vw, (min-width: 481px) 50vw, 100vw', 
-          widths: '150, 200, 300, 400',
           class: 'ayurhq-blog-topic-card__image' 
         }}
       </div>
@@ -20,15 +19,15 @@
       <div class="ayurhq-blog-topic-card__image-placeholder"></div>
     {%- endif -%}
     <div class="ayurhq-blog-topic-card__content">
-      <div class="ayurhq-blog-topic-card__titles">
-        <h3 class="ayurhq-blog-topic-card__title">{{ tc.title }}</h3>
+      <h3 class="ayurhq-blog-topic-card__title">{{ tc.title }}</h3>
+      <div class="ayurhq-blog-topic-card__footer">
         {%- if tc.hindi_title != blank -%}
           <span class="ayurhq-blog-topic-card__hindi">{{ tc.hindi_title }}</span>
         {%- endif -%}
+        {%- if tc.article_count != blank -%}
+          <span class="ayurhq-blog-topic-card__count">{{ tc.article_count | split: ' ' | first }}</span>
+        {%- endif -%}
       </div>
-      {%- if tc.article_count != blank -%}
-        <span class="ayurhq-blog-topic-card__count">{{ tc.article_count }} Articles</span>
-      {%- endif -%}
     </div>
   </a>
 {%- endif -%}
