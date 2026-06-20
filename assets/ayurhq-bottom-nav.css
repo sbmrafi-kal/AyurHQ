@@ -117,7 +117,7 @@
   border-top: none !important;
   max-width: 1120px !important;
   margin: 0 auto !important;
-  padding: 48px 24px !important;
+  padding: 12px 24px !important;
   box-sizing: border-box !important;
   display: flex !important;
   flex-direction: row !important;
@@ -162,8 +162,8 @@
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 12px !important;
-    padding-bottom: 48px !important;
-    padding-top: 48px !important;
+    padding-bottom: 12px !important;
+    padding-top: 12px !important;
   }
 
   .is-ayurveda-page .footer-utilities .utilities>*:has(.inline-policy-list),

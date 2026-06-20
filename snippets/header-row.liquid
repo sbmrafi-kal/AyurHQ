@@ -71,7 +71,7 @@
     >
       {% liquid
         assign current_path = request.path
-        if current_path == blank
+        if current_path == blank or template.name == '404' or current_path contains '/404'
           if canonical_url contains '/blogs/'
             assign blog_part = canonical_url | split: '/blogs/' | last | split: '?' | first
             assign current_path = '/blogs/' | append: blog_part
@@ -80,24 +80,12 @@
             assign current_path = '/pages/' | append: page_part
           endif
         endif
-
-        assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/'
-          assign is_ayurveda_page = true
-        endif
+        assign is_ayurveda_page = true
       %}
       {% if is_ayurveda_page and column == 'right' %}
         <!-- Custom DhyanHQ Actions -->
         <div class="dhyanhq-header-actions">
-          <!-- English Dropdown Selection -->
-          <div class="dhyanhq-dropdown dhyanhq-lang-dropdown">
-            <button class="dhyanhq-dropdown-btn">
-              <span>English</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-caret">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
-          </div>
+
 
           <!-- Sign in link -->
           <a href="/account/login" class="dhyanhq-signin-link">Sign in</a>
@@ -128,9 +116,10 @@
             stroke-width: 1.5px !important;
           }
           .dhyanhq-signin-link {
-            color: #8d8177;
+            color: #2F5A96;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 14px;
+            font-family: 'Mukta', sans-serif;
             font-weight: 500;
             transition: color 0.2s;
             cursor: pointer;

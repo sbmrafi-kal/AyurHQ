@@ -422,7 +422,7 @@
               </a>
             </article>
 
-            <article class="ayurhq-blog-editorial__row ayurhq-blog-editorial__row--active">
+            <article class="ayurhq-blog-editorial__row">
               <div class="ayurhq-blog-editorial__row-body">
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path3_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path3_desc }}</p>
@@ -443,45 +443,6 @@
                 {{ section.settings.path4_label | default: 'See the day rhythm' }}
               </a>
             </article>
-          </div>
-        </div>
-      </div>
-    </section>
-  {%- endif -%}
-
-  <!-- Daily Rhythm Section -->
-  {%- if section.settings.show_daily_rhythm -%}
-    <section class="ayurhq-blog-daily-rhythm-section">
-      <div class="ayurhq-blog-container">
-        <div class="ayurhq-daily-rhythm-grid">
-          <div class="ayurhq-daily-rhythm-teaser">
-            <span class="ayurhq-daily-rhythm-teaser__eyebrow">{{ section.settings.daily_rhythm_eyebrow }}</span>
-            <h2 class="ayurhq-daily-rhythm-teaser__heading">{{ section.settings.daily_rhythm_heading }}</h2>
-            <p class="ayurhq-daily-rhythm-teaser__text">{{ section.settings.daily_rhythm_text }}</p>
-          </div>
-
-          <div class="ayurhq-daily-rhythm-list" aria-label="Daily rhythm">
-            {%- for i in (1..4) -%}
-              {%- assign rhythm_label_key = 'rhythm' | append: i | append: '_label' -%}
-              {%- assign rhythm_title_key = 'rhythm' | append: i | append: '_title' -%}
-              {%- assign rhythm_desc_key = 'rhythm' | append: i | append: '_desc' -%}
-              
-              {%- assign rhythm_label = section.settings[rhythm_label_key] -%}
-              {%- assign rhythm_title = section.settings[rhythm_title_key] -%}
-              {%- assign rhythm_desc = section.settings[rhythm_desc_key] -%}
-
-              {%- if rhythm_title != blank -%}
-                <div class="ayurhq-daily-rhythm-item">
-                  <div class="ayurhq-daily-rhythm-item__meta">
-                    <span class="ayurhq-daily-rhythm-item__tags">{{ rhythm_label }}</span>
-                  </div>
-                  <div class="ayurhq-daily-rhythm-item__content">
-                    <h3 class="ayurhq-daily-rhythm-item__title">{{ rhythm_title }}</h3>
-                    <p class="ayurhq-daily-rhythm-item__desc">{{ rhythm_desc }}</p>
-                  </div>
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
           </div>
         </div>
       </div>
@@ -555,7 +516,7 @@
       <div class="ayurhq-section-header">
         <span class="ayurhq-section-eyebrow">BROWSE · विषय</span>
         <h2 class="ayurhq-blog-section-title">Find your topic</h2>
-        <p class="ayurhq-section-subheading">The full library, sorted into shelves you can actually navigate. {{ blog.articles_count | default: 250 }} articles</p>
+        <p class="ayurhq-section-subheading">The full library, sorted into shelves you can actually navigate. {% if blog.articles_count > 0 %}{{ blog.articles_count }}{% else %}250{% endif %} articles</p>
       </div>
 
       <div class="ayurhq-blog-topic-grid">
@@ -647,6 +608,7 @@
   {%- endif -%}
 </div>
 
+{% comment %}
 <!-- Floating Ask Guruji CTA -->
 {%- if section.settings.show_ask_guruji and section.settings.ask_guruji_link != blank -%}
   <a href="{{ section.settings.ask_guruji_link }}" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
@@ -658,6 +620,7 @@
     <span>{{ section.settings.ask_guruji_label | default: 'Ask Guruji' }}</span>
   </a>
 {%- endif -%}
+{% endcomment %}
 
 
 </div> <!-- end js-ayurhq-normal-blog-content -->

@@ -10,7 +10,7 @@
   assign block_settings = block.settings
 
   assign current_path = request.path
-  if current_path == blank
+  if current_path == blank or template.name == '404' or current_path contains '/404'
     if canonical_url contains '/blogs/'
       assign blog_part = canonical_url | split: '/blogs/' | last | split: '?' | first
       assign current_path = '/blogs/' | append: blog_part
@@ -40,10 +40,7 @@
   {% when 'navigation_bar' %}
     {% if block_settings.navigation_bar == true %}
       {% liquid
-        assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/'
-          assign is_ayurveda_page = true
-        endif
+        assign is_ayurveda_page = true
         assign current_blog_url = blogs['ayurveda'].url
         if current_blog_url == blank
           assign current_blog_url = blogs['news'].url | default: '/blogs/news'
@@ -236,10 +233,7 @@
 
     {% capture children %}
       {% liquid
-        assign is_ayurveda_page = false
-        if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/'
-          assign is_ayurveda_page = true
-        endif
+        assign is_ayurveda_page = true
         assign current_blog_url = blogs['ayurveda'].url
         if current_blog_url == blank
           assign current_blog_url = blogs['news'].url | default: '/blogs/news'
@@ -993,17 +987,18 @@
   .menu-icon--ayurveda {
     color: #c94f17;
   }
+  /* Cream background for header on Ayurveda pages */
+  .is-ayurveda-page #header-component,
+  .is-ayurveda-page .header__row {
+    background-color: #FFFDF8 !important;
+    background: #FFFDF8 !important;
+  }
 
   /* Compact navbar sizing on desktop – matches Blog_main_01 reference */
   @media screen and (min-width: 750px) {
     /* ── Header shell ── */
-    .is-ayurveda-page #header-component {
-      border-top: 2px solid #242424 !important;
-    }
     .is-ayurveda-page #header-component,
     .is-ayurveda-page .header__row {
-      background-color: #FFFCF2 !important;
-      background: #FFFCF2 !important;
       min-height: 58px !important;
       height: 58px !important;
     }
@@ -1045,17 +1040,17 @@
 
     /* ── Nav link defaults ── */
     .is-ayurveda-page .menu-list__link {
-      font-size: 14px !important;
+      font-size: 15px !important;
       letter-spacing: 0.01em !important;
-      color: #7A6E64 !important;
+      color: #5A544C !important;
     }
     .is-ayurveda-page .menu-list__link--active:not(.menu-list__link--ayurveda-pill),
     .is-ayurveda-page .menu-list__link:hover {
       color: #1e1e1e !important;
     }
     .is-ayurveda-page .menu-list__link-title {
-      padding-inline: 6px !important;
-      font-size: 14px !important;
+      padding-inline: 20px !important;
+      font-size: 15px !important;
       font-weight: 500 !important;
       gap: 8px !important;
     }
@@ -1188,18 +1183,18 @@
   }
 
   #header-component {
-    background-color: #FFFCF2 !important;
-    background: #FFFCF2 !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
   }
   .header__row {
     border-bottom: 1px solid #E3CFB4 !important;
-    background-color: #FFFCF2 !important;
-    background: #FFFCF2 !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
   }
   .header__underlay-closed,
   .header__underlay-open {
-    background: #FFFCF2 !important;
-    background-color: #FFFCF2 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
   }
 
   @media screen and (min-width: 750px) {

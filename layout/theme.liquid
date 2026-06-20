@@ -8,7 +8,7 @@
   <head>
     {%- liquid
       assign current_path = request.path
-      if current_path == blank
+      if current_path == blank or template.name == '404' or current_path contains '/404'
         if canonical_url contains '/blogs/'
           assign blog_part = canonical_url | split: '/blogs/' | last | split: '?' | first
           assign current_path = '/blogs/' | append: blog_part
@@ -18,13 +18,22 @@
         endif
       endif
 
-      assign is_ayurveda_page = false
-      if template.name == 'blog' or template.name == 'article' or current_path contains '/blogs/'
-        assign is_ayurveda_page = true
-      endif
+      assign is_ayurveda_page = true
       assign current_blog_url = blogs['ayurveda'].url
       if current_blog_url == blank
         assign current_blog_url = blogs['news'].url | default: '/blogs/news'
+      endif
+
+      assign is_article_page = false
+      if template.name == 'article'
+        assign is_article_page = true
+      elsif current_path contains '/blogs/'
+        assign blog_prefix = current_blog_url | append: '/'
+        if current_path contains blog_prefix and current_path != current_blog_url and current_path != blog_prefix
+          unless current_path contains '/tagged/' or current_path contains '/tag/'
+            assign is_article_page = true
+          endunless
+        endif
       endif
     -%}
     {% if request.page_type == 'index' and request.design_mode == false %}
@@ -75,7 +84,7 @@
     {% # theme-check-enable RemoteAsset %}
   </head>
 
-  <body class="{% if is_ayurveda_page %}is-ayurveda-page {% endif %}page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="{% if is_ayurveda_page %}is-ayurveda-page {% endif %}{% if is_article_page %}is-article-page {% endif %}page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
@@ -175,7 +184,17 @@
               var defaultWrapper = document.getElementById('ayurhq-404-default-wrapper');
               if (defaultWrapper) defaultWrapper.style.display = 'none';
               
-              if (path.includes('/tagged/') || path.includes('/tag/')) {
+              var cleanPath = path.replace(/\/$/, "");
+              var parts = cleanPath.split('/').filter(Boolean);
+              
+              var isBlogHub = false;
+              if (parts.length === 2 && parts[0] === 'blogs') {
+                isBlogHub = true;
+              } else if (path.includes('/tagged/') || path.includes('/tag/')) {
+                isBlogHub = true;
+              }
+              
+              if (isBlogHub) {
                 var blogWrapper = document.getElementById('ayurhq-404-blog-hub-wrapper');
                 if (blogWrapper) blogWrapper.style.display = 'block';
               } else {
@@ -193,6 +212,123 @@
     <footer>
       {% sections 'footer-group' %}
     </footer>
+
+    <script>
+      (function() {
+        var path = window.location.pathname;
+        
+        // Force class on body
+        document.body.classList.add('is-ayurveda-page');
+        
+        // Detect individual article pages (e.g. /blogs/news/acidity-heartburn)
+        var pathParts = path.split('/').filter(Boolean);
+        if (path.includes('/blogs/') && !path.includes('/tagged/') && !path.includes('/tag/') && pathParts.length > 2) {
+          document.body.classList.add('is-article-page');
+        }
+
+        // Helper to replace header menu items dynamically
+        function fixHeaderMenu() {
+          var desktopMenu = document.querySelector('.overflow-menu');
+          if (desktopMenu) {
+            var currentBlogUrl = '/blogs/news';
+            desktopMenu.innerHTML = `
+              <li role="presentation" class="menu-list__list-item">
+                <a href="${currentBlogUrl}/today" class="menu-list__link">
+                  <span class="menu-list__link-title">
+                    <span class="menu-icon menu-icon--today">
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5.5 16.5a6.5 6.5 0 0 1 13 0"></path>
+                        <line x1="3" y1="19.5" x2="21" y2="19.5"></line>
+                        <line x1="12" y1="4" x2="12" y2="6.4"></line>
+                        <line x1="5.2" y1="7.2" x2="6.9" y2="8.9"></line>
+                        <line x1="18.8" y1="7.2" x2="17.1" y2="8.9"></line>
+                      </svg>
+                    </span>Today
+                  </span>
+                </a>
+              </li>
+              <li role="presentation" class="menu-list__list-item">
+                <a href="${currentBlogUrl}/yoga" class="menu-list__link">
+                  <span class="menu-list__link-title">
+                    <span class="menu-icon menu-icon--yoga">
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 5.8 C 9.7 4.4 6.6 4.3 4 5.3 V18 c2.6-1 5.7-.9 8 .5 c2.3-1.4 5.4-1.5 8-.5 V5.3 c-2.6-1-5.7-.9-8 .5 Z"></path>
+                        <line x1="12" y1="6" x2="12" y2="18.2"></line>
+                      </svg>
+                    </span>Yoga
+                  </span>
+                </a>
+              </li>
+              <li role="presentation" class="menu-list__list-item">
+                <a href="${currentBlogUrl}/gyaan" class="menu-list__link">
+                  <span class="menu-list__link-title">
+                    <span class="menu-icon menu-icon--gyaan">
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                      </svg>
+                    </span>Gyaan
+                  </span>
+                </a>
+              </li>
+              <li role="presentation" class="menu-list__list-item">
+                <a href="${currentBlogUrl}" class="menu-list__link menu-list__link--ayurveda-pill">
+                  <span class="menu-list__link-title">
+                    <span class="menu-icon menu-icon--ayurveda">
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                        <path d="M18.8 5.2 C 12 4.6 6.6 7.8 5.4 13.6 c-.6 2.8.4 5 1.4 5.6 c5.8 1.2 11-2 12.2-7.8 c.6-2.8-.2-5.4-.2-6.2 Z" fill="currentColor"></path>
+                        <path d="M7.5 17.5 C 9.5 13.5 12.5 10.2 16.6 7.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                    </span>Ayurveda
+                  </span>
+                </a>
+              </li>
+            `;
+
+            // Highlight active tab
+            desktopMenu.querySelectorAll('a').forEach(function(el) {
+              el.classList.remove('menu-list__link--active');
+            });
+            if (path.includes('/today')) {
+              desktopMenu.querySelector('a[href*="/today"]')?.classList.add('menu-list__link--active');
+            } else if (path.includes('/yoga')) {
+              desktopMenu.querySelector('a[href*="/yoga"]')?.classList.add('menu-list__link--active');
+            } else if (path.includes('/gyaan')) {
+              desktopMenu.querySelector('a[href*="/gyaan"]')?.classList.add('menu-list__link--active');
+            } else if (path.includes('/blogs/')) {
+              desktopMenu.querySelector('a.menu-list__link--ayurveda-pill')?.classList.add('menu-list__link--active');
+            }
+          }
+        }
+
+        // Helper to replace footer policy links dynamically
+        function fixFooterLinks() {
+          var footerList = document.querySelector('.inline-policy-list');
+          if (footerList) {
+            footerList.innerHTML = `
+              <li><a href="/pages/legal-center" class="footer-utilities__text">Legal center</a></li>
+              <li><a href="/policies/terms-of-service" class="footer-utilities__text">Terms</a></li>
+              <li><a href="/policies/privacy-policy" class="footer-utilities__text">Privacy</a></li>
+              <li><a href="/policies/refund-policy" class="footer-utilities__text">Refund policy</a></li>
+              <li><a href="/pages/health-disclaimer" class="footer-utilities__text">Health disclaimer</a></li>
+            `;
+          }
+
+          // Hide English dropdown globally
+          var langDropdown = document.querySelector('.dhyanhq-lang-dropdown');
+          if (langDropdown) langDropdown.style.display = 'none';
+        }
+
+        // Run immediately and on DOMContentLoaded
+        fixHeaderMenu();
+        fixFooterLinks();
+        window.addEventListener('DOMContentLoaded', function() {
+          fixHeaderMenu();
+          fixFooterLinks();
+        });
+      })();
+    </script>
 
     {% render 'search-modal' %}
 
@@ -282,5 +418,73 @@
         </nav>
       </div>
     {%- endif -%}
+
+    <!-- Global Floating Ask Guruji CTA -->
+    <a href="/pages/consultation" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
+      <span class="ayurhq-floating-guruji__icon-wrapper">
+        <svg viewBox="-1 0 412 500" width="20" height="24" fill="none" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M 205 14 C 202 80, 167 112, 149.5 150 C 127 182, 105.5 225, 105.5 278 C 105.5 322, 133 362, 156 384 C 168 393, 150 400, 125 404 C 95 402, 20 407, 12 445 C 6 466, 38 486, 88 487.5 C 138 489, 180 468, 205 426 L 205 398 C 215 388, 243.5 358, 243.5 318 C 242 286, 208 246, 205 228 C 202 246, 168 286, 166.5 318 C 166.5 358, 195 388, 205 398 L 205 426 C 230 468, 272 489, 322 487.5 C 372 486, 404 466, 398 445 C 390 407, 315 402, 285 404 C 260 400, 242 393, 254 384 C 277 362, 304.5 322, 304.5 278 C 304.5 225, 283 182, 260.5 150 C 243 112, 208 80, 205 14 Z M 126 404 C 146 414, 160 432, 170 448 M 284 404 C 264 414, 250 432, 240 448" />
+        </svg>
+      </span>
+      <span>Ask Guruji</span>
+    </a>
+
+    <style>
+      /* Global Floating CTA Ask Guruji */
+      .ayurhq-floating-guruji {
+        position: fixed;
+        bottom: 30px;
+        right: 32px;
+        z-index: 1000;
+        background-color: #c94f17;
+        color: #ffffff;
+        padding: 8px 18px 8px 8px !important;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(201, 79, 23, 0.25);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.25s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        font-family: 'Mukta', sans-serif;
+      }
+
+      .ayurhq-floating-guruji:hover {
+        transform: translateY(-2px);
+        background-color: #b24112;
+        box-shadow: 0 6px 20px rgba(201, 79, 23, 0.35);
+        color: #ffffff !important;
+      }
+
+      .ayurhq-floating-guruji__icon-wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 50% !important;
+        background-color: #ffffff !important;
+        color: #c94f17 !important;
+      }
+
+      .ayurhq-floating-guruji__icon-wrapper svg {
+        fill: none !important;
+        stroke: #c94f17 !important;
+        width: 16px !important;
+        height: 16px !important;
+        stroke-width: 28px !important;
+      }
+
+      @media (max-width: 768px) {
+        .ayurhq-floating-guruji {
+          bottom: 90px;
+          padding: 8px 16px;
+          font-size: 13px;
+        }
+      }
+    </style>
   </body>
 </html>

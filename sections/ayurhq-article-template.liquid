@@ -1,6 +1,6 @@
 {{ 'ayurhq-article-template.css' | asset_url | stylesheet_tag }}
 
-{%- if article != blank -%}
+{%- if article != blank and article.metafields.custom.at_a_glance.value != blank -%}
 <div class="ayurhq-article-wrapper">
   <div class="ayurhq-article-container">
     
@@ -54,7 +54,7 @@
             <span class="ayurhq-article-meta__item">{{ article.published_at | time_tag: '%B %d, %Y' }}</span>
             {%- if article.metafields.custom.read_time != blank -%}
               <span class="ayurhq-article-meta__separator">•</span>
-              <span class="ayurhq-article-meta__item">{{ article.metafields.custom.read_time.value }} read</span>
+              <span class="ayurhq-article-meta__item ayurhq-article-meta__read-time">{{ article.metafields.custom.read_time.value }} read</span>
             {%- endif -%}
             {%- if article.metafields.custom.review_label != blank -%}
               <span class="ayurhq-article-meta__separator">•</span>
@@ -304,6 +304,7 @@
   </div>
 </div>
 
+{% comment %}
 <!-- Floating Ask Guruji CTA -->
 {%- if section.settings.show_ask_guruji and section.settings.ask_guruji_link != blank -%}
   <a href="{{ section.settings.ask_guruji_link }}" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
@@ -315,6 +316,7 @@
     <span>{{ section.settings.ask_guruji_label | default: 'Ask Guruji' }}</span>
   </a>
 {%- endif -%}
+{% endcomment %}
 
 <!-- Mobile Sticky CTA Button -->
 {%- if article.metafields.custom.sticky_cta_label != blank and article.metafields.custom.sticky_cta_link != blank -%}
@@ -362,7 +364,7 @@
           <div class="ayurhq-article-meta">
             <span class="ayurhq-article-meta__item">By DhyanHQ Ayurveda desk</span>
             <span class="ayurhq-article-meta__separator">•</span>
-            <span id="js-read-time" class="ayurhq-article-meta__item"></span>
+            <span id="js-read-time" class="ayurhq-article-meta__item ayurhq-article-meta__read-time"></span>
             <span class="ayurhq-article-meta__separator">•</span>
             <span class="ayurhq-article-meta__item ayurhq-article-meta__review-badge">
               Reviewed for tradition-faithfulness
@@ -465,6 +467,7 @@
   <a href="{{ blog.url | default: '/blogs/news' }}" id="js-fallback-back-btn" class="button" style="background-color: #C8521B; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none;">Back to Ayurveda</a>
 </div>
 
+{% comment %}
 <!-- Floating Ask Guruji CTA -->
 {%- if section.settings.show_ask_guruji and section.settings.ask_guruji_link != blank -%}
   <a href="{{ section.settings.ask_guruji_link }}" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
@@ -476,6 +479,7 @@
     <span>{{ section.settings.ask_guruji_label | default: 'Ask Guruji' }}</span>
   </a>
 {%- endif -%}
+{% endcomment %}
 
 <script>
   (function() {
@@ -516,7 +520,7 @@
         const badgeEl = document.getElementById('js-badge');
         if (data.badge) {
           badgeEl.textContent = data.badge;
-          badgeEl.style.display = 'inline-block';
+          badgeEl.style.display = 'block';
         }
         document.getElementById('js-title').textContent = data.title;
         
@@ -540,8 +544,8 @@
         if (data.at_a_glance && data.at_a_glance.length > 0) {
           glanceEl.style.display = 'block';
           glanceList.innerHTML = data.at_a_glance.map(item => `
-            <li class="flex gap-2.5 text-[14.5px] leading-relaxed text-ink-v4">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-[3px] flex-shrink-0 text-bhagwa" aria-hidden="true">
+            <li class="ayurhq-article-glance__item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ayurhq-article-glance__icon" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
               <span>${item}</span>
