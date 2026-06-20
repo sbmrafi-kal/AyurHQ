@@ -84,15 +84,15 @@
         <!-- Visual Explainer Block -->
         {%- if article.metafields.custom.visual_explainer.value != blank -%}
           {%- assign explainer = article.metafields.custom.visual_explainer.value -%}
-          {%- assign downcase_heading = explainer.heading | downcase -%}
-          {%- assign downcase_eyebrow = explainer.eyebrow | downcase -%}
+          {%- assign downcase_heading = explainer.heading.value | downcase -%}
+          {%- assign downcase_eyebrow = explainer.eyebrow.value | downcase -%}
           {%- if downcase_heading contains 'agni' or downcase_heading contains 'digestive fire' or downcase_eyebrow contains 'agni' or downcase_eyebrow contains 'digestive fire' -%}
             <section class="ayurhq-article-explainer ayurhq-agni-card">
-              {%- if explainer.eyebrow != blank -%}
-                <span class="ayurhq-article-explainer__eyebrow">{{ explainer.eyebrow }}</span>
+              {%- if explainer.eyebrow.value != blank -%}
+                <span class="ayurhq-article-explainer__eyebrow">{{ explainer.eyebrow.value }}</span>
               {%- endif -%}
-              {%- if explainer.heading != blank -%}
-                <h2 class="ayurhq-article-explainer__heading">{{ explainer.heading }}</h2>
+              {%- if explainer.heading.value != blank -%}
+                <h2 class="ayurhq-article-explainer__heading">{{ explainer.heading.value }}</h2>
               {%- endif -%}
               
               <div class="ayurhq-agni-card-content">
@@ -132,29 +132,29 @@
                 </div>
               </div>
  
-              {%- if explainer.description != blank -%}
-                <p class="ayurhq-article-explainer__desc">{{ explainer.description | newline_to_br }}</p>
+              {%- if explainer.description.value != blank -%}
+                <p class="ayurhq-article-explainer__desc">{{ explainer.description.value | newline_to_br }}</p>
               {%- endif -%}
             </section>
           {%- else -%}
             <section class="ayurhq-article-explainer">
-              {%- if explainer.eyebrow != blank -%}
-                <span class="ayurhq-article-explainer__eyebrow">{{ explainer.eyebrow }}</span>
+              {%- if explainer.eyebrow.value != blank -%}
+                <span class="ayurhq-article-explainer__eyebrow">{{ explainer.eyebrow.value }}</span>
               {%- endif -%}
-              {%- if explainer.heading != blank -%}
-                <h2 class="ayurhq-article-explainer__heading">{{ explainer.heading }}</h2>
+              {%- if explainer.heading.value != blank -%}
+                <h2 class="ayurhq-article-explainer__heading">{{ explainer.heading.value }}</h2>
               {%- endif -%}
-              {%- if explainer.image != blank -%}
+              {%- if explainer.image.value != blank -%}
                 <div class="ayurhq-article-explainer__image-wrapper">
-                  {{ explainer.image | image_url: width: 600 | image_tag: 
+                  {{ explainer.image.value | image_url: width: 600 | image_tag: 
                     loading: 'lazy', 
                     class: 'ayurhq-article-explainer__image',
                     widths: '300, 450, 600, 750'
                   }}
                 </div>
               {%- endif -%}
-              {%- if explainer.description != blank -%}
-                <p class="ayurhq-article-explainer__desc">{{ explainer.description | newline_to_br }}</p>
+              {%- if explainer.description.value != blank -%}
+                <p class="ayurhq-article-explainer__desc">{{ explainer.description.value | newline_to_br }}</p>
               {%- endif -%}
             </section>
           {%- endif -%}
@@ -189,9 +189,9 @@
                           <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
                       </span>
-                      {{ tip_val.title }}
+                      {{ tip_val.title.value }}
                     </h3>
-                    <p class="ayurhq-article-tip-item__desc">{{ tip_val.description | newline_to_br }}</p>
+                    <p class="ayurhq-article-tip-item__desc">{{ tip_val.description.value | newline_to_br }}</p>
                   </div>
                 {%- endfor -%}
               </div>
@@ -207,9 +207,9 @@
               {%- for herb in article.metafields.custom.ingredient_cards.value -%}
                 {%- assign herb_val = herb.value | default: herb -%}
                 <div class="ayurhq-article-ingredient-card">
-                  {%- if herb_val.image != blank -%}
+                  {%- if herb_val.image.value != blank -%}
                     <div class="ayurhq-article-ingredient-card__image-wrapper">
-                      {{ herb_val.image | image_url: width: 160 | image_tag: 
+                      {{ herb_val.image.value | image_url: width: 160 | image_tag: 
                         loading: 'lazy', 
                         class: 'ayurhq-article-ingredient-card__image'
                       }}
@@ -217,12 +217,12 @@
                   {%- endif -%}
                   <div class="ayurhq-article-ingredient-card__content">
                     <div class="ayurhq-article-ingredient-card__title-row">
-                      <h3 class="ayurhq-article-ingredient-card__name">{{ herb_val.name }}</h3>
-                      {%- if herb_val.sanskrit_name != blank -%}
-                        <p class="ayurhq-article-ingredient-card__sanskrit">{{ herb_val.sanskrit_name }}</p>
+                      <h3 class="ayurhq-article-ingredient-card__name">{{ herb_val.name.value }}</h3>
+                      {%- if herb_val.sanskrit_name.value != blank -%}
+                        <p class="ayurhq-article-ingredient-card__sanskrit">{{ herb_val.sanskrit_name.value }}</p>
                       {%- endif -%}
                     </div>
-                    <p class="ayurhq-article-ingredient-card__desc">{{ herb_val.description | newline_to_br }}</p>
+                    <p class="ayurhq-article-ingredient-card__desc">{{ herb_val.description.value | newline_to_br }}</p>
                   </div>
                 </div>
               {%- endfor -%}
@@ -238,8 +238,13 @@
               {%- for def in article.metafields.custom.words_to_know.value -%}
                 {%- assign def_val = def.value | default: def -%}
                 <div class="ayurhq-article-definition-item">
-                  <span class="ayurhq-article-definition-item__term">{{ def_val.term }}. </span>
-                  <span class="ayurhq-article-definition-item__desc">{{ def_val.definition }}</span>
+                  {%- assign clean_term = def_val.term.value | strip -%}
+                  {%- assign last_char = clean_term | slice: -1 -%}
+                  {%- unless last_char == '.' -%}
+                    {%- assign clean_term = clean_term | append: '.' -%}
+                  {%- endunless -%}
+                  <span class="ayurhq-article-definition-item__term">{{ clean_term }} </span>
+                  <span class="ayurhq-article-definition-item__desc">{{ def_val.definition.value }}</span>
                 </div>
               {%- endfor -%}
             </div>
