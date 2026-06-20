@@ -292,7 +292,7 @@
         <!-- Medical Disclaimer -->
         {%- if article.metafields.custom.medical_disclaimer != blank -%}
           <div class="ayurhq-article-disclaimer">
-            {{ article.metafields.custom.medical_disclaimer.value | newline_to_br }}
+            {{ article.metafields.custom.medical_disclaimer.value | replace: 'DhyanHQ', 'AyurHQ' | newline_to_br }}
           </div>
         {%- else -%}
           <div class="ayurhq-article-disclaimer">
