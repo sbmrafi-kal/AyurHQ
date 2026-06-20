@@ -254,9 +254,30 @@
         <!-- Sources Section -->
         {%- if article.metafields.custom.sources.value != blank -%}
           <section class="ayurhq-article-sources">
-            <h3 class="ayurhq-article-sources__title">Scientific Sources & References</h3>
+            <h3 class="ayurhq-article-sources__title">SOURCES</h3>
             <div class="ayurhq-article-sources__text">
-              {{ article.metafields.custom.sources.value | newline_to_br }}
+              {%- assign source_items = article.metafields.custom.sources.value | split: ' · ' -%}
+              {%- for item in source_items -%}
+                {%- assign parts = item | split: ',' -%}
+                {%- assign book_name = parts[0] | strip -%}
+                {%- assign rest = '' -%}
+                {%- for part in parts offset: 1 -%}
+                  {%- if forloop.first -%}
+                    {%- assign rest = part -%}
+                  {%- else -%}
+                    {%- assign rest = rest | append: ',' | append: part -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                <span class="ayurhq-source-item">
+                  <span class="ayurhq-source-book">{{ book_name }}</span>
+                  {%- if rest != blank -%}
+                    <span class="ayurhq-source-details">,{{ rest }}</span>
+                  {%- endif -%}
+                </span>
+                {%- unless forloop.last -%}
+                  <span class="ayurhq-source-separator"> · </span>
+                {%- endunless -%}
+              {%- endfor -%}
             </div>
           </section>
         {%- endif -%}
@@ -293,8 +314,8 @@
     {%- endif -%}
 
     {%- if related_articles != blank or fallback_related != blank -%}
+      <div class="ayurhq-more-from-ayurveda-title">More from Ayurveda</div>
       <section class="ayurhq-article-related">
-        <h2 class="ayurhq-article-ingredients__heading">Read Next</h2>
         <div class="ayurhq-article-related__grid">
           {%- if related_articles != blank -%}
             {%- for rel_art in related_articles -%}

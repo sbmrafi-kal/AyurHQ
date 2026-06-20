@@ -1215,3 +1215,83 @@ blockquote p,
   border-radius: 0 !important;
   background: transparent !important;
 }
+
+/* ── UI Styling Updates requested by User ── */
+
+/* 1. Sources Section Styling */
+.ayurhq-article-sources {
+  margin-top: 50px !important;
+  padding-top: 30px !important;
+  border-top: 1.5px solid var(--ayurhq-border) !important;
+}
+
+/* SOURCES title: 11px Mukta font with color #8A8275 in desktop mode */
+.ayurhq-article-sources__title {
+  font-family: 'Mukta', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  margin-bottom: 12px !important;
+  font-size: 11px !important;
+  color: #8A8275 !important;
+}
+
+/* Sources description: 12.5px Mukta font, book name in #5A544C, details after comma in #BFBBB4 */
+.ayurhq-article-sources__text {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 12.5px !important;
+  line-height: 1.8 !important;
+}
+
+.ayurhq-source-book {
+  color: #5A544C !important;
+  font-weight: 500 !important;
+}
+
+.ayurhq-source-details {
+  color: #BFBBB4 !important;
+}
+
+.ayurhq-source-separator {
+  color: #BFBBB4 !important;
+}
+
+/* 2. Medical Disclaimer: exactly 12.5px */
+.ayurhq-article-disclaimer {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 12.5px !important;
+  color: var(--ayurhq-muted-text) !important;
+  line-height: 1.6 !important;
+  margin-top: 30px !important;
+}
+
+/* 3. Related Articles Section & "More from Ayurveda" Title */
+.ayurhq-more-from-ayurveda-title {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 18px !important;
+  color: #1A1A1A !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  margin-top: 60px !important;
+  margin-bottom: 16px !important;
+}
+
+.ayurhq-article-related {
+  margin-top: 0 !important;
+  border-top: 1.5px solid var(--ayurhq-border) !important;
+  padding-top: 24px !important; /* Reduced gap between orange line and cards below */
+}
+
+/* 4. Back Arrow Navigation positioning */
+/* "should be coming a little down from its current place and a little to the right side (in desktop view) - a little down in the mobile view" */
+.ayurhq-article-back-nav {
+  top: 40px !important; /* down from 24px */
+  left: max(60px, calc((100vw - 1180px) / 2 + 30px)) !important; /* right from calc((100vw - 1180px) / 2) */
+}
+
+@media (max-width: 749px) {
+  .ayurhq-article-back-nav {
+    top: 36px !important; /* down on mobile */
+    left: 24px !important;
+  }
+}
