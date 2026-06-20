@@ -16,7 +16,7 @@
     right: 0;
     z-index: 1000;
     height: 72px;
-    background-color: #fffdf8;
+    background-color: #FFF8EC;
     border-top: 1px solid #eadcc8;
     display: flex;
     justify-content: space-around;
@@ -101,7 +101,7 @@
 
   /* Extra space at the bottom of the body so bottom nav doesn't cover content */
   body.is-ayurveda-page {
-    padding-bottom: 100px !important;
+    padding-bottom: 0 !important;
   }
 }
 
@@ -160,6 +160,10 @@
 }
 
 @media screen and (max-width: 749px) {
+  .is-ayurveda-page .footer-utilities {
+    padding-bottom: 92px !important;
+  }
+
   .is-ayurveda-page .footer-utilities .utilities {
     flex-direction: column !important;
     align-items: flex-start !important;

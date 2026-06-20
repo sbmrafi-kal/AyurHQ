@@ -30,17 +30,26 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-article-container {
-  max-width: 1120px;
+  max-width: 1260px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 40px;
   box-sizing: border-box;
+}
+
+@media (max-width: 749px) {
+  .ayurhq-article-container {
+    padding: 0 20px;
+  }
+  .ayurhq-article-back-nav {
+    left: 20px;
+  }
 }
 
 /* Back Button Pill */
 .ayurhq-article-back-nav {
   position: absolute;
   top: 24px;
-  left: max(24px, calc((100vw - 1120px) / 2 + 24px));
+  left: max(40px, calc((100vw - 1180px) / 2));
   z-index: 10;
   margin-bottom: 0;
 }
@@ -903,6 +912,10 @@ body.is-ayurveda-page {
 @media (max-width: 768px) {
   .ayurhq-article-layout {
     margin-top: 0 !important;
+  }
+  .ayurhq-article-related {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
   }
   /* Push floating button up to avoid overlapping sticky CTA on mobile */
   .ayurhq-floating-guruji {
