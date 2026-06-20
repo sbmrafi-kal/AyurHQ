@@ -1334,10 +1334,22 @@ blockquote p,
   display: inline-block !important;
 }
 
-/* 5. Content Column Width Constraint (width 672px for everything in individual blog pages) */
-.ayurhq-article-main-column {
-  width: 100% !important;
-  max-width: 672px !important;
+/* 5. Content Column Width Constraint (width 676px for everything in individual blog pages) */
+@media (min-width: 749px) {
+  .ayurhq-article-main-column {
+    width: 100% !important;
+    max-width: 676px !important;
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 748px) {
+  .ayurhq-article-main-column {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 24px !important;
+    box-sizing: border-box !important;
+  }
 }
 
 /* 6. Metadata Row: Remove bottom border line */
