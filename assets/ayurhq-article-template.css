@@ -1209,11 +1209,17 @@ blockquote p,
   border-left: 3px solid #c94f17 !important; /* vertical red line */
   padding-left: 20px !important;
   margin: 32px 0 !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   border-top: none !important;
   border-right: none !important;
   border-bottom: none !important;
   border-radius: 0 !important;
   background: transparent !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* ── UI Styling Updates requested by User ── */
