@@ -9,7 +9,8 @@
       <div class="ayurhq-article-hero">
         <nav class="ayurhq-article-back-nav">
           <a href="{{ blog.url }}" class="ayurhq-article-back-pill">
-            <span>← Ayurveda</span>
+            <span class="ayurhq-back-arrow">←</span>
+            <span>Ayurveda</span>
           </a>
         </nav>
         <div class="ayurhq-article-hero__image-wrapper">
@@ -24,7 +25,8 @@
     {%- else -%}
       <nav class="ayurhq-article-back-nav no-hero-image">
         <a href="{{ blog.url }}" class="ayurhq-article-back-pill">
-          <span>← Ayurveda</span>
+          <span class="ayurhq-back-arrow">←</span>
+          <span>Ayurveda</span>
         </a>
       </nav>
     {%- endif -%}
@@ -56,7 +58,7 @@
             <span class="ayurhq-article-meta__item">By {{ display_author }}</span>
             {%- if article.metafields.custom.read_time != blank -%}
               <span class="ayurhq-article-meta__separator">•</span>
-              <span class="ayurhq-article-meta__item ayurhq-article-meta__read-time">{{ article.metafields.custom.read_time.value }} read</span>
+              <span class="ayurhq-article-meta__item ayurhq-article-meta__read-time">{{ article.metafields.custom.read_time.value }}</span>
             {%- endif -%}
             {%- if article.metafields.custom.review_label != blank -%}
               <span class="ayurhq-article-meta__separator">•</span>
@@ -74,7 +76,12 @@
             <ul class="ayurhq-article-glance__list">
               {%- for bullet in article.metafields.custom.at_a_glance.value -%}
                 {%- if bullet != blank -%}
-                  <li class="ayurhq-article-glance__item">{{ bullet | newline_to_br }}</li>
+                  <li class="ayurhq-article-glance__item">
+                    <svg class="ayurhq-glance-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>{{ bullet | newline_to_br }}</span>
+                  </li>
                 {%- endif -%}
               {%- endfor -%}
             </ul>

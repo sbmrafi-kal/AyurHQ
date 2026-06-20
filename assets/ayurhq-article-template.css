@@ -1285,19 +1285,19 @@ blockquote p,
 /* 4. Back Arrow Navigation positioning & styling */
 .ayurhq-article-back-nav {
   position: absolute;
-  top: 72px !important; /* Positioned well down, fully inside the hero image */
+  top: 50px !important; /* Moved closer to the header */
   z-index: 10;
 }
 
 @media (min-width: 749px) {
   .ayurhq-article-back-nav {
-    left: calc((100vw - 700px) / 2 + 24px) !important; /* Aligned exactly with content column left edge on desktop */
+    left: calc((100vw - 672px) / 2 + 24px) !important; /* Aligned with the 672px content column left edge */
   }
 }
 
 @media (max-width: 748px) {
   .ayurhq-article-back-nav {
-    top: 56px !important; /* Positioned a little down in mobile/tablet view */
+    top: 40px !important; /* Moved closer to the header on mobile */
     left: 24px !important;
   }
 }
@@ -1306,7 +1306,7 @@ blockquote p,
 .ayurhq-article-back-pill {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 12px !important; /* Increased spacing between arrow and text */
   padding: 6px 16px !important; /* Compact padding */
   background-color: #FFFFFFD9 !important; /* Translucent background */
   border: 1px solid rgba(26, 26, 26, 0.08) !important; /* Subtle border */
@@ -1326,3 +1326,50 @@ blockquote p,
   border-color: #c94f17 !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
 }
+
+/* Increased arrow glyph size */
+.ayurhq-back-arrow {
+  font-size: 16px !important;
+  line-height: 1 !important;
+  display: inline-block !important;
+}
+
+/* 5. Content Column Width Constraint (width 672px for everything in individual blog pages) */
+.ayurhq-article-main-column {
+  width: 100% !important;
+  max-width: 672px !important;
+}
+
+/* 6. Metadata Row: Remove bottom border line */
+.ayurhq-article-meta {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+/* 7. Hero Image Bottom White Blur Fade Overlay Height */
+.ayurhq-article-hero__image-wrapper::after {
+  height: 180px !important;
+}
+
+/* 8. At a Glance Checkmarks styling */
+.ayurhq-article-glance__item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  padding-left: 0 !important;
+  position: relative !important;
+}
+
+.ayurhq-article-glance__item::before {
+  display: none !important; /* Hide old unicode checkmarks */
+}
+
+.ayurhq-glance-check-icon {
+  flex-shrink: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  stroke: #C2541B !important; /* Bhagwa orange */
+  stroke-width: 3.5 !important;
+  margin-top: 4px !important;
+}
+
