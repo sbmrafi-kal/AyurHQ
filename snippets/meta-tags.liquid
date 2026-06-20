@@ -167,20 +167,23 @@
     {%- endif -%}
   {%- endif -%}
 
-  {%- if custom_title != blank -%}
-    {{ custom_title }} &ndash; AyurHQ
-  {%- elsif request.page_type == 'blog' -%}
-    Blogs - AyurHQ
-  {%- else -%}
-    {%- assign display_title = page_title -%}
-    {%- if template.name == '404' or template == '404' -%}
-      {%- assign display_title = '404 Not Found' -%}
+  {%- capture final_title -%}
+    {%- if custom_title != blank -%}
+      {{ custom_title }} &ndash; AyurHQ
+    {%- elsif request.page_type == 'blog' -%}
+      Blogs - AyurHQ
+    {%- else -%}
+      {%- assign display_title = page_title -%}
+      {%- if template.name == '404' or template == '404' or request.page_type == '404' or page_title contains '404' -%}
+        {%- assign display_title = '404 Not Found' -%}
+      {%- endif -%}
+      {{ display_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless display_title contains 'AyurHQ' %} &ndash; AyurHQ{% endunless -%}
     {%- endif -%}
-    {{ display_title }}
-    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-    {%- unless display_title contains 'AyurHQ' %} &ndash; AyurHQ{% endunless -%}
-  {%- endif -%}
+  {%- endcapture -%}
+  {{ final_title | replace: 'My Store', 'AyurHQ' | replace: shop.name, 'AyurHQ' | strip }}
 </title>
 
 <link
