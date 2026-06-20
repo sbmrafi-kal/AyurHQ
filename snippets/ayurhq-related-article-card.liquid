@@ -28,10 +28,6 @@
         
         <h4 class="ayurhq-article-related-card__title">{{ article.title }}</h4>
         
-        {%- if article.metafields.custom.hindi_title != blank -%}
-          <p class="ayurhq-article-related-card__hindi">{{ article.metafields.custom.hindi_title.value }}</p>
-        {%- endif -%}
-
         {%- if article.excerpt != blank -%}
           <p class="ayurhq-article-related-card__excerpt">{{ article.excerpt | strip_html | truncatewords: 20 }}</p>
         {%- else -%}
@@ -40,7 +36,7 @@
 
         {%- if article.metafields.custom.read_time != blank -%}
           <div class="ayurhq-article-related-card__footer">
-            <span class="ayurhq-article-related-card__read-time">{{ article.metafields.custom.read_time.value }} read</span>
+            <span class="ayurhq-article-related-card__read-time">{{ article.metafields.custom.read_time.value }}</span>
           </div>
         {%- endif -%}
       </div>

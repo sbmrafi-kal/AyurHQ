@@ -700,7 +700,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-article-related-card {
-  background-color: #ffffff;
+  background-color: #FFFCF4;
   border: 1px solid var(--ayurhq-border);
   border-radius: 18px;
   overflow: hidden;
@@ -753,7 +753,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-article-related-card__image-wrapper {
-  height: 180px;
+  height: 125px;
   overflow: hidden;
 }
 
@@ -805,12 +805,12 @@ body.is-ayurveda-page {
   font-size: 14px;
   color: var(--ayurhq-body-text);
   line-height: 1.5;
-  margin: 8px 0 16px 0;
+  margin: 8px 0 12px 0;
 }
 
 .ayurhq-article-related-card__footer {
-  border-top: 1px solid #f5ede2;
-  padding-top: 12px;
+  border-top: none;
+  padding-top: 0;
   margin-top: auto;
 }
 
@@ -916,6 +916,8 @@ body.is-ayurveda-page {
   .ayurhq-article-related {
     padding-left: 24px !important;
     padding-right: 24px !important;
+    border-top: none !important;
+    padding-top: 0 !important;
   }
   /* Push floating button up to avoid overlapping sticky CTA on mobile */
   .ayurhq-floating-guruji {
