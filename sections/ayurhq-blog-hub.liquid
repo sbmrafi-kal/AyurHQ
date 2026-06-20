@@ -405,10 +405,12 @@
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path1_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path1_desc }}</p>
               </div>
-              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path1_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-              <a href="{{ section.settings.path1_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                {{ section.settings.path1_label | default: 'Begin with asana' }}
-              </a>
+              <div class="ayurhq-blog-editorial__row-meta">
+                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path1_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                <a href="{{ section.settings.path1_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path1_label | default: 'Begin with asana' }}
+                </a>
+              </div>
             </article>
 
             <article class="ayurhq-blog-editorial__row">
@@ -416,10 +418,12 @@
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path2_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path2_desc }}</p>
               </div>
-              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path2_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-              <a href="{{ section.settings.path2_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                {{ section.settings.path2_label | default: 'Go to yoga nidra' }}
-              </a>
+              <div class="ayurhq-blog-editorial__row-meta">
+                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path2_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                <a href="{{ section.settings.path2_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path2_label | default: 'Go to yoga nidra' }}
+                </a>
+              </div>
             </article>
 
             <article class="ayurhq-blog-editorial__row">
@@ -427,10 +431,12 @@
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path3_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path3_desc }}</p>
               </div>
-              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path3_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-              <a href="{{ section.settings.path3_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                {{ section.settings.path3_label | default: 'Start with breath' }}
-              </a>
+              <div class="ayurhq-blog-editorial__row-meta">
+                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path3_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                <a href="{{ section.settings.path3_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path3_label | default: 'Start with breath' }}
+                </a>
+              </div>
             </article>
 
             <article class="ayurhq-blog-editorial__row">
@@ -438,10 +444,12 @@
                 <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path4_title }}</h3>
                 <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path4_desc }}</p>
               </div>
-              <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path4_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-              <a href="{{ section.settings.path4_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                {{ section.settings.path4_label | default: 'See the day rhythm' }}
-              </a>
+              <div class="ayurhq-blog-editorial__row-meta">
+                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path4_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                <a href="{{ section.settings.path4_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                  {{ section.settings.path4_label | default: 'See the day rhythm' }}
+                </a>
+              </div>
             </article>
           </div>
         </div>
@@ -597,12 +605,13 @@
               <span class="ayurhq-consultation-step__num">03</span>
               <div class="ayurhq-consultation-step__content">
                 <h3 class="ayurhq-consultation-step__title">Fold it into Today</h3>
-                <p class="ayurhq-consultation-step__desc">The plan points back to classes, breath and quiet reminders already inside DhyanHQ.</p>
+                <p class="ayurhq-consultation-step__desc">The plan points back to classes, breath and quiet reminders already inside AyurHQ.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <p class="ayurhq-consultation-disclaimer">Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment.</p>
     </div>
   </section>
   {%- endif -%}
@@ -664,7 +673,7 @@
           const data = window.AYURHQ_FALLBACK_TOPICS[normalizedTag];
           
           // Set dynamic browser tab title
-          document.title = data.title + ' · Ayurveda · DhyanHQ';
+          document.title = data.title + ' · Ayurveda · AyurHQ';
           
           // Hide normal content, show fallback
           const normalContent = document.getElementById('js-ayurhq-normal-blog-content');

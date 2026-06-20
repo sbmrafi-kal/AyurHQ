@@ -2,7 +2,7 @@
 
 :root {
   --ayurhq-bg: #ffffff;
-  --ayurhq-cream-card-light: #fff8ef;
+  --ayurhq-cream-card-light: #FFF8EC;
   --ayurhq-cream-card-dark: #fff7ea;
   --ayurhq-border: #eadcc8;
   --ayurhq-orange: #c94f17;
@@ -29,10 +29,22 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-container {
-  max-width: 1120px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0;
   box-sizing: border-box;
+}
+
+@media (max-width: 1260px) {
+  .ayurhq-blog-container {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 749px) {
+  .ayurhq-blog-container {
+    padding: 0 20px;
+  }
 }
 
 /* Sibling Sections Spacing */
@@ -58,8 +70,9 @@ body.is-ayurveda-page {
     margin-top: 56px;
     margin-bottom: 56px;
   }
-  .ayurhq-blog-care-paths-section {
-    margin-top: 24px !important;
+  .ayurhq-blog-care-paths-section,
+  .is-ayurveda-page .ayurhq-blog-care-paths-section {
+    margin-top: 0px !important;
   }
 }
 
@@ -217,7 +230,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-care-paths-teaser {
-  background-color: #fff8ef;
+  background-color: #FFF8EC;
   border: 1px solid var(--ayurhq-border);
   border-radius: 16px;
   padding: 32px;
@@ -529,8 +542,8 @@ body.is-ayurveda-page {
 
 .ayurhq-blog-featured-card {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  background-color: #FFFBF4;
+  grid-template-columns: 0.9fr 1.1fr;
+  background-color: #FFF8EC;
   border: 1px solid rgba(26, 18, 8, 0.08);
   border-radius: 24px;
   overflow: hidden;
@@ -564,7 +577,7 @@ body.is-ayurveda-page {
 .ayurhq-blog-featured-card__image-wrapper {
   position: relative;
   height: 100%;
-  min-height: 280px;
+  min-height: 200px;
   overflow: hidden;
 }
 
@@ -576,7 +589,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-featured-card__content {
-  padding: 32px;
+  padding: 16px 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -602,7 +615,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-featured-card__title {
-  font-family: var(--ayurhq-font-body);
+  font-family: var(--ayurhq-font-title);
   font-size: 30px;
   font-weight: 600;
   line-height: 1.16;
@@ -648,7 +661,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-topic-card {
-  background-color: #FFFBF4 !important;
+  background-color: #FFF8EC !important;
   border: 1px solid rgba(26,18,8,0.07);
   border-radius: 18px;
   text-decoration: none;
@@ -707,7 +720,7 @@ body.is-ayurveda-page {
 .ayurhq-blog-topic-card__image-placeholder {
   width: 100%;
   height: 120px;
-  background-color: #FFFBF4;
+  background-color: #FFF8EC;
   border-bottom: 4px solid #C8521B;
   position: relative;
 }
@@ -723,27 +736,26 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-topic-card__content {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 14px;
-  flex: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  padding: 12px 14px !important;
+  flex: 1 !important;
 }
 
 .ayurhq-blog-topic-card__title {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 14.5px !important;
   font-weight: 600 !important;
   color: #1A1A1A !important;
-  margin: 0;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
-  transition: color 0.25s ease;
+  margin: 0 !important;
+  transition: color 0.25s ease !important;
 }
 
 .ayurhq-blog-topic-card:hover .ayurhq-blog-topic-card__title {
@@ -751,19 +763,19 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-topic-card__footer {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  margin-top: 0;
-  width: auto;
+  display: block !important;
+  margin-top: 2px !important;
+  text-align: left !important;
+  width: 100% !important;
 }
 
 .ayurhq-blog-topic-card__hindi {
   font-family: 'Mukta', sans-serif !important;
   font-size: 12.5px !important;
   color: var(--ayurhq-orange) !important;
-  font-weight: 500;
-  white-space: nowrap;
+  font-weight: 500 !important;
+  display: block !important;
+  text-align: left !important;
 }
 
 .ayurhq-blog-topic-card__count {
@@ -918,7 +930,7 @@ body.is-ayurveda-page {
 
 /* Consultation CTA Section */
 .ayurhq-blog-consultation {
-  background-color: #FFFBF4 !important;
+  background-color: #FFF8EC !important;
   border: 1px solid rgba(26, 18, 8, 0.08);
   border-radius: 24px;
   padding: 32px;
@@ -949,8 +961,8 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-consultation__heading {
-  font-family: var(--ayurhq-font-body);
-  font-size: 32px;
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 28px !important;
   font-weight: 600;
   color: var(--ayurhq-dark-text);
   margin: 0 0 16px 0;
@@ -996,7 +1008,7 @@ body.is-ayurveda-page {
 .ayurhq-consultation-step {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 24px;
+  gap: 36px;
   align-items: flex-start;
   padding-block: 22px;
   border-bottom: 1px solid #FFF4E8 !important;
@@ -1012,7 +1024,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-consultation-step__num {
-  font-size: 14px;
+  font-size: 12px !important;
   font-weight: 600;
   color: var(--ayurhq-orange);
   margin-top: 2px;
@@ -1025,6 +1037,7 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-consultation-step__title {
+  font-family: 'Mukta', sans-serif !important;
   font-size: 16px;
   font-weight: 600;
   color: var(--ayurhq-dark-text);
@@ -1036,6 +1049,16 @@ body.is-ayurveda-page {
   color: var(--ayurhq-body-text);
   margin: 0;
   line-height: 1.5;
+}
+
+.ayurhq-consultation-disclaimer {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 13px;
+  color: var(--ayurhq-muted-text);
+  text-align: center;
+  margin-top: 24px;
+  line-height: 1.5;
+  padding: 0 16px;
 }
 
 /* Floating Ask Guruji CTA */
@@ -1244,10 +1267,10 @@ body.is-ayurveda-page {
 }
 
 .ayurhq-blog-editorial {
-  background-color: #FFFBF4 !important;
+  background-color: #FFF8EC !important;
   border: 1px solid #EDE2D2;
   border-radius: 24px;
-  box-shadow: 0 18px 50px rgba(75, 48, 20, 0.08) !important;
+  box-shadow: 0 36px 72px rgba(75, 48, 20, 0.22) !important;
   padding: 24px;
   display: grid;
   grid-template-columns: 0.78fr 1.22fr;
@@ -1265,6 +1288,7 @@ body.is-ayurveda-page {
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
+  align-self: start;
 }
 
 .ayurhq-blog-editorial__teaser-eyebrow {
@@ -1279,7 +1303,7 @@ body.is-ayurveda-page {
 
 .ayurhq-blog-editorial__teaser-heading {
   margin: 0 0 12px;
-  font-family: var(--ayurhq-font-body);
+  font-family: 'Mukta', sans-serif !important;
   font-size: 28px;
   line-height: 1.22;
   font-weight: 600;
@@ -1334,7 +1358,7 @@ body.is-ayurveda-page {
 
 .ayurhq-blog-editorial__row-title {
   margin: 0;
-  font-family: var(--ayurhq-font-body);
+  font-family: 'Mukta', sans-serif !important;
   font-size: 17px;
   line-height: 1.3;
   font-weight: 600;
@@ -1355,10 +1379,9 @@ body.is-ayurveda-page {
 
 .ayurhq-blog-editorial__row-label {
   font-size: 12px;
-  font-weight: 600;
-  color: var(--ayurhq-soft-v4) !important;
+  font-weight: 500;
+  color: var(--ayurhq-muted-text) !important;
   text-align: right;
-  align-self: flex-start;
   text-transform: lowercase;
 }
 
@@ -1368,8 +1391,15 @@ body.is-ayurveda-page {
   color: var(--ayurhq-blue-link);
   text-decoration: none;
   text-align: right;
-  align-self: flex-end;
-  margin-top: 12px;
+}
+
+.ayurhq-blog-editorial__row-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  text-align: right;
+  height: 100%;
 }
 
 .ayurhq-blog-editorial__row:hover .ayurhq-blog-editorial__row-link {
@@ -1541,7 +1571,11 @@ body.is-ayurveda-page {
       "body"
       "link";
     gap: 10px;
-    padding: 16px 0;
+    padding: 16px 20px;
+  }
+
+  .ayurhq-blog-editorial__row-meta {
+    display: contents;
   }
 
   .ayurhq-blog-editorial__row-label {
@@ -1651,7 +1685,7 @@ body.is-ayurveda-page {
 .ayurhq-topic-article-card {
   display: flex;
   flex-direction: column;
-  background-color: #FFFBF3;
+  background-color: #FFF8EC;
   border: 1px solid rgba(26,18,8,0.07);
   border-radius: 16px;
   overflow: hidden;
@@ -1799,5 +1833,13 @@ body.is-ayurveda-page {
 .ayurhq-topic-header *,
 .ayurhq-topic-content-container,
 .ayurhq-topic-content-container * {
+  font-family: 'Mukta', sans-serif !important;
+}
+
+/* Enforce Mukta Font on Care Paths and Vaidya Consultation containers */
+.ayurhq-blog-care-paths-section,
+.ayurhq-blog-care-paths-section *,
+.ayurhq-blog-consultation-section,
+.ayurhq-blog-consultation-section * {
   font-family: 'Mukta', sans-serif !important;
 }

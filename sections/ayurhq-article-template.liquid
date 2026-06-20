@@ -262,7 +262,7 @@
           </div>
         {%- else -%}
           <div class="ayurhq-article-disclaimer">
-            <strong>Disclaimer:</strong> The information provided in this article is for educational purposes only and is not intended to substitute for professional medical advice, diagnosis, or treatment. Always consult with your Ayurvedic physician or qualified healthcare provider before implementing any changes.
+            Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment.
           </div>
         {%- endif -%}
 
@@ -362,7 +362,7 @@
           <p id="js-excerpt" class="ayurhq-article-header__excerpt" style="display: none;"></p>
 
           <div class="ayurhq-article-meta">
-            <span class="ayurhq-article-meta__item">By DhyanHQ Ayurveda desk</span>
+            <span class="ayurhq-article-meta__item">By AyurHQ Ayurveda desk</span>
             <span class="ayurhq-article-meta__separator">•</span>
             <span id="js-read-time" class="ayurhq-article-meta__item ayurhq-article-meta__read-time"></span>
             <span class="ayurhq-article-meta__separator">•</span>
@@ -502,7 +502,7 @@
         return res.json();
       })
       .then(data => {
-        document.title = data.title + ' · Ayurveda · DhyanHQ';
+        document.title = data.title + ' · Ayurveda · AyurHQ';
         
         // Hero Image
         const heroEl = document.getElementById('js-article-hero');
@@ -586,7 +586,7 @@
                   const restStr = p.slice(1);
                   return `
                     <p class="text-[16px] leading-[1.78] text-ink-v4/90 md:text-[17.5px]">
-                      <span class="float-left mr-2 mt-1 font-display text-[52px] font-semibold leading-[0.8] text-bhagwa">${firstChar}</span>${restStr}
+                      <span class="ayurhq-article-drop-cap float-left mr-2 mt-1 font-display text-[52px] font-semibold leading-[0.8] text-bhagwa">${firstChar}</span>${restStr}
                     </p>
                   `;
                 }
@@ -595,7 +595,7 @@
             }
             if (sec.pullQuote) {
               secHtml += `
-                <blockquote class="my-6 border-l-[3px] border-bhagwa pl-5 text-[20px] font-medium italic leading-snug text-ink-v4 md:text-[24px]">
+                <blockquote class="ayurhq-article-quote my-6 border-l-[3px] border-bhagwa pl-5 text-[20px] font-medium italic leading-snug text-ink-v4 md:text-[24px]">
                   “${sec.pullQuote}”
                 </blockquote>
               `;
