@@ -1282,16 +1282,47 @@ blockquote p,
   padding-top: 24px !important; /* Reduced gap between orange line and cards below */
 }
 
-/* 4. Back Arrow Navigation positioning */
-/* "should be coming a little down from its current place and a little to the right side (in desktop view) - a little down in the mobile view" */
+/* 4. Back Arrow Navigation positioning & styling */
 .ayurhq-article-back-nav {
-  top: 40px !important; /* down from 24px */
-  left: max(60px, calc((100vw - 1180px) / 2 + 30px)) !important; /* right from calc((100vw - 1180px) / 2) */
+  position: absolute;
+  top: 72px !important; /* Positioned well down, fully inside the hero image */
+  z-index: 10;
 }
 
-@media (max-width: 749px) {
+@media (min-width: 749px) {
   .ayurhq-article-back-nav {
-    top: 36px !important; /* down on mobile */
+    left: calc((100vw - 700px) / 2 + 24px) !important; /* Aligned exactly with content column left edge on desktop */
+  }
+}
+
+@media (max-width: 748px) {
+  .ayurhq-article-back-nav {
+    top: 56px !important; /* Positioned a little down in mobile/tablet view */
     left: 24px !important;
   }
+}
+
+/* Compact pill design: White 85% opacity background, #1A1A1A text, 12.5px size */
+.ayurhq-article-back-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 16px !important; /* Compact padding */
+  background-color: #FFFFFFD9 !important; /* Translucent background */
+  border: 1px solid rgba(26, 26, 26, 0.08) !important; /* Subtle border */
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  color: #1A1A1A !important; /* #1A1A1A text color */
+  font-size: 12.5px !important; /* 12.5px font size */
+  font-family: 'Mukta', sans-serif !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.25s ease !important;
+}
+
+.ayurhq-article-back-pill:hover {
+  background-color: #ffffff !important;
+  color: #c94f17 !important;
+  border-color: #c94f17 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
 }
