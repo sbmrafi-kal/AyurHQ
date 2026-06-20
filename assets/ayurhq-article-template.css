@@ -1285,19 +1285,19 @@ blockquote p,
 /* 4. Back Arrow Navigation positioning & styling */
 .ayurhq-article-back-nav {
   position: absolute;
-  top: 50px !important; /* Moved closer to the header */
+  top: 64px !important; /* Lowered a bit vertically */
   z-index: 10;
 }
 
 @media (min-width: 749px) {
   .ayurhq-article-back-nav {
-    left: calc((100vw - 672px) / 2 + 24px) !important; /* Aligned with the 672px content column left edge */
+    left: max(260px, calc((100vw - 1260px) / 2 + 290px)) !important; /* Centered between logo and 'Today' tab */
   }
 }
 
 @media (max-width: 748px) {
   .ayurhq-article-back-nav {
-    top: 40px !important; /* Moved closer to the header on mobile */
+    top: 48px !important; /* Lowered a bit vertically on mobile */
     left: 24px !important;
   }
 }
