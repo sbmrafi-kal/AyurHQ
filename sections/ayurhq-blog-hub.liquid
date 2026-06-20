@@ -48,7 +48,7 @@
     <header class="ayurhq-topic-header">
       <div class="ayurhq-topic-header-container">
         <a class="ayurhq-topic-back-link" href="{{ current_blog_url }}">
-          <span>←</span> All topics
+          <span>←</span> {{ section.settings.back_link_label | default: "All topics" }}
         </a>
         <div class="ayurhq-topic-header-title-row">
           <h1 class="ayurhq-topic-header-title">{{ topic_title }}</h1>
@@ -57,7 +57,7 @@
           {%- endif -%}
         </div>
         {%- paginate blog.articles by 24 -%}
-          <p class="ayurhq-topic-header-count">{{ paginate.items }} articles</p>
+          <p class="ayurhq-topic-header-count">{{ paginate.items }} {{ section.settings.count_suffix | default: "articles" }}</p>
         {%- endpaginate -%}
       </div>
     </header>
@@ -191,8 +191,8 @@
   <section class="ayurhq-blog-featured-section">
     <div class="ayurhq-blog-container">
       <div class="ayurhq-section-header">
-        <span class="ayurhq-section-eyebrow">READ · पढ़ें</span>
-        <h2 class="ayurhq-blog-section-title">Everyday Ayurveda, explained simply</h2>
+        <span class="ayurhq-section-eyebrow">{{ section.settings.read_eyebrow | default: "READ · पढ़ें" }}</span>
+        <h2 class="ayurhq-blog-section-title">{{ section.settings.read_heading | default: "Everyday Ayurveda, explained simply" }}</h2>
       </div>
 
       {%- assign featured_article = blog.metafields.custom.featured_article.value -%}
@@ -208,7 +208,7 @@
           </div>
           <div class="ayurhq-blog-featured-card__content">
             <div class="ayurhq-blog-featured-card__meta">
-              <span class="ayurhq-blog-featured-card__badge">FEATURED</span>
+              <span class="ayurhq-blog-featured-card__badge">{{ section.settings.featured_badge | default: "FEATURED" }}</span>
               {%- if featured_article.metafields.custom.read_time != blank -%}
                 <span class="ayurhq-blog-featured-card__read-time">• {{ featured_article.metafields.custom.read_time.value }} read</span>
               {%- endif -%}
@@ -221,7 +221,7 @@
               {{ featured_article.excerpt | default: featured_article.content | strip_html | truncatewords: 30 }}
             </p>
             <a href="{{ featured_article.url }}" class="ayurhq-blog-featured-card__cta">
-              Read this first &rarr;
+              {{ section.settings.featured_cta_label | default: "Read this first" }} &rarr;
             </a>
           </div>
         </div>
@@ -233,14 +233,14 @@
           </div>
           <div class="ayurhq-blog-featured-card__content">
             <div class="ayurhq-blog-featured-card__meta">
-              <span class="ayurhq-blog-featured-card__badge">FEATURED</span>
+              <span class="ayurhq-blog-featured-card__badge">{{ section.settings.featured_badge | default: "FEATURED" }}</span>
             </div>
             <h3 class="ayurhq-blog-featured-card__title">Acidity and heartburn</h3>
             <p class="ayurhq-blog-featured-card__excerpt">
               A calm, plain-language look at why acidity and heartburn happen, what Ayurveda sees behind that burning feeling, and a few everyday habits the tradition suggests you can start today.
             </p>
             <a href="{{ current_blog_url }}/acidity-heartburn" class="ayurhq-blog-featured-card__cta">
-              Read this first &rarr;
+              {{ section.settings.featured_cta_label | default: "Read this first" }} &rarr;
             </a>
           </div>
         </div>
@@ -252,9 +252,11 @@
   <section class="ayurhq-blog-topics-section">
     <div class="ayurhq-blog-container">
       <div class="ayurhq-section-header">
-        <span class="ayurhq-section-eyebrow">BROWSE · विषय</span>
-        <h2 class="ayurhq-blog-section-title">Find your topic</h2>
-        <p class="ayurhq-section-subheading">The full library, sorted into shelves you can actually navigate. {% if blog.articles_count > 0 %}{{ blog.articles_count }}{% else %}250{% endif %} articles</p>
+        <span class="ayurhq-section-eyebrow">{{ section.settings.browse_eyebrow | default: "BROWSE · विषय" }}</span>
+        <h2 class="ayurhq-blog-section-title">{{ section.settings.browse_heading | default: "Find your topic" }}</h2>
+        {%- assign total_count = blog.articles_count | default: 250 -%}
+        {%- assign browse_sub = section.settings.browse_subheading | default: "The full library, sorted into shelves you can actually navigate. [count] articles" | replace: '[count]', total_count -%}
+        <p class="ayurhq-section-subheading">{{ browse_sub }}</p>
       </div>
 
       <div class="ayurhq-blog-topic-grid">
@@ -300,17 +302,25 @@
   </section>
 
   <!-- Vaidya Consult CTA Section -->
-  {%- assign consult_heading = blog.metafields.custom.consultation_heading.value | default: "Book a consultation with a vaidya" -%}
-  {%- assign consult_text = blog.metafields.custom.consultation_text.value | default: "When personal guidance is needed, the intake stays simple and the plan returns to your daily rhythm instead of becoming another disconnected PDF." -%}
-  {%- assign consult_label = blog.metafields.custom.consultation_cta_label.value | default: "WhatsApp consults opening soon" -%}
-  {%- assign consult_link = blog.metafields.custom.consultation_cta_link.value | default: "#" -%}
+  {%- assign consult_heading = blog.metafields.custom.consultation_heading.value | default: section.settings.consult_heading | default: "Book a consultation with a vaidya" -%}
+  {%- assign consult_text = blog.metafields.custom.consultation_text.value | default: section.settings.consult_text | default: "When personal guidance is needed, the intake stays simple and the plan returns to your daily rhythm instead of becoming another disconnected PDF." -%}
+  {%- assign consult_label = blog.metafields.custom.consultation_cta_label.value | default: section.settings.consult_label | default: "WhatsApp consults opening soon" -%}
+  {%- assign consult_link = blog.metafields.custom.consultation_cta_link.value | default: section.settings.consult_link | default: "#" -%}
+  {%- assign consult_eyebrow = section.settings.consult_eyebrow | default: "VAIDYA CONSULT" -%}
+  {%- assign step1_title = section.settings.step1_title | default: "Share the pattern" -%}
+  {%- assign step1_desc = section.settings.step1_desc | default: "Sleep, appetite, digestion, pain, energy and current routine." -%}
+  {%- assign step2_title = section.settings.step2_title | default: "Receive a small plan" -%}
+  {%- assign step2_desc = section.settings.step2_desc | default: "Food timing, practice adjustments and one or two daily changes." -%}
+  {%- assign step3_title = section.settings.step3_title | default: "Fold it into Today" -%}
+  {%- assign step3_desc = section.settings.step3_desc | default: "The plan points back to classes, breath and quiet reminders already inside AyurHQ." -%}
+  {%- assign consult_disclaimer = section.settings.consult_disclaimer | default: "Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment." -%}
 
   <section class="ayurhq-blog-consultation-section">
     <div class="ayurhq-blog-container">
       <div class="ayurhq-blog-consultation">
         <div class="ayurhq-blog-consultation-container">
           <div class="ayurhq-blog-consultation__left">
-            <span class="ayurhq-blog-consultation__eyebrow">VAIDYA CONSULT</span>
+            <span class="ayurhq-blog-consultation__eyebrow">{{ consult_eyebrow }}</span>
             <h2 class="ayurhq-blog-consultation__heading">{{ consult_heading }}</h2>
             <p class="ayurhq-blog-consultation__text">{{ consult_text }}</p>
             <a href="{{ consult_link }}" class="ayurhq-consultation-btn">{{ consult_label }}</a>
@@ -320,28 +330,28 @@
             <div class="ayurhq-consultation-step">
               <span class="ayurhq-consultation-step__num">01</span>
               <div class="ayurhq-consultation-step__content">
-                <h3 class="ayurhq-consultation-step__title">Share the pattern</h3>
-                <p class="ayurhq-consultation-step__desc">Sleep, appetite, digestion, pain, energy and current routine.</p>
+                <h3 class="ayurhq-consultation-step__title">{{ step1_title }}</h3>
+                <p class="ayurhq-consultation-step__desc">{{ step1_desc }}</p>
               </div>
             </div>
             <div class="ayurhq-consultation-step">
               <span class="ayurhq-consultation-step__num">02</span>
               <div class="ayurhq-consultation-step__content">
-                <h3 class="ayurhq-consultation-step__title">Receive a small plan</h3>
-                <p class="ayurhq-consultation-step__desc">Food timing, practice adjustments and one or two daily changes.</p>
+                <h3 class="ayurhq-consultation-step__title">{{ step2_title }}</h3>
+                <p class="ayurhq-consultation-step__desc">{{ step2_desc }}</p>
               </div>
             </div>
             <div class="ayurhq-consultation-step">
               <span class="ayurhq-consultation-step__num">03</span>
               <div class="ayurhq-consultation-step__content">
-                <h3 class="ayurhq-consultation-step__title">Fold it into Today</h3>
-                <p class="ayurhq-consultation-step__desc">The plan points back to classes, breath and quiet reminders already inside AyurHQ.</p>
+                <h3 class="ayurhq-consultation-step__title">{{ step3_title }}</h3>
+                <p class="ayurhq-consultation-step__desc">{{ step3_desc }}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <p class="ayurhq-consultation-disclaimer">Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment.</p>
+      <p class="ayurhq-consultation-disclaimer">{{ consult_disclaimer }}</p>
     </div>
   </section>
 
@@ -352,6 +362,64 @@
 {
   "name": "AyurHQ Ayurveda Blog Hub",
   "settings": [
+    {
+      "type": "header",
+      "content": "General Headings & Navigation"
+    },
+    {
+      "type": "text",
+      "id": "back_link_label",
+      "label": "Back Link Label",
+      "default": "All topics"
+    },
+    {
+      "type": "text",
+      "id": "count_suffix",
+      "label": "Articles Count Suffix",
+      "default": "articles"
+    },
+    {
+      "type": "text",
+      "id": "read_eyebrow",
+      "label": "Read Section Eyebrow",
+      "default": "READ · पढ़ें"
+    },
+    {
+      "type": "text",
+      "id": "read_heading",
+      "label": "Read Section Heading",
+      "default": "Everyday Ayurveda, explained simply"
+    },
+    {
+      "type": "text",
+      "id": "featured_badge",
+      "label": "Featured Badge Label",
+      "default": "FEATURED"
+    },
+    {
+      "type": "text",
+      "id": "featured_cta_label",
+      "label": "Featured Read More Label",
+      "default": "Read this first"
+    },
+    {
+      "type": "text",
+      "id": "browse_eyebrow",
+      "label": "Browse Section Eyebrow",
+      "default": "BROWSE · विषय"
+    },
+    {
+      "type": "text",
+      "id": "browse_heading",
+      "label": "Browse Section Heading",
+      "default": "Find your topic"
+    },
+    {
+      "type": "text",
+      "id": "browse_subheading",
+      "label": "Browse Section Subheading",
+      "default": "The full library, sorted into shelves you can actually navigate. [count] articles"
+    },
     {
       "type": "header",
       "content": "Care Paths Settings"
@@ -627,6 +695,81 @@
       "id": "path4_label",
       "label": "Path 4 Link Label",
       "default": "See the day rhythm"
+    },
+    {
+      "type": "header",
+      "content": "Consultation Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "consult_eyebrow",
+      "label": "Consult Eyebrow",
+      "default": "VAIDYA CONSULT"
+    },
+    {
+      "type": "text",
+      "id": "consult_heading",
+      "label": "Consult Heading",
+      "default": "Book a consultation with a vaidya"
+    },
+    {
+      "type": "textarea",
+      "id": "consult_text",
+      "label": "Consult Description",
+      "default": "When personal guidance is needed, the intake stays simple and the plan returns to your daily rhythm instead of becoming another disconnected PDF."
+    },
+    {
+      "type": "text",
+      "id": "consult_label",
+      "label": "Consult CTA Button Label",
+      "default": "WhatsApp consults opening soon"
+    },
+    {
+      "type": "url",
+      "id": "consult_link",
+      "label": "Consult CTA Button Link"
+    },
+    {
+      "type": "text",
+      "id": "step1_title",
+      "label": "Step 1 Title",
+      "default": "Share the pattern"
+    },
+    {
+      "type": "textarea",
+      "id": "step1_desc",
+      "label": "Step 1 Description",
+      "default": "Sleep, appetite, digestion, pain, energy and current routine."
+    },
+    {
+      "type": "text",
+      "id": "step2_title",
+      "label": "Step 2 Title",
+      "default": "Receive a small plan"
+    },
+    {
+      "type": "textarea",
+      "id": "step2_desc",
+      "label": "Step 2 Description",
+      "default": "Food timing, practice adjustments and one or two daily changes."
+    },
+    {
+      "type": "text",
+      "id": "step3_title",
+      "label": "Step 3 Title",
+      "default": "Fold it into Today"
+    },
+    {
+      "type": "textarea",
+      "id": "step3_desc",
+      "label": "Step 3 Description",
+      "default": "The plan points back to classes, breath and quiet reminders already inside AyurHQ."
+    },
+    {
+      "type": "textarea",
+      "id": "consult_disclaimer",
+      "label": "Consult Disclaimer",
+      "default": "Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment."
     },
     {
       "type": "header",
