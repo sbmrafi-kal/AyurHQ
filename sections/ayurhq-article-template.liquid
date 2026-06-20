@@ -181,7 +181,7 @@
               <h2 class="ayurhq-article-tips__heading">Try This Today</h2>
               <div class="ayurhq-article-tips__grid">
                 {%- for tip in article.metafields.custom.try_this_today.value -%}
-                  {%- assign tip_val = tip.value -%}
+                  {%- assign tip_val = tip.value | default: tip -%}
                   <div class="ayurhq-article-tip-item">
                     <h3 class="ayurhq-article-tip-item__title">
                       <span class="ayurhq-tip-check-icon">
@@ -205,7 +205,7 @@
             <h2 class="ayurhq-article-ingredients__heading">Key Ingredients & Herbs</h2>
             <div class="ayurhq-article-ingredients__grid">
               {%- for herb in article.metafields.custom.ingredient_cards.value -%}
-                {%- assign herb_val = herb.value -%}
+                {%- assign herb_val = herb.value | default: herb -%}
                 <div class="ayurhq-article-ingredient-card">
                   {%- if herb_val.image != blank -%}
                     <div class="ayurhq-article-ingredient-card__image-wrapper">
@@ -236,7 +236,7 @@
             <h2 class="ayurhq-article-definitions__heading">Words to Know</h2>
             <div class="ayurhq-article-definitions__grid">
               {%- for def in article.metafields.custom.words_to_know.value -%}
-                {%- assign def_val = def.value -%}
+                {%- assign def_val = def.value | default: def -%}
                 <div class="ayurhq-article-definition-item">
                   <span class="ayurhq-article-definition-item__term">{{ def_val.term }}. </span>
                   <span class="ayurhq-article-definition-item__desc">{{ def_val.definition }}</span>
@@ -247,7 +247,7 @@
         {%- endif -%}
 
         <!-- Sources Section -->
-        {%- if article.metafields.custom.sources != blank -%}
+        {%- if article.metafields.custom.sources.value != blank -%}
           <section class="ayurhq-article-sources">
             <h3 class="ayurhq-article-sources__title">Scientific Sources & References</h3>
             <div class="ayurhq-article-sources__text">

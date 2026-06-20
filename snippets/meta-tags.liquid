@@ -168,14 +168,18 @@
   {%- endif -%}
 
   {%- if custom_title != blank -%}
-    {{ custom_title }} &ndash; {{ shop.name }}
+    {{ custom_title }} &ndash; AyurHQ
   {%- elsif request.page_type == 'blog' -%}
     Blogs - AyurHQ
   {%- else -%}
-    {{ page_title }}
+    {%- assign display_title = page_title -%}
+    {%- if template.name == '404' or template == '404' -%}
+      {%- assign display_title = '404 Not Found' -%}
+    {%- endif -%}
+    {{ display_title }}
     {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
     {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    {%- unless display_title contains 'AyurHQ' %} &ndash; AyurHQ{% endunless -%}
   {%- endif -%}
 </title>
 
