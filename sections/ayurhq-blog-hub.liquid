@@ -1,31 +1,6 @@
 {{ 'ayurhq-blog-hub.css' | asset_url | stylesheet_tag }}
 
 <div class="ayurhq-blog-wrapper">
-  <!-- Fallback Client-side Topic Page for 404 routing -->
-  <div id="js-ayurhq-fallback-topic-page" style="display: none;">
-    <header class="ayurhq-topic-header">
-      <div class="ayurhq-topic-header-container">
-        <a class="ayurhq-topic-back-link" href="" id="js-fallback-topic-back-btn">
-          <span>←</span> All topics
-        </a>
-        <div class="ayurhq-topic-header-title-row">
-          <h1 class="ayurhq-topic-header-title" id="js-fallback-topic-title"></h1>
-          <span class="ayurhq-topic-header-hindi" lang="hi" id="js-fallback-topic-hindi" style="display: none;"></span>
-        </div>
-        <p class="ayurhq-topic-header-count" id="js-fallback-topic-count"></p>
-      </div>
-    </header>
-
-    <div class="ayurhq-topic-content-container">
-      <div class="ayurhq-topic-articles-grid" id="js-fallback-topic-grid">
-        <!-- Cards will be injected here -->
-      </div>
-    </div>
-  </div>
-
-<div id="js-ayurhq-normal-blog-content">
-
-  
   {%- assign current_blog_url = blog.url -%}
   {%- if current_blog_url == blank -%}
     {%- assign current_blog_url = blogs['ayurveda'].url -%}
@@ -34,273 +9,45 @@
     {%- assign current_blog_url = blogs['news'].url | default: '/blogs/news' -%}
   {%- endif -%}
 
-  {%- assign all_tags = "digestion,food,herbs,weight,immunity,seasons,sleep,mind,habits,joints,skin,hair,eyes,womens,mens,children,elder,basics" | split: "," -%}
-  {%- assign is_tag_page = false -%}
   {%- if current_tags != blank -%}
-    {%- assign is_tag_page = true -%}
-    {%- assign current_tag = current_tags.first -%}
-  {%- endif -%}
+    {%- assign current_tag = current_tags.first | downcase -%}
+    {%- assign topic_title = current_tag | capitalize -%}
+    {%- assign topic_hindi = "" -%}
 
-  {%- assign topic_title = "" -%}
-  {%- assign topic_hindi = "" -%}
-  {%- assign topic_count = 0 -%}
-  {%- assign mock_titles_str = "" -%}
-  {%- assign mock_excerpts_str = "" -%}
-  {%- assign mock_times_str = "" -%}
-  {%- assign mock_handles_str = "" -%}
-  {%- assign mock_images_str = "" -%}
-
-  <script>
-    window.AYURHQ_FALLBACK_TOPICS = {};
-  </script>
-
-  {%- for t in all_tags -%}
-    {%- assign t_title = "" -%}
-    {%- assign t_hindi = "" -%}
-    {%- assign t_count = 0 -%}
-    {%- assign t_titles = "" -%}
-    {%- assign t_excerpts = "" -%}
-    {%- assign t_times = "" -%}
-    {%- assign t_handles = "" -%}
-    {%- assign t_images = "" -%}
-
-    {%- case t -%}
-      {%- when 'digestion' -%}
-        {%- assign t_title = "Digestion & gut" -%}
-        {%- assign t_hindi = "पाचन" -%}
-        {%- assign t_count = 24 -%}
-        {%- assign t_titles = "Acidity and heartburn|Gas and bloating|Easing constipation|Heaviness after meals|Agni: your digestive fire|Ama: the toxins, explained|Ginger for digestion|CCF tea: cumin, coriander, fennel|Saunf and ajwain after meals|A short walk after meals|Why an early, lighter dinner|How and when to eat|Loose motions and what to eat|Feeling nauseous and how to settle it|What your tongue says about your health|No appetite and not feeling hungry|Intestinal worms and how to deal with them|Overeating and that stuffed, indigested feeling|Heavy-headed, hungover mornings|Sour burps and bad breath after eating|Stomach pain and cramps|Piles: comfort and what helps|Signs your digestion (agni) is off|Motion sickness while travelling" -%}
-        {%- assign t_excerpts = "A calm, plain-language look at why acidity and heartburn happen, what Ayurveda sees behind that burning feeling, and a few everyday habits the tradition suggests you can start today.|A plain-language look at how Ayurveda understands gas and bloating, and the simple daily habits the old texts suggest to feel lighter after meals.|What Ayurveda sees behind constipation, and gentle everyday habits around food, routine, and calm that the tradition suggests for smoother digestion.|Why food can sit heavy after a meal, how Ayurveda understands it through digestion and ama, and a few calm everyday habits the tradition suggests.|A plain-language guide to agni, the digestive fire at the centre of Ayurveda, and the simple everyday habits the old texts suggest to keep it steady.|A plain-language guide to what Ayurveda means by ama, why weak digestion is said to create it, and a few gentle everyday habits the old texts suggest.|Learn how Ayurveda understands sluggish digestion and a few simple, everyday ginger and meal habits the classical texts suggest to support a steadier appetite.|A calm, everyday look at the classic cumin-coriander-fennel brew: what Ayurveda sees behind a heavy, bloated, sluggish belly, and gentle habits you can start sipping today.|Why so many Indian homes reach for fennel and ajwain after a meal, what Ayurveda sees behind that heavy, gassy, bloated feeling, and a few calm habits you can try today.|Why a gentle walk after eating may help you feel lighter, and the simple, everyday habits Ayurveda suggests for steady digestion.|Why Ayurveda links a heavy, late dinner to morning heaviness, and the simple food and routine habits the tradition suggests for easier digestion.|A plain guide to the Ayurvedic idea that how and when you eat matters as much as what you eat, with simple habits you can try at your next meal.|Loose motions, called atisara in Ayurveda, are the body flushing out what it cannot digest. The classical texts read them as a sign of weak digestive fire, and the gentle way back is rest, warm fluids, and simple binding foods like rice and buttermilk.|That queasy, about-to-be-sick feeling has a name in Ayurveda: chhardi. Here is the classical view, and the small kitchen habits that settle a turning stomach.|Your tongue carries a daily health report that Ayurvedic physicians have been reading for centuries. A few seconds each morning with a mirror can tell you a great deal about digestion, dosha balance, and the state of your body's inner fire.|When hunger quietly disappears, Ayurveda sees it as a signal from the digestive fire, not just a mood or a busy schedule. Here is what the classical texts say, and how to gently coax appetite back.|Intestinal worms, called Krimi in Ayurveda, are more common than most people admit. The classical texts offer a clear picture of why they take hold and what gentle daily habits help keep them away.|Most of us have felt that heavy, bloated, can't-move feeling after eating too much. Ayurveda has a precise name for it, a clear explanation of what went wrong, and a simple plan for the day after.|That heavy, foggy feeling after a late night of rich food or drink has a name in Ayurveda, and a clear, gentle path out. Here is what the classical texts say, and what actually helps.|Sour burps and bad breath after eating are not just embarrassing, they are your digestive system signalling that food has not been processed properly. Ayurveda reads these as clear signs of ama, the residue of incomplete digestion, and offers simple daily habits to clear them.|Stomach cramps and sudden abdominal pain are something most of us know well. Ayurveda calls this condition Shula, traces it mainly to disturbed Vata, and offers warming, carminative remedies that have been used for centuries.|Arsha, the Ayurvedic term for haemorrhoids, has troubled people for centuries, and the classical texts offer a grounded, practical way to understand and ease it through food, daily habits, and gentle care.|Your body keeps sending quiet signals when digestion is struggling, and Ayurveda has named and studied those signals for thousands of years. Here is how to read them.|Travel nausea is one of the most common complaints on long journeys, and Ayurveda has understood it for centuries as a disturbance of Vata dosha in the channels of movement. Here is what the classical texts say, and what you can do before you even board." -%}
-        {%- assign t_times = "5 min read|4 min read|5 min read|4 min read|5 min read|5 min read|5 min read|4 min read|4 min read|4 min read|4 min read|5 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "acidity-heartburn|gas-and-bloating|constipation-relief|heaviness-after-meals|what-is-agni|what-is-ama|ginger-for-digestion|ccf-tea|saunf-ajwain-after-meals|walk-after-meals|why-an-early-dinner|how-and-when-to-eat|loose-motions-diarrhea|nausea-and-vomiting|reading-your-tongue|low-appetite-no-hunger|worms-in-kids-and-adults|overeating-and-indigestion|hangover-and-heavy-feeling|sour-burps-bad-breath|stomach-pain-cramps|piles-bleeding-and-comfort|signs-your-digestion-is-off|motion-sickness-travel" -%}
-        {%- assign t_images = "acidity-heartburn.webp|gas-and-bloating.webp|constipation-relief.webp|heaviness-after-meals.webp|what-is-agni.webp|what-is-ama.webp|ginger-for-digestion.webp|ccf-tea.webp|saunf-ajwain-after-meals.webp|walk-after-meals.webp|why-an-early-dinner.webp|how-and-when-to-eat.webp|loose-motions-diarrhea.webp|nausea-and-vomiting.webp|reading-your-tongue.webp|low-appetite-no-hunger.webp|worms-in-kids-and-adults.webp|overeating-and-indigestion.webp|hangover-and-heavy-feeling.webp|sour-burps-bad-breath.webp|stomach-pain-cramps.webp|piles-bleeding-and-comfort.webp|signs-your-digestion-is-off.webp|motion-sickness-travel.webp" -%}
-      {%- when 'food' -%}
-        {%- assign t_title = "Food & kitchen" -%}
-        {%- assign t_hindi = "आहार" -%}
-        {%- assign t_count = 16 -%}
-        {%- assign t_titles = "Golden milk (haldi doodh)|Ghee: why a little is prized|The six tastes|Triphala, explained|Buttermilk (takra) for the gut|Is curd good for you, and when|Honey for weight: truth and limits|Ghee or oil: which to cook with|Sattu and cooling summer drinks|Is milk good for you, and how|Food combinations to avoid (viruddha ahara)|Barley and millets for lighter eating|How much should you actually eat|Kadha: the home immunity drink|The right way to eat (ahara vidhi)|Warm vs cold food: why it matters" -%}
-        {%- assign t_excerpts = "A simple, calming guide to the beloved warm turmeric milk many households drink at night, with the classical ideas about its ingredients and how to make it well.|A plain guide to why Ayurveda treats ghee as the finest of the good fats, and a few calm, everyday ways the tradition suggests using a little of it well.|A simple guide to the six tastes Ayurveda recognizes, and how including all of them can make an everyday meal feel more complete and satisfying.|A plain-language guide to what triphala is, why Ayurveda values it for digestion, and the calm, everyday ways the tradition suggests using it.|In Ayurveda, a humble glass of chaas is treated almost like medicine. Here is why the granthas praise takra for digestion, bloating and loose stools, and how to make and time it.|Curd is one of those foods Indians grow up trusting, yet Ayurveda treats it with real caution. The texts say it depends entirely on how and when you eat it.|Ayurveda calls honey madhu and gives it a quiet reputation for scraping away fat, but the same texts add a strict warning: never heat it. Here is what that really means for your weight, in plain terms.|Every Indian kitchen keeps a tin of ghee and a bottle of oil, but Ayurveda teaches that each fat has its own character, and choosing the wrong one for your body or the season quietly works against your health.|Every summer, people reach for iced water or cold drinks to escape the heat. Ayurveda offers something older and more effective: the panaka and sattu tradition, a family of cooling preparations that strengthen the body while genuinely bringing down internal heat.|Milk has nourished Indian households for centuries, but Ayurveda says how you drink it matters as much as whether you drink it. Warm, spiced, and timed right, dugdha builds strength and calm; cold and mismatched, it can become a burden on digestion.|Certain food pairings have been called viruddha ahara, or incompatible foods, in Ayurveda for over two thousand years. Here is what the classical texts actually say, and how to eat more wisely every day.|Barley and millets have been Ayurveda's go-to grains for lighter, cleaner eating for over two thousand years. Here is why the classical texts trusted them, and how to bring them back to your everyday table.|Ayurveda has a precise rule for portion size, called matra, and it has nothing to do with calories. It is simpler, more personal, and surprisingly easy to follow every single day.|Kadha, the spiced herbal decoction simmered on Indian stovetops for centuries, is not a folk remedy invented by grandmothers. It is a classical Ayurvedic preparation called kashaya, and the granthas explain exactly why it works, and when it has limits.|Ayurveda has precise rules for how to eat, not just what to eat. Follow these classical guidelines and your meals will nourish you far more deeply.|Ayurveda has a surprisingly firm view on whether your food should be warm or cold, and it goes well beyond comfort. Classical texts link the temperature of your meal directly to the strength of your digestive fire." -%}
-        {%- assign t_times = "4 min read|5 min read|5 min read|5 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "golden-milk-haldi-doodh|ghee-in-ayurveda|six-tastes-balance-plate|triphala-explained|buttermilk-takra-for-gut|is-curd-good-for-you|honey-for-weight|ghee-vs-oil-which-to-use|sattu-and-cooling-drinks|is-milk-good-for-you|food-combinations-to-avoid|barley-and-millets-for-weight|how-much-to-eat-portion|kadha-immunity-drink|eating-rules-ahara-vidhi|warm-vs-cold-food" -%}
-        {%- assign t_images = "golden-milk-haldi-doodh.webp|ghee-in-ayurveda.webp|six-tastes-balance-plate.webp|triphala-explained.webp|buttermilk-takra-for-gut.webp|is-curd-good-for-you.webp|honey-for-weight.webp|ghee-vs-oil-which-to-use.webp|sattu-and-cooling-drinks.webp|is-milk-good-for-you.webp|food-combinations-to-avoid.webp|barley-and-millets-for-weight.webp|how-much-to-eat-portion.webp|kadha-immunity-drink.webp|eating-rules-ahara-vidhi.webp|warm-vs-cold-food.webp" -%}
-      {%- when 'herbs' -%}
-        {%- assign t_title = "Herbs & remedies" -%}
-        {%- assign t_hindi = "औषधि" -%}
-        {%- assign t_count = 10 -%}
-        {%- assign t_titles = "Jeera (cumin) for digestion|Hing (asafoetida) for gas and bloating|Jaiphal (nutmeg) for sleep|Sesame oil (til) for joints and body|Shilajit for strength and stamina|Brahmi for the mind|Ashwagandha for stress and stamina|Shankhpushpi for calm focus|Triphala and weight: what to expect|Shatavari for women's health" -%}
-        {%- assign t_excerpts = "A pinch of jeera in your dal, a glass of jeera water after a heavy meal: the kitchen habit your grandmother kept is, in Ayurveda, a quiet way to wake up digestion.|A plain-language look at why a pinch of hing in your dal really does help with gas and bloating, what the old Ayurvedic texts say about it, and how to use it kindly at home.|A pinch of jaiphal stirred into warm milk at night is one of Ayurveda's oldest sleep remedies. Here is what the classical texts say and how to use it safely.|Sesame oil, called tila taila in Ayurveda, has been the go-to massage oil for aching joints and tired muscles for thousands of years. Here is what the classical texts say, and how to use it at home.|Shilajit has been used in Ayurveda for centuries as a rasayana for strength, stamina, and joint health. Here is what the classical texts actually say, and how to use it wisely.|Brahmi is one of Ayurveda's most celebrated medhya herbs, used for centuries to support memory, focus, and a calm mind. Here is what the classical texts say, and how to work it into your everyday life.|Ashwagandha, one of Ayurveda's most celebrated rasayana herbs, has been used for centuries to rebuild strength, calm a restless mind, and restore the body's natural resilience after strain.|Shankhpushpi is one of Ayurveda's most celebrated herbs for the mind: a classical medhya rasayana that quiets mental restlessness and supports memory without sedating you.|Triphala is everywhere: morning powder, evening churna, a staple in every Indian grandmother's cabinet. But does it actually help with weight? Here is what the classical texts really say, and what to realistically expect.|Shatavari has been Ayurveda's go-to herb for women for over two thousand years, a cooling, nourishing rasayana that supports hormonal rhythm, milk flow, and quiet vitality across every stage of life." -%}
-        {%- assign t_times = "4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "jeera-cumin-for-digestion|hing-asafoetida-for-bloating|nutmeg-jaiphal-for-sleep|sesame-oil-for-joints|shilajit-for-strength|brahmi-for-the-mind|ashwagandha-for-stress|shankhpushpi-calm-focus|triphala-for-weight|shatavari-for-women" -%}
-        {%- assign t_images = "jeera-cumin-for-digestion.webp|hing-asafoetida-for-bloating.webp|nutmeg-jaiphal-for-sleep.webp|sesame-oil-for-joints.webp|shilajit-for-strength.webp|brahmi-for-the-mind.webp|ashwagandha-for-stress.webp|shankhpushpi-calm-focus.webp|triphala-for-weight.webp|shatavari-for-women.webp" -%}
-      {%- when 'weight' -%}
-        {%- assign t_title = "Weight & cravings" -%}
-        {%- assign t_hindi = "वजन और लालच" -%}
-        {%- assign t_count = 13 -%}
-        {%- assign t_titles = "Slow metabolism and weight|Sugar cravings|Belly fat and a heavy tummy|Too thin and struggling to gain weight|Late-night and emotional eating|Overeating and Eating from Stress|Hard to Gain Weight: Building Healthily|Constant hunger and cravings|Blood sugar: everyday supportive habits|Belly Fat: Why It Settles and How to Shift It|Lightening and Fasting (Langhana): Doing It Wisely|Thyroid Trouble: Weight, Energy and Mood|High Cholesterol: Everyday Habits That Help" -%}
-        {%- assign t_excerpts = "A calm, plain-English look at how Ayurveda understands weight gain, why a strong appetite and heaviness can go together, and the everyday habits the old texts suggest.|Why the urge for something sweet keeps returning after meals, what Ayurveda's general principles suggest, and a few calm everyday habits you can start today.|Why weight settles around the middle, what the classical texts say about medas and kapha, and the everyday habits that gently help it move.|If you eat well but stay thin and clothes hang loose, Ayurveda sees this as karshya, a state where the body is not building enough tissue. The fix is gentle nourishment, not force-feeding.|That second helping at midnight, the chips when you are anxious, the dinner that slides past 10pm: Ayurveda has a calm, practical view of why we eat when we are not hungry, and how to find your rhythm again.|Ayurveda draws a clear line between true hunger and the restless urge to eat when you are tired, bored, or overwhelmed. Understanding that line can quietly change how you relate to food.|If eating well has not made you heavier, Ayurveda says the problem is rarely the food itself. Classical texts describe a specific body type and imbalance that makes gaining healthy weight harder than it looks.|That restless hunger between meals, and the cravings that strike even when you have just eaten, often have roots in imbalanced digestive fire and an incomplete mix of tastes, according to Ayurveda.|Ayurveda describes blood sugar imbalance through a lens thousands of years old, one that looks at digestion, fat tissue, and daily rhythms together. Small, consistent habits matter far more than any single remedy.|Ayurveda names stubborn belly fat 'medas' and explains exactly why it accumulates there, and what daily habits can gently shift it.|Langhana, the Ayurvedic practice of lightening, is far more than skipping meals. Understanding its types and timing can make a one-day fast genuinely restorative rather than draining.|Thyroid imbalance shows up as stubborn weight gain, foggy thinking and mood swings, and Ayurveda has been describing this territory for centuries under the lens of agni and dosha. Here is what the classical texts say, and what you can do today.|Ayurveda has described high cholesterol for centuries as meda dushti, a buildup of excess fat tissue that clogs the body's fine channels. Simple, daily habits rooted in the classical texts can quietly turn the tide." -%}
-        {%- assign t_times = "5 min read|5 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "slow-metabolism-weight|sugar-cravings|belly-fat-and-tummy|too-thin-hard-to-gain-weight|emotional-eating-late-night|overeating-emotional-eating|underweight-gaining-healthily|cravings-and-hunger-control|blood-sugar-everyday-habits|belly-fat-around-middle|water-fasting-langhana|thyroid-and-weight-changes|high-cholesterol-lifestyle" -%}
-        {%- assign t_images = "slow-metabolism-weight.webp|sugar-cravings.webp|belly-fat-and-tummy.webp|too-thin-hard-to-gain-weight.webp|emotional-eating-late-night.webp|overeating-emotional-eating.webp|underweight-gaining-healthily.webp|cravings-and-hunger-control.webp|blood-sugar-everyday-habits.webp|belly-fat-around-middle.webp|water-fasting-langhana.webp|thyroid-and-weight-changes.webp|high-cholesterol-lifestyle.webp" -%}
-      {%- when 'immunity' -%}
-        {%- assign t_title = "Immunity" -%}
-        {%- assign t_hindi = "रोग-प्रतिरोध" -%}
-        {%- assign t_count = 15 -%}
-        {%- assign t_titles = "Frequent colds and immunity|Seasonal allergies and sneezing|Always feeling cold|Ojas: vitality and resilience|Eating for the season|Recurring fever and weakness|Sore throat and cough|Frequent mouth ulcers|Sore Throat: Soothing It Fast and Safely|Mild Fever: Resting and Recovering the Right Way|Falling sick often: building resilience|Frequent urination and burning|Always Catching Something: Building Real Resilience|Weak After Being Sick: Rebuilding Strength|Sinus Trouble: Blocked, Heavy Head" -%}
-        {%- assign t_excerpts = "If you seem to catch every cold going around, here is how Ayurveda understands weak resistance and the simple daily habits the tradition suggests to support the body's resilience and vitality.|Why some people sneeze and react more when the seasons turn, what Ayurveda sees behind it, and a few gentle everyday habits the tradition suggests to support your strength.|If your hands and feet are always cold while everyone around you feels fine, here is how Ayurveda understands warmth, and what gentle everyday habits the tradition suggests to support it.|A plain-language guide to ojas, the inner vitality and resilience that Ayurveda speaks of, and the simple everyday habits the classical texts suggest for keeping it strong.|Why the same meal sits differently in summer and winter, and the simple seasonal eating habits Ayurveda has suggested for centuries.|In Ayurveda, fever is called jwara, and the classical texts treat it as the king of diseases. Here is the calm, grantha-rooted view of why fevers keep returning, and how to rebuild strength once one passes.|Gale ki kharash and a nagging khansi are among the most common things a season change brings. Ayurveda reads them as a quarrel in the throat and chest, and answers mostly with warmth, not force.|Those small white ulcers that flare on the cheek and tongue, again and again, are what Ayurveda calls mukhapaka. The classical texts read them as heat in the mouth, often fed by a tired gut, and they point to cooling, gentle care.|That scratchy, raw feeling in the throat is one of the most common reasons people reach for home remedies. Ayurveda calls it Kanthashula or Kantharoga and has been treating it for thousands of years with simple kitchen ingredients.|When a mild fever hits, Ayurveda sees it not as an enemy to suppress but as agni, the digestive fire, fighting to restore balance. Knowing how to rest, eat, and recover wisely can make all the difference.|If you seem to catch every cold going around, Ayurveda has a two-thousand-year-old explanation: your ojas, the body's finest vital essence, needs rebuilding. Here is how the classical texts say to do it.|Frequent urination and a burning feeling when you pass urine are signs your body's pitta heat is running too high. Ayurveda calls this Mutrakrichra and has gentle, practical remedies rooted in the classical granthas.|Why do some people catch every cough that passes through the office while others sail through winter untouched? Ayurveda has a 2,000-year-old answer rooted in ojas, agni, and daily rhythm.|After a fever or infection clears, many people feel hollowed out for days or weeks. Ayurveda has a precise name and a gentle roadmap for this recovery phase.|Blocked sinuses, a heavy head, and that thick drip at the back of the throat are not just seasonal nuisances. Ayurveda has a name for this condition and a set of gentle, time-tested ways to clear it." -%}
-        {%- assign t_times = "5 min read|5 min read|5 min read|5 min read|5 min read|4 min read|4 min read|3 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "frequent-colds-immunity|seasonal-allergies-sneezing|feeling-cold-circulation|ojas-immunity-vitality|eat-for-the-season|recurring-fever-and-weakness|sore-throat-and-cough|frequent-mouth-and-cold-sores|sore-throat-relief|low-grade-fever-care|low-immunity-falling-sick-often|frequent-urination|falling-sick-often|post-illness-weakness|sinusitis-blocked-sinuses" -%}
-        {%- assign t_images = "frequent-colds-immunity.webp|seasonal-allergies-sneezing.webp|feeling-cold-circulation.webp|ojas-immunity-vitality.webp|eat-for-the-season.webp|recurring-fever-and-weakness.webp|sore-throat-and-cough.webp|frequent-mouth-and-cold-sores.webp|sore-throat-relief.webp|low-grade-fever-care.webp|low-immunity-falling-sick-often.webp|frequent-urination.webp|falling-sick-often.webp|post-illness-weakness.webp|sinusitis-blocked-sinuses.webp" -%}
-      {%- when 'seasons' -%}
-        {%- assign t_title = "Seasons & routine" -%}
-        {%- assign t_hindi = "ऋतुचर्या" -%}
-        {%- assign t_count = 11 -%}
-        {%- assign t_titles = "Staying cool through summer|Winter: the season to build strength|Monsoon: protecting digestion and immunity|Why you fall sick at season-change|Heatstroke and dehydration in summer|Spring: clearing winter's kapha|Autumn: cooling the built-up pitta|Prickly heat and summer rashes|Staying Cool and Well Through Summer (Grishma)|Monsoon Wellness: Eating and Living in the Rains|Dry skin and cracked lips in cold weather" -%}
-        {%- assign t_excerpts = "In peak summer your body's strength dips and the digestive fire weakens. Ayurveda's grishma ritucharya is a simple seasonal reset: cool, light food, more fluids, and a gentler daily rhythm.|In Ayurveda, winter is not the season to diet down. It is the one stretch of the year when your digestion is at its strongest, and the classical texts treat it as the time to eat well and build real strength.|The monsoon season is Ayurveda's most demanding time for the gut. Classical texts warn that agni, the digestive fire, reaches its annual low in these months, and a few small habits can make the difference between an energetic rainy season and months of sluggishness.|Every time the season shifts, your body needs a two-week bridge to adjust. Ayurveda calls this window ritu sandhi, and knowing it can stop the familiar cold, rash, or fatigue before it starts.|Every summer, thousands of people are caught off-guard by loo, India's scorching hot wind, and the dehydration it brings. Ayurveda understood heat illness long before modern medicine named it, and offers time-tested guidance on cooling the body and replacing lost fluids.|When winter gives way to warmth, Ayurveda says the kapha that built up inside us starts to melt, and that thaw is both an opportunity and a challenge. Here is how to work with your body during vasanta ritu instead of against it.|Every autumn, many people notice unexplained skin flare-ups, sharp hunger, night sweats, or a short fuse. Ayurveda has a precise name for what is happening, and a gentle seasonal plan to steady it.|Prickly heat, known in Ayurveda as udarda or pittaja tvak vikara, is a sign that your body's internal heat is overflowing. A few cooling habits drawn from classical texts can bring real relief through the summer months.|Ayurveda calls summer Grishma, a season that drains your vital energy and heats up both body and mind. Here is how the classical texts guide you to stay cool, nourished, and well from May through July.|When the monsoon arrives, Ayurveda says your digestive fire dims and your body becomes vulnerable. A few simple shifts in what you eat and how you live can carry you through the rains feeling steady and well.|When cold, dry winter air strips moisture from your skin and lips, Ayurveda has a precise explanation: Shishira ritu intensifies Vata dosha. Here is how to bring balance back using kitchen staples and gentle daily rituals." -%}
-        {%- assign t_times = "3 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "surviving-the-summer-heat|winter-eating-and-strength|monsoon-digestion-and-immunity|seasonal-junction-ritu-sandhi|heatstroke-and-dehydration|spring-detox-kapha-season|autumn-cooling-pitta-season|prickly-heat-and-rashes|surviving-the-summer|monsoon-health-rains|dry-skin-and-lips-in-cold" -%}
-        {%- assign t_images = "surviving-the-summer-heat.webp|winter-eating-and-strength.webp|monsoon-digestion-and-immunity.webp|seasonal-junction-ritu-sandhi.webp|heatstroke-and-dehydration.webp|spring-detox-kapha-season.webp|autumn-cooling-pitta-season.webp|prickly-heat-and-rashes.webp|surviving-the-summer.webp|monsoon-health-rains.webp|dry-skin-and-lips-in-cold.webp" -%}
-      {%- when 'sleep' -%}
-        {%- assign t_title = "Sleep & energy" -%}
-        {%- assign t_hindi = "नींद और ऊर्जा" -%}
-        {%- assign t_count = 14 -%}
-        {%- assign t_titles = "Better sleep|Always tired|Waking up groggy|An evening wind-down|Trouble falling asleep at night|Waking up in the middle of the night|Sleeping too much and daytime drowsiness|Snoring and Restless Nights: Gentle Help|Too Many Dreams and a Busy Sleeping Mind|Is sleeping in the day okay|Bad dreams and restless sleep|Snoring and heavy, blocked sleep|Warm Milk at Night: The Old Sleep Ritual|Foot Massage Before Bed: Small Habit, Deep Calm" -%}
-        {%- assign t_excerpts = "A calm, practical guide to what classical Ayurveda says about restless nights, and the simple everyday habits the tradition suggests for better rest.|If you wake up tired and drag through the day, here is how Ayurveda understands low energy and a few gentle, everyday habits the old texts suggest to help you rest and recover.|Why mornings feel heavy and slow, and the everyday food, routine, and rest habits Ayurveda leans on for a calmer start to the day.|A calm, classical evening routine from Ayurveda: simple food, oil, and wind-down habits the old texts suggest to help you settle into rest at night.|If you lie in bed wide awake while your body is exhausted, Ayurveda has a name for it, anidra, and a calm, very old set of habits to coax sleep back.|You fall asleep fine, then snap awake at 2 or 3 in the morning and lie there watching the ceiling. Ayurveda has a calm, practical way of understanding this broken sleep and gently mending it.|Always heavy-eyed by mid-afternoon, even after a full night's sleep? Ayurveda calls this atinidra, too much sleep, and treats it as a kapha problem with simple daily fixes.|Snoring is not just a nuisance for your partner. Ayurveda sees it as a signal from your body that Kapha dosha and sluggish channels need gentle attention, and there are simple daily habits that can bring back quiet, restful nights.|Ayurveda has a name for those exhausting nights when your mind refuses to go quiet: it sees vivid, relentless dreams as a signal from an overheated Vata-Pitta imbalance, and it offers surprisingly simple remedies.|Ayurveda has a surprisingly detailed take on the afternoon nap: it is medicine for some and a slow poison for others, depending on your body type and the season you are in.|Ayurveda has named the unsettled, dream-filled night for centuries, tracing it to a disturbed mind and an imbalanced Vata. A few changes at dinner and before bed can make a real difference.|Ayurveda has long recognized the link between Kapha congestion and noisy, heavy sleep. A few targeted evening habits can help you breathe easier and wake up genuinely rested.|Warm milk at night is one of those remedies your grandmother swore by, and Ayurveda has a clear, grounded reason for why it works, and for whom.|Ayurveda has a name for the nightly foot-massage ritual, padabhyanga, and the classical texts prescribe it not as luxury but as medicine for the nervous system. Here is why a few minutes of warm oil on your feet can genuinely change how you sleep." -%}
-        {%- assign t_times = "4 min read|5 min read|4 min read|5 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "better-sleep|always-tired-low-energy|groggy-mornings|evening-wind-down|trouble-falling-asleep|waking-up-at-night|too-much-sleep-daytime-drowsy|snoring-disturbed-sleep|vivid-dreams-restless-mind|is-day-sleep-okay|nightmares-restless-sleep|snoring-and-blocked-sleep|warm-milk-for-sleep|foot-massage-for-sleep" -%}
-        {%- assign t_images = "better-sleep.webp|always-tired-low-energy.webp|groggy-mornings.webp|evening-wind-down.webp|trouble-falling-asleep.webp|waking-up-at-night.webp|too-much-sleep-daytime-drowsy.webp|snoring-disturbed-sleep.webp|vivid-dreams-restless-mind.webp|is-day-sleep-okay.webp|nightmares-restless-sleep.webp|snoring-and-blocked-sleep.webp|warm-milk-for-sleep.webp|foot-massage-for-sleep.webp" -%}
-      {%- when 'mind' -%}
-        {%- assign t_title = "Mind & calm" -%}
-        {%- assign t_hindi = "मन और शांति" -%}
-        {%- assign t_count = 14 -%}
-        {%- assign t_titles = "Stress and overthinking|Brain fog and focus|Sattvic eating|Anxiety and constant worry|Feeling low, heavy and unmotivated|Quick anger and irritability|High blood pressure: a calmer lifestyle|Simple breathing (pranayama) for everyday calm|Forgetfulness and weak memory|Mind won't switch off at night|Mood swings through the day|Feeling Low and Flat: Lifting Heaviness|Nervousness and low confidence|Anxiety and Inner Restlessness: Grounding the Mind" -%}
-        {%- assign t_excerpts = "If your mind keeps racing and you cannot switch it off, here are calm, everyday habits Ayurveda suggests to steady your thoughts and rest better.|Why your mind feels cloudy and scattered, what Ayurveda sees behind it, and a few calm everyday habits the tradition suggests to support clearer focus.|What sattvic eating really means, why Ayurveda links food to a steadier mind, and a few simple, calming food and routine habits you can begin today.|That restless, tight feeling in the chest, the mind running ahead of you. Ayurveda calls it chittodvega and reads it as an aggravated vata in the mind, soothed by warmth, rhythm, and slower breath.|When the mind feels low, heavy and unmotivated, Ayurveda reads it as too much tamas and kapha weighing on a tired spirit. Here is the calm, plain-language view and a few everyday habits the old texts lean toward.|In Ayurveda, a short fuse is rarely just a personality flaw. It is often Pitta, the body's fire, running hot, and there are gentle daily ways to cool it down.|Ayurveda sees high blood pressure not as a single disease but as a sign that vata and pitta have disturbed the flow of rakta, the blood. Small, steady changes to daily routine can support your body's own intelligence in calming that disturbance.|Pranayama, the ancient practice of regulated breathing, offers a direct route to everyday calm by settling the restless quality of vata in both body and mind. Here is what the classical texts say and how to begin today.|Forgetting names, misplacing keys, or reading a page and not retaining it can feel unsettling. Ayurveda looks at weak memory as a mix of attention, sleep, digestion, stress, and the nourishing quality of the mind.|When racing thoughts keep you awake every night, Ayurveda points to an excess of vata, the air-and-space energy that governs the mind. Here is what the classical texts say, and what you can do about it.|By afternoon, a small hunger or a missed sleep hour can tip you into snapping at people you love. Ayurveda saw this pattern centuries ago and called it a rhythm problem, not a character flaw.|When your mood feels flat and your body heavy, Ayurveda sees it not as weakness but as an imbalance that steady, gentle daily choices can begin to lift.|Ayurveda has a precise explanation for the jittery, unsettled feeling that creeps in before a difficult conversation or an uncertain day, and it points to two qualities you can quietly rebuild: ojas and sattva.|Anxiety and inner restlessness have an Ayurvedic name and a clear cause. When Vata dosha rises in the mind, the ancient granthas offer grounding remedies that are as practical today as they were centuries ago." -%}
-        {%- assign t_times = "5 min read|5 min read|4 min read|3 min read|4 min read|4 min read|4 min read|4 min read|3 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "stress-and-overthinking|brain-fog-and-focus|sattvic-eating|anxiety-and-worry|feeling-low-and-heavy|anger-and-irritability|high-blood-pressure-lifestyle|pranayama-for-everyday-calm|poor-memory-forgetfulness|restless-mind-overthinking-at-night|mood-swings-and-irritation|low-mood-feeling-down|low-confidence-nervousness|anxiety-restlessness" -%}
-        {%- assign t_images = "stress-and-overthinking.webp|brain-fog-and-focus.webp|sattvic-eating.webp|anxiety-and-worry.webp|feeling-low-and-heavy.webp|anger-and-irritability.webp|high-blood-pressure-lifestyle.webp|pranayama-for-everyday-calm.webp|poor-memory-forgetfulness.webp|restless-mind-overthinking-at-night.webp|mood-swings-and-irritation.webp|low-mood-feeling-down.webp|low-confidence-nervousness.webp|anxiety-restlessness.webp" -%}
-      {%- when 'habits' -%}
-        {%- assign t_title = "Daily habits" -%}
-        {%- assign t_hindi = "दिनचर्या" -%}
-        {%- assign t_count = 16 -%}
-        {%- assign t_titles = "Tongue scraping|Oil pulling|Warm water in the morning|Abhyanga: self-massage|A simple morning routine|Oiling the feet before bed|Honey-lemon-warm-water in the morning|Ear oiling (karna purana) explained|Skipping meals and water-fasting: is it safe|Exercise: the right amount (vyayama)|Nasya: Why Ayurveda Puts Oil in Your Nose|Nasya: nose drops for head and senses|Fasting (langhana) the Ayurvedic way|Staying hydrated the Ayurvedic way|Bathing the Ayurvedic Way: Water, Timing, Temperature|Dry and Powder Massage (Udvartana): Skin and Weight" -%}
-        {%- assign t_excerpts = "A calm, plain-English guide to why Ayurveda places tongue scraping in the daily routine, what the white coating means, and a simple two-minute morning habit you can start today.|A simple morning habit from Ayurveda, what oil pulling is, how to do it gently, and what it can quietly support for your mouth and breath.|Learn why the morning matters so much in Ayurveda, what the tradition sees behind a sluggish start, and a few simple habits, warm water, tongue cleaning, oil massage, you can begin today.|A calm, plain-English guide to abhyanga, the daily oil self-massage Ayurveda suggests, what it is, why the tradition values it, and a simple way to begin at home.|A calm, beginner-friendly walk through the classical Ayurvedic morning routine (dinacharya), with a few small habits you can start tomorrow.|A few minutes of warm oil on the soles, an old Ayurvedic bedtime habit, settles a restless body and a busy mind before sleep.|The honey-lemon-warm-water glass is on every morning routine list. Ayurveda is gently in favour, with one firm rule the wellness reels usually miss: never heat the honey.|Karna purana, the old habit of putting warm oil in the ears, is meant to soothe vata, soften dryness and ease stubborn earwax. Here is the gentle, safe way to do it at home.|Ayurveda has always made room for fasting, but it draws a careful line between fasting that restores and fasting that depletes. Here is how to tell which side you are on.|Ayurveda says exercise is medicine, but the dose matters. The classical texts lay out a half-strength rule that most modern fitness culture ignores, and your body already knows the signal.|Nasya, the ancient practice of putting oil into your nostrils, is one of Ayurveda's most overlooked daily rituals. A few drops in the morning can clear your head, ease sinus congestion, and help you sleep more soundly.|Nasya, the Ayurvedic practice of putting a few drops of medicated oil into each nostril, takes under two minutes a day and quietly supports your head, sinuses, voice, and mental clarity.|Langhana, the Ayurvedic practice of fasting, is not about deprivation. It is a precise tool for clearing ama, the sticky residue of undigested food, and restoring the body's natural lightness.|Ayurveda has thought deeply about water, not just how much to drink but how, when, and what kind. A few simple shifts in how you sip can make a surprising difference to your energy and digestion.|Ayurveda has clear, practical guidance on when to bathe, how hot the water should be, and why oil comes first. Following these habits takes minutes but the benefits, according to classical texts, are surprisingly wide-ranging.|Udvartana, the Ayurvedic practice of dry powder massage, has been used for centuries to invigorate the skin, support healthy weight, and balance excess kapha. Here is what the classical texts say, and how to try it at home." -%}
-        {%- assign t_times = "4 min read|4 min read|5 min read|5 min read|5 min read|4 min read|3 min read|3 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "tongue-scraping|oil-pulling|warm-water-morning|self-massage-abhyanga|simple-morning-routine|feet-oiling-padabhyanga-sleep|warm-water-honey-lemon-morning|ear-oiling-karna-purana|is-fasting-on-water-safe|exercise-the-right-amount|nasya-nose-drops|nasya-nose-drops-explained|fasting-the-ayurvedic-way|dehydration-and-electrolytes|bathing-snana-habits|dry-brushing-udvartana" -%}
-        {%- assign t_images = "tongue-scraping.webp|oil-pulling.webp|warm-water-morning.webp|self-massage-abhyanga.webp|simple-morning-routine.webp|feet-oiling-padabhyanga-sleep.webp|warm-water-honey-lemon-morning.webp|ear-oiling-karna-purana.webp|is-fasting-on-water-safe.webp|exercise-the-right-amount.webp|nasya-nose-drops.webp|nasya-nose-drops-explained.webp|fasting-the-ayurvedic-way.webp|dehydration-and-electrolytes.webp|bathing-snana-habits.webp|dry-brushing-udvartana.webp" -%}
-      {%- when 'joints' -%}
-        {%- assign t_title = "Joints & body" -%}
-        {%- assign t_hindi = "जोड़ और शरीर" -%}
-        {%- assign t_count = 17 -%}
-        {%- assign t_titles = "Stiff, achy joints|Caring for your knees|Headaches: common causes|Puffiness and water retention|Lower back pain|Neck and shoulder stiffness|Knee pain on stairs and squatting|Muscle cramps and spasms|Cracking and popping joints|Stiff joints in the morning|Gout and toe joint pain|Morning Joint Stiffness: Loosening Up Easier|Lower Back Pain: Everyday Relief and Prevention|Neck and Shoulder Stiffness: Releasing the Tension|Swelling in legs and feet|Muscle Cramps and Spasms: Why and What Helps|Swollen, Hot Joints: When Inflammation Flares" -%}
-        {%- assign t_excerpts = "Why Ayurveda links stiff, achy joints to cold, dry 'vata', and the simple warmth-and-oil habits the classical texts suggest you can try today.|Why knees feel stiff and achy, what Ayurveda sees behind it, and a few warm, everyday habits the old texts suggest to keep them comfortable.|Why everyday tension-type headaches happen, what Ayurveda sees behind the dull throb, and a few simple, calming habits you can try today.|Why your face, hands, or feet can feel puffy, heavy, and sluggish, what Ayurveda sees behind that everyday water-heavy feeling, and a few calm habits the tradition suggests to feel lighter.|In Ayurveda, the dull ache in your lower back is mostly an aggravated Vata problem, and the old answer is warmth, oil, and gentle movement rather than force.|Why your neck and shoulders go tight after a long day at the screen, what Ayurveda sees behind the stiffness, and gentle warmth-and-oil habits you can try at home.|Pain when you climb stairs or squat is often the joint asking for warmth and oil. Ayurveda calls this sandhigata vata, the dry wind that settles in the knee.|Muscle cramps, or what many people call 'nas chadhna,' have a clear explanation in Ayurveda: aggravated vata and depleted tissues. Here is what the classical texts say, and how simple warmth, oil, and nourishing food can bring lasting relief.|That satisfying pop when you stretch your knuckles or stand up from the floor may seem harmless, but Ayurveda reads joint sounds as an early message from your body about dryness and Vata imbalance.|That early-morning stiffness in your fingers, knees, or hips has a name in Ayurveda: ama-vata. Understanding it can change how you start your day.|That burning, swollen big toe joint is not just a modern diet problem: Ayurveda called it Vatarakta centuries ago and traced it to the same foods and habits we still overdo today.|That familiar stiffness when you first get out of bed, where your knees and fingers need a few minutes before they cooperate, has a clear explanation in Ayurveda, along with gentle, practical ways to ease it every morning.|Lower back pain is one of the most common complaints in Indian households. Ayurveda calls it Kati-shula and traces it to an aggravated Vata dosha, offering surprisingly practical everyday remedies that have stood for centuries.|Neck and shoulder stiffness is one of the most common complaints in modern life, but Ayurveda recognized it centuries ago as Manyastambha, a Vata disorder that responds beautifully to warmth, oil, and mindful movement.|Leg swelling, or shotha, is one of Ayurveda's most recognised signs that the body's channels and digestive fire need attention. Here is what the classical texts say, and what you can do about it at home.|Muscle cramps and spasms have a root in Vata imbalance, according to classical Ayurvedic texts. Warm oil, the right foods, and gentle movement can ease the pain and prevent it from coming back.|When your joints swell and burn, Ayurveda points to a toxic buildup called ama blocking the body's channels. Understanding this root cause can help you make simple, daily choices that bring lasting relief." -%}
-        {%- assign t_times = "5 min read|5 min read|4 min read|4 min read|3 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "stiff-achy-joints|caring-for-your-knees|headaches-common-causes|puffiness-water-retention|back-pain-lower-back|neck-and-shoulder-stiffness|knee-pain-going-up-stairs|muscle-cramps-and-spasms|joint-cracking-sounds|morning-joint-stiffness|gout-uric-acid-toe-pain|morning-stiffness-joints|lower-back-pain|neck-shoulder-stiffness|swelling-in-legs-and-feet|muscle-cramps-spasms|swollen-painful-joints" -%}
-        {%- assign t_images = "stiff-achy-joints.webp|caring-for-your-knees.webp|headaches-common-causes.webp|puffiness-water-retention.webp|back-pain-lower-back.webp|neck-and-shoulder-stiffness.webp|knee-pain-going-up-stairs.webp|muscle-cramps-and-spasms.webp|joint-cracking-sounds.webp|morning-joint-stiffness.webp|gout-uric-acid-toe-pain.webp|morning-stiffness-joints.webp|lower-back-pain.webp|neck-shoulder-stiffness.webp|swelling-in-legs-and-feet.webp|muscle-cramps-spasms.webp|swollen-painful-joints.webp" -%}
-      {%- when 'skin' -%}
-        {%- assign t_title = "Skin & glow" -%}
-        {%- assign t_hindi = "त्वचा" -%}
-        {%- assign t_count = 16 -%}
-        {%- assign t_titles = "Hair fall|Dull skin, natural glow|Dry skin in winter|Dandruff and itchy scalp|Dark circles and tired eyes|Acne and pimples|Itchy skin and rashes|Excess sweating and body odour|Acne and Pimples: What Helps from the Inside Out|Oily Skin and Open Pores: Calming Excess Oil|Early wrinkles and aging skin|Oily skin and large pores|Pigmentation and dark spots|Dark Spots and Pigmentation: Evening Out Your Skin|Sun Tan and Sun-Damaged Skin: Cooling Repair|Itchy Skin and Rashes: Why It Happens and What Calms It" -%}
-        {%- assign t_excerpts = "A calm, practical look at how Ayurveda supports hair and scalp health through nourishment, daily routine, and head-oiling, with simple habits you can start today.|Why your skin looks tired and dull, what Ayurveda sees behind it, and a few calm daily habits the tradition suggests to support a natural glow from within.|Why skin turns dry, tight, and flaky in the cold months, and the simple daily habits Ayurveda suggests to keep it soft and comfortable.|A calm, plain-English look at general scalp comfort the Ayurvedic way, with simple food and routine habits you can start today.|Why dark circles and tired eyes show up, what Ayurveda actually says (and does not say) about them, and a few gentle everyday habits you can start today.|Pimples that flare across the face in the teens and twenties have a clear place in Ayurveda: an imbalance of pitta, kapha, and the blood. Here is the classical view, with gentle everyday habits to calm the skin.|A calm, plain-language look at why skin itches and breaks out in rashes, what Ayurveda sees behind that heat and irritation, and the gentle cooling habits the old texts suggest you can start today.|Excess sweating and body odour trouble most of us, especially through the hot months. Ayurveda names this condition Atisvedana and traces it, with practical precision, to Pitta dosha and the body's own cooling channels.|Ayurveda has understood acne for over two thousand years, tracing it to excess Pitta and impure blood rather than just surface-level bacteria. Here is what the classical texts say, and how you can work with your body to calm breakouts from the inside out.|Oily skin and open pores are usually a sign of excess oil production, which Ayurveda traces to an imbalance in Kapha and Pitta doshas, and has addressed with gentle herbal routines for thousands of years.|Ayurveda links early wrinkles to Vata imbalance and a decline in rasa, the body's most refined nourishing tissue. Simple daily habits of oiling, warm food, and rest can slow this process far more than any cream.|Ayurveda links oily skin and large pores to an imbalance of Kapha and Pitta doshas, and the classical texts offer a surprisingly practical daily routine to bring your complexion back to its natural clarity.|Dark spots and uneven skin tone are ancient concerns in Ayurveda, understood as Vyanga, a pitta-vata imbalance that dims the face's natural radiance. Classical texts offer cooling herbs, sensible sun habits, and time-tested face pastes that work gently over weeks.|Ayurveda calls dark spots and uneven skin tone 'Vyanga,' a condition rooted in imbalanced doshas, poor digestion, and sun exposure, and classical granthas describe a whole-body approach to clearing the complexion from the inside out.|Summer sun leaves more than just a glow: Ayurveda explains why skin darkens after sun exposure and offers time-tested cooling remedies to gently repair it.|Itchy skin and rashes can come from heat, dryness, allergy, infection, or diet triggers. Ayurveda looks at it through Kandu, itching, and the wider skin disorder group called Kushtha, while still treating sudden or severe rashes as a reason for medical care." -%}
-        {%- assign t_times = "5 min read|5 min read|5 min read|5 min read|4 min read|3 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "hair-fall|dull-skin-natural-glow|dry-skin-in-winter|dandruff-itchy-scalp|dark-circles-tired-eyes|acne-and-pimples|itchy-skin-and-rashes|sweating-and-body-odour|acne-pimples-natural-care|oily-skin-large-pores|premature-wrinkles-aging-skin|oily-skin-and-large-pores|pigmentation-and-dark-spots|dark-spots-pigmentation|skin-tan-sun-exposure|itchy-skin-rashes" -%}
-        {%- assign t_images = "hair-fall.webp|dull-skin-natural-glow.webp|dry-skin-in-winter.webp|dandruff-itchy-scalp.webp|dark-circles-tired-eyes.webp|acne-and-pimples.webp|itchy-skin-and-rashes.webp|sweating-and-body-odour.webp|acne-pimples-natural-care.webp|oily-skin-large-pores.webp|premature-wrinkles-aging-skin.webp|oily-skin-and-large-pores.webp|pigmentation-and-dark-spots.webp|dark-spots-pigmentation.webp|skin-tan-sun-exposure.webp|itchy-skin-rashes.webp" -%}
-      {%- when 'hair' -%}
-        {%- assign t_title = "Hair & scalp" -%}
-        {%- assign t_hindi = "बाल" -%}
-        {%- assign t_count = 11 -%}
-        {%- assign t_titles = "Premature greying of hair|How and why to oil your hair|Oily, Greasy Scalp: Balancing the Roots|Help Your Hair Grow: What Actually Supports Length|Split Ends and Damaged Hair: Repair and Prevent|Dry, frizzy, rough hair|Premature Grey Hair: Slowing It Down Naturally|Thinning Hair and Low Volume: Thicker-Looking Hair|Itchy, Flaky Scalp Beyond Dandruff|Hair Oiling Done Right: How, When, and Which Oil|Head Lice: Getting Rid of Them Naturally" -%}
-        {%- assign t_excerpts = "Why hair greys early, the pitta-heat link Ayurveda describes, and the calm, cooling habits the old texts suggest, with honest words on what oiling and diet can and cannot do.|Ayurveda has long prescribed a simple daily ritual called Shiroabhyanga, or head oiling, not just for healthy hair but for calmer nerves and deeper sleep. Here is what the classical texts say and how to make it work in your week.|An oily, greasy scalp is one of the most common hair complaints, yet Ayurveda has understood its root cause for centuries: an imbalance of Kapha and Pitta doshas at the scalp. Here is how the classical texts explain it, and what you can do about it every day.|Ayurveda has a detailed science of hair nourishment rooted in the classical granthas: the right herbs, oils, and scalp habits can make a real difference to how your hair grows.|Split ends and damaged hair are a common frustration, and Ayurveda traces them directly to excess Vata dosha drying out the hair shaft from within. Simple oiling rituals and a few kitchen herbs can seal the damage and prevent more.|Dry, frizzy hair is often a sign that your body is running on too much Vata, the airy, mobile force that governs dryness throughout the body. Ayurveda offers a whole-body approach to restoring lustre, from the oils you put on your scalp to the food you eat at dinner.|Premature grey hair, known in Ayurveda as palitya, is more than a cosmetic worry. Classical texts trace it to excess pitta heat and offer practical, everyday remedies that have stood for centuries.|Ayurveda has long held that the scalp is nourished from within, and that thinning hair is a sign the body needs deeper care, not just a new shampoo.|An itchy, flaky scalp is more than a cosmetic nuisance: Ayurveda traces it to an imbalance of Vata or Kapha on the skin of the head, and classical texts offer simple, time-tested ways to calm it.|Hair oiling is one of Ayurveda's oldest daily rituals, and a few small details, when done right and how often, make all the difference between nourishment and buildup.|Head lice have troubled families for centuries, and Ayurveda offers a calm, practical approach rooted in kitchen herbs and careful combing that is gentle enough for children." -%}
-        {%- assign t_times = "4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "premature-hair-greying|oiling-your-hair|oily-greasy-scalp|hair-growth-faster|split-ends-hair-damage|dry-frizzy-hair|premature-grey-hair|thinning-hair-volume|scalp-itching-flaking|hair-oiling-how-to|head-lice-natural-care" -%}
-        {%- assign t_images = "premature-hair-greying.webp|oiling-your-hair.webp|oily-greasy-scalp.webp|hair-growth-faster.webp|split-ends-hair-damage.webp|dry-frizzy-hair.webp|premature-grey-hair.webp|thinning-hair-volume.webp|scalp-itching-flaking.webp|hair-oiling-how-to.webp|head-lice-natural-care.webp" -%}
-      {%- when 'eyes' -%}
-        {%- assign t_title = "Eyes, ears & mouth" -%}
-        {%- assign t_hindi = "आँख, कान, मुँह" -%}
-        {%- assign t_count = 11 -%}
-        {%- assign t_titles = "Tired, strained eyes from screens|Dry, gritty or watering eyes|Sensitive teeth and toothache|Blocked, stuffy nose|Daily care to protect eyesight|Ear pain and blocked ears|Ringing or buzzing in the ears|Breathlessness and wheezing|Hoarse voice and throat care|Daily Eye Care: Simple Habits for Tired Eyes|Bleeding gums and daily mouth care" -%}
-        {%- assign t_excerpts = "Hours of screens leave your eyes dry, hot and aching. Ayurveda treats the eye as a seat of fire, and its old advice on rest, cooling and triphala still fits a workday glued to a glowing rectangle.|Dry, gritty, or watering eyes are more common than ever. Ayurveda has named and understood this condition for centuries, and its daily remedies are simple enough for anyone.|Tooth pain and that sharp zing when you sip something cold have troubled people for centuries. Ayurveda has a clear explanation and a set of everyday habits that can bring real relief.|When your nose feels blocked and heavy, Ayurveda points to an excess of kapha dosha clogging the channels of the head. Simple warmth, oil, and a lighter plate can open things up again.|Ayurveda has kept eyes sharp for centuries with habits as simple as oiling your feet at night. Here is the classical view on daily eye care, straight from the granthas.|That dull ache deep in your ear, or the muffled feeling after a flight or a cold, has a name in Ayurveda: Karnashula. Classical texts explain it largely as a disorder of Vata dosha, and they offer a surprisingly gentle fix that grandmothers across India have quietly practiced for centuries.|A persistent ringing or buzzing in the ears, known in Ayurveda as karna-nada, is understood as an imbalance of vata in the head and ears. Classical texts offer gentle, time-tested remedies that work alongside modern care.|In Ayurveda, breathlessness and wheezing are not just lung problems; they trace back to an imbalance of kapha and vata that can be gently managed with warmth, light eating, and the right daily habits.|When your voice turns rough or disappears after a long day of talking, Ayurveda calls it Swarabheda and offers a clear, practical path back to clarity through warm care, voice rest, and time-tested herbs.|Ayurveda calls the eyes one of the five organs of perception, and the classical texts offer a complete daily routine, from triphala washes to ghee application, to keep them clear, cool, and comfortable even in a screen-heavy life.|Bleeding gums are something most of us quietly ignore, rinsing and moving on. Ayurveda names the condition Danta-mula Roga and offers a daily mouth-care ritual that goes well beyond toothpaste." -%}
-        {%- assign t_times = "4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "tired-strained-eyes-screen|dry-and-watery-eyes|sensitive-teeth-and-toothache|blocked-stuffy-nose|caring-for-your-eyesight|ear-pain-and-blocked-ears|ringing-in-the-ears|breathlessness-and-wheezing|hoarse-voice-and-throat-care|eye-care-netra|bleeding-gums-and-mouth-care" -%}
-        {%- assign t_images = "tired-strained-eyes-screen.webp|dry-and-watery-eyes.webp|sensitive-teeth-and-toothache.webp|blocked-stuffy-nose.webp|caring-for-your-eyesight.webp|ear-pain-and-blocked-ears.webp|ringing-in-the-ears.webp|breathlessness-and-wheezing.webp|hoarse-voice-and-throat-care.webp|eye-care-netra.webp|bleeding-gums-and-mouth-care.webp" -%}
-      {%- when 'womens' -%}
-        {%- assign t_title = "Women's wellbeing" -%}
-        {%- assign t_hindi = "स्त्री-स्वास्थ्य" -%}
-        {%- assign t_count = 13 -%}
-        {%- assign t_titles = "Period comfort and self-care|Irregular periods|Painful period cramps|Heavy periods and excess bleeding|Supporting fertility, gently|Pregnancy month-by-month self-care basics|Mood and bloating before periods|PCOS-type cycles and weight|Recovery and care after delivery|Low breast milk and how to support it|Menopause, hot flushes and sleep|White discharge (leucorrhoea)|Heavy Periods: Calming Excess Flow" -%}
-        {%- assign t_excerpts = "A calm, practical guide to how Ayurveda views the monthly cycle, with simple food, rest, and routine habits the classical texts suggest for those uncomfortable days.|In Ayurveda, the monthly cycle has its own rhythm, governed by Vata and warmth in the body. When periods come late, early, or unpredictably, the granthas point to a disturbed flow rather than a broken machine.|Period cramps are mostly a vata problem in Ayurveda, eased by warmth, rest, gentle oiling, and easy-to-digest food during your bleed.|In Ayurveda, periods that run too heavy or too long are called raktapradara, and the classical view ties them mostly to excess heat (pitta) in the blood. Cooling, calming food and rest are the everyday starting point.|Ayurveda has always seen conception as a meeting of two kinds of vitality. Here is what the classical texts say about preparing your body and mind before trying to conceive.|Ayurveda has mapped out every month of pregnancy with specific foods, herbs, and habits. Here is what the classical granthas say, in plain everyday terms.|Before your period arrives, your body is not malfunctioning. Ayurveda has a precise, centuries-old explanation for the mood swings, bloating, and restlessness that arrive in those few days, and simple daily habits that ease them.|Irregular cycles, stubborn weight, and a persistent sense of heaviness: Ayurveda has been describing this cluster of symptoms for centuries, long before it had an acronym. Here is what the classical texts say and how to gently shift the pattern.|Ayurveda has a dedicated protocol for the weeks after childbirth, called sutika paricharya, built around warming food, oil, rest, and a careful rebuilding of the mother's digestion and strength.|Low breast milk is more common than most new mothers are told, and Ayurveda has a quiet, nourishing answer rooted in a concept called stanya kshaya, a depletion of the milk-forming tissue that classical physicians mapped in careful detail two thousand years ago.|Menopause brings real physical changes, and Ayurveda has a name and a framework for them. Here is what the classical texts say, and what you can do every day to feel steadier.|Shweta pradara, the Ayurvedic name for leucorrhoea, is one of the most common yet least discussed concerns among women. Classical texts explain it through an imbalance of kapha and the build-up of ama, and gentle daily habits can make a real difference.|Heavy periods are common and often exhausting, but Ayurveda has understood this condition for centuries, naming it Raktapradara and tracing it to an excess of the fiery Pitta dosha in the channels that govern menstrual flow." -%}
-        {%- assign t_times = "5 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "period-comfort-self-care|irregular-periods|painful-periods-cramps|heavy-periods-bleeding|trying-to-conceive-fertility|pregnancy-self-care-basics|pms-mood-before-periods|pcos-irregular-cycles-weight|after-delivery-recovery|low-breast-milk|menopause-hot-flushes|white-discharge-leucorrhoea|heavy-periods-flow" -%}
-        {%- assign t_images = "period-comfort-self-care.webp|irregular-periods.webp|painful-periods-cramps.webp|heavy-periods-bleeding.webp|trying-to-conceive-fertility.webp|pregnancy-self-care-basics.webp|pms-mood-before-periods.webp|pcos-irregular-cycles-weight.webp|after-delivery-recovery.webp|low-breast-milk.webp|menopause-hot-flushes.webp|white-discharge-leucorrhoea.webp|heavy-periods-flow.webp" -%}
-      {%- when 'mens' -%}
-        {%- assign t_title = "Men's wellbeing" -%}
-        {%- assign t_hindi = "पुरुष-स्वास्थ्य" -%}
-        {%- assign t_count = 9 -%}
-        {%- assign t_titles = "Low energy and stamina in men|Vitality and vigour: the vajikarana idea|Hair thinning and early baldness in men|Low Stamina and Feeling Run Down|Weak urine flow as men age|Premature greying of hair and beard|Feeling too much heat in the body|Erectile Difficulty: Causes and Support|Low Sperm Count: Boosting Male Fertility" -%}
-        {%- assign t_excerpts = "Feeling drained, low on stamina, not quite yourself? Ayurveda has a clear, calm way of understanding men's energy, and a few everyday habits to rebuild it.|In Ayurveda, 'vajikarana' is the gentle science of strength and vitality, built on nourishment and good sleep, not the quick fixes the word gets confused with today.|In Ayurveda, hair loss is read as the body's heat speaking through the scalp. Here is the classical view of khalitya and indralupta, and the honest limits of what oil and diet can do.|Ayurveda has understood low stamina in men for centuries, tracing it to depleted ojas and weakened bala. Simple daily habits rooted in the classical granthas can help you feel steady and strong again.|As men age, a slow or weak urine stream is one of those quiet troubles that many quietly live with. Ayurveda named this pattern centuries ago and offers practical, daily habits that can genuinely help.|Premature greying of hair and beard, known in Ayurveda as palitya, is not just cosmetic. The classical texts trace it to excess pitta and practical, cooling habits can genuinely slow it down.|Feeling too much heat in the body, with burning sensations, acid reflux, or a short temper, is something Ayurveda has understood for centuries. It calls this state 'pitta vriddhi,' and the classics offer a gentle, food-first path back to coolness.|Klaibya, the Ayurvedic term for erectile difficulty, has been addressed in classical texts for centuries. Understanding its roots in stress, depleted vitality, and disrupted circulation offers a path toward genuine, lasting support.|Ayurveda has always placed male reproductive vitality at the heart of overall health. Here is what the classical texts say about low sperm count, and the everyday habits that can gently support it." -%}
-        {%- assign t_times = "4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "low-stamina-and-vigour|vajikarana-vitality-basics|hair-thinning-in-men|low-stamina-men|prostate-and-urine-flow-elders|premature-greying-of-beard-hair|too-much-heat-in-body-men|erectile-dysfunction-care|low-sperm-count-male-fertility" -%}
-        {%- assign t_images = "low-stamina-and-vigour.webp|vajikarana-vitality-basics.webp|hair-thinning-in-men.webp|low-stamina-men.webp|prostate-and-urine-flow-elders.webp|premature-greying-of-beard-hair.webp|too-much-heat-in-body-men.webp|erectile-dysfunction-care.webp|low-sperm-count-male-fertility.webp" -%}
-      {%- when 'children' -%}
-        {%- assign t_title = "Children's care" -%}
-        {%- assign t_hindi = "बच्चों की देखभाल" -%}
-        {%- assign t_count = 13 -%}
-        {%- assign t_titles = "Colic and gas in babies|Baby massage and which oils|Teething trouble in babies|Building everyday immunity in children|Bedwetting in children|A thin, slow-to-grow child|Focus and memory for studying kids|Colic and Gas in Babies: Gentle Soothing|When a child won't eat|When a Child Won't Eat: Rebuilding Appetite|Baby Massage: Why and How to Do It|Kids Who Keep Catching Cold and Cough|Teething Troubles: Easing a Fussy Baby" -%}
-        {%- assign t_excerpts = "Babies cry, pull up their legs, and pass gas, and parents panic. Ayurveda's children's text treats this as a tender, temporary phase of infant digestion, and offers gentle, warming care.|In Ayurveda, the daily oil massage of a baby is not a luxury, it is care: a way to build strength, settle sleep, and steady a newborn's growing body. Here is the classical view, and how to do it gently at home.|When the first tooth pushes through, babies get fussy, drool, and sleep badly. Ayurveda calls this Dantodbheda and treats it as a natural passage, not a disease, with gentle soothing care.|Ayurveda's oldest pediatric texts say a child's immunity begins not in a pharmacy, but in steady warmth, deep sleep, and food cooked with love. Here is what the classical granthas actually teach, and how to bring it home.|Bedwetting, or Shayyamutra, is one of the most common and misunderstood childhood concerns, and Ayurveda has addressed it with gentle reassurance and practical routine for over two thousand years.|Ayurveda has a name and a remedy for the child who stays thin no matter what you feed them. Here is what the classical texts say about nourishing a slow-to-grow child.|Ayurveda has always had a name for the quality of mind that helps children learn well: medha. Here is what the classical texts say, and how everyday habits can support it.|When a baby cries inconsolably after feeding, Ayurveda sees a small, immature digestive fire meeting an imbalance of Vata, and has a toolkit of gentle, time-tested remedies that parents have relied on for centuries.|When a young child refuses to eat, Ayurveda sees it not as stubbornness but as a signal from a delicate digestive fire. Classical texts offer simple, time-tested remedies that any parent can try at home.|When a child refuses food, Ayurveda points not to stubbornness but to a weakened digestive fire. Simple daily rhythms and gentle herbs can coax appetite back, without battles at the table.|Bala abhyanga, or baby massage, is one of Ayurveda's oldest gifts to new parents: a daily oil ritual that builds strong limbs, calms the nervous system, and deepens the bond between child and caregiver.|Children who catch every cold going around may have a deeper imbalance in their natural immunity. Ayurveda has understood this pattern for centuries and offers gentle, practical ways to build a child's inner resilience.|Babies have been cutting teeth since the beginning of time, and every generation of parents has reached for something to soothe the fussing. Ayurveda names this passage Dantodbheda and offers gentle, time-tested ways to ease the discomfort without harsh interventions." -%}
-        {%- assign t_times = "4 min read|4 min read|3 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "colic-and-gas-in-babies|baby-massage-and-oils|teething-trouble-babies|kids-immunity-everyday|bedwetting-in-children|kids-weak-and-underweight|focus-and-study-for-kids|colic-gas-in-babies|kids-poor-appetite|child-not-eating|baby-massage-benefits|child-frequent-cold-cough|teething-troubles-babies" -%}
-        {%- assign t_images = "colic-and-gas-in-babies.webp|baby-massage-and-oils.webp|teething-trouble-babies.webp|kids-immunity-everyday.webp|bedwetting-in-children.webp|kids-weak-and-underweight.webp|focus-and-study-for-kids.webp|colic-gas-in-babies.webp|kids-poor-appetite.webp|child-not-eating.webp|baby-massage-benefits.webp|child-frequent-cold-cough.webp|teething-troubles-babies.webp" -%}
-      {%- when 'elder' -%}
-        {%- assign t_title = "Elder care" -%}
-        {%- assign t_hindi = "बुजुर्गों की देखभाल" -%}
-        {%- assign t_count = 11 -%}
-        {%- assign t_titles = "Weak bones and aching body with age|Dryness, stiffness and vata in old age|Constipation in older people|Rasayana for healthy aging|Staying mobile and steady with age|Aging Well: The Idea of Rasayana, Made Simple|Weak digestion and appetite in elders|Sleep troubles in older age|Dryness in Later Years: Skin, Joints, and Gut|Weak Digestion with Age: Eating Lighter and Better|Forgetfulness and Memory Loss in Elders" -%}
-        {%- assign t_excerpts = "Aching joints, brittle bones, and a body that protests in the cold are common as we age. Ayurveda reads this as the natural decline of asthi-dhatu and a rise in vata, and it leans on oiling, gentle weight-bearing movement, and warm nourishing food.|Old age is the season of vata in life, when the body turns drier, lighter and colder. Here is the Ayurvedic way to meet it with oil, warmth and gentle routine.|As we age, the body grows drier and the downward wind that clears the bowel weakens. Ayurveda treats constipation in elders gently, with warmth, ghee, fluids and small daily habits rather than harsh purges.|Rasayana, Ayurveda's oldest rejuvenation science, is less about reversing age and more about building the deep vitality that keeps you bright, resilient, and clear-minded well into your later years.|Ayurveda has always known that movement, oil, and rhythm are the best friends of an aging body. Here is how ancient wisdom can help you stay steady, mobile, and clear-minded well into your later years.|Rasayana, Ayurveda's science of rejuvenation, is not about reversing age. It is about living through each decade with more strength, clarity, and ease than the one before.|As we grow older, the digestive fire that once powered a full meal quietly dims. Ayurveda has observed this for millennia and offers gentle, time-tested ways to keep the flame alive.|As we age, sleep grows lighter and more broken. Ayurveda explains exactly why, and offers warm, practical remedies rooted in the classical texts.|As we age, Ayurveda says the body naturally dries out from within. Here is how classical medicine explains the process, and what you can do every day to stay supple.|As we age, the digestive fire naturally dims. Ayurveda offers a clear map for eating well in the later years, drawn from its oldest classical texts.|In Ayurveda, age-related forgetfulness is not considered inevitable decline but a signal from a depleted nervous system, one that classical texts say can be gently supported with the right herbs, foods, and daily rhythm." -%}
-        {%- assign t_times = "4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "weak-bones-as-we-age|dryness-and-vata-in-old-age|constipation-in-elders|rasayana-for-healthy-aging|staying-active-mobile-elders|aging-well-rasayana|poor-appetite-and-digestion-elders|sleep-problems-in-elders|dryness-in-old-age|weak-digestion-elderly|memory-loss-and-dementia-elders" -%}
-        {%- assign t_images = "weak-bones-as-we-age.webp|dryness-and-vata-in-old-age.webp|constipation-in-elders.webp|rasayana-for-healthy-aging.webp|staying-active-mobile-elders.webp|aging-well-rasayana.webp|poor-appetite-and-digestion-elders.webp|sleep-problems-in-elders.webp|dryness-in-old-age.webp|weak-digestion-elderly.webp|memory-loss-and-dementia-elders.webp" -%}
-      {%- when 'basics' -%}
-        {%- assign t_title = "Ayurveda basics" -%}
-        {%- assign t_hindi = "आयुर्वेद की बुनियाद" -%}
-        {%- assign t_count = 16 -%}
-        {%- assign t_titles = "What is Ayurveda?|Vata, Pitta and Kapha|Know your dosha|Yoga and Ayurveda|What Ayurveda is not|Detox: the myth and what panchakarma really is|The full daily routine (dinacharya)|Your nature vs your imbalance (prakriti vs vikriti)|Why you shouldn't hold in natural urges|Daily good conduct (sadvritta) for wellbeing|The seasonal routine (ritucharya), simply|What the seven tissues (dhatus) are|Stool, urine, sweat: the three wastes (malas)|The dosha clock: best times of day|Your Body Type (Prakriti): What It Means for You|The Seven Body Tissues (Dhatus), Made Simple" -%}
-        {%- assign t_excerpts = "A simple, honest introduction to what Ayurveda is, what the three doshas and your constitution mean, and a few everyday habits the tradition suggests.|A simple, jargon-free guide to what Vata, Pitta and Kapha actually mean, how to get a feel for your own constitution, and small everyday habits the tradition suggests for staying in balance.|A plain-language guide to understanding your Ayurvedic constitution (prakriti), what the three doshas mean, and a few everyday habits the classical texts suggest for staying in balance.|A plain-language guide to how Yoga and Ayurveda share one aim, a steady body and a calm mind, and a few everyday habits the tradition suggests to keep both in balance.|A plain, honest look at what Ayurveda actually is, what it is not, and how to know when a doctor or qualified vaidya is the right call.|Detox teas promise to flush out toxins overnight. Ayurveda's actual cleansing tradition, called shodhana or panchakarma, is something slower, more careful, and far less glamorous than the hype suggests.|Ayurveda lays out a full day, from the moment you wake to the moment you sleep, as a quiet form of medicine. This is dinacharya, the daily routine, explained for ordinary life.|You were born with a unique constitutional blueprint, your prakriti. But everyday stress, poor sleep, and wrong foods can shift you into vikriti, a state of imbalance. Knowing the difference is the first step in Ayurveda's approach to genuine wellbeing.|Ayurveda calls the suppression of natural urges 'vega-dharana,' and the classical texts warn that holding in urine, stool, hunger, or even a sneeze disturbs vata and sets off a chain of health troubles. Here is what that means for your daily life.|Ayurveda has always known that how you behave shapes how you feel: sadvritta, the code of good daily conduct, is the mental and social hygiene that the classical texts place alongside diet and herbs as a pillar of lasting health.|Ayurveda has always held that nature shifts every two months, and your body should shift with it. Here is what the six-season framework of ritucharya actually means for your daily life.|Every meal you eat does not simply become 'nutrition': Ayurveda says it travels through seven successive tissues, each one feeding the next, until the finest essence supports life itself. Understanding the sapta dhatus can change how you think about fatigue, dullness, and what it means to truly nourish yourself.|Your body produces waste every single day, and Ayurveda says that is not something to ignore. The three malas, or waste products, are signals your constitution sends you about how well your digestion and metabolism are really working.|Ayurveda maps each part of the day to a dosha, and that rhythm, called the dinacharya clock, quietly shapes your digestion, focus, and sleep without you realising it.|Prakriti is your inborn body-mind constitution, set at conception and unchanged for life. Understanding it helps you eat, sleep, and live in a way that keeps you well, without turning health into a complicated project.|Your body is rebuilding itself right now, layer by layer, from the food you ate this morning. Ayurveda mapped this process in remarkable detail more than two thousand years ago, calling it the journey of the seven dhatus." -%}
-        {%- assign t_times = "4 min read|5 min read|5 min read|5 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read|4 min read" -%}
-        {%- assign t_handles = "what-is-ayurveda|vata-pitta-kapha-explained|know-your-dosha|yoga-and-ayurveda|what-ayurveda-is-not|detox-myth-vs-panchakarma|daily-routine-dinacharya|prakriti-vs-vikriti|holding-natural-urges|good-conduct-sadvritta-wellbeing|seasonal-routine-ritucharya|what-the-seven-dhatus-are|what-the-three-malas-are|dosha-and-the-clock|what-is-prakriti-body-type|what-are-dhatus-body-tissues" -%}
-        {%- assign t_images = "what-is-ayurveda.webp|vata-pitta-kapha-explained.webp|know-your-dosha.webp|yoga-and-ayurveda.webp|what-ayurveda-is-not.webp|detox-myth-vs-panchakarma.webp|daily-routine-dinacharya.webp|prakriti-vs-vikriti.webp|holding-natural-urges.webp|good-conduct-sadvritta-wellbeing.webp|seasonal-routine-ritucharya.webp|what-the-seven-dhatus-are.webp|what-the-three-malas-are.webp|dosha-and-the-clock.webp|what-is-prakriti-body-type.webp|what-are-dhatus-body-tissues.webp" -%}
+    {%- case current_tag -%}
+      {%- when 'digestion' -%}{%- assign topic_title = "Digestion & gut" -%}{%- assign topic_hindi = "पाचन" -%}
+      {%- when 'food' -%}{%- assign topic_title = "Food & kitchen" -%}{%- assign topic_hindi = "आहार" -%}
+      {%- when 'herbs' -%}{%- assign topic_title = "Herbs & remedies" -%}{%- assign topic_hindi = "औषधि" -%}
+      {%- when 'weight' -%}{%- assign topic_title = "Weight & cravings" -%}{%- assign topic_hindi = "वजन और लालच" -%}
+      {%- when 'immunity' -%}{%- assign topic_title = "Immunity" -%}{%- assign topic_hindi = "रोग-प्रतिरोध" -%}
+      {%- when 'seasons' -%}{%- assign topic_title = "Seasons & routine" -%}{%- assign topic_hindi = "ऋतुचर्या" -%}
+      {%- when 'sleep' -%}{%- assign topic_title = "Sleep & energy" -%}{%- assign topic_hindi = "नींद और ऊर्जा" -%}
+      {%- when 'mind' -%}{%- assign topic_title = "Mind & calm" -%}{%- assign topic_hindi = "मन और शांति" -%}
+      {%- when 'habits' -%}{%- assign topic_title = "Daily habits" -%}{%- assign topic_hindi = "दिनचर्या" -%}
+      {%- when 'joints' -%}{%- assign topic_title = "Joints & body" -%}{%- assign topic_hindi = "जोड़ और शरीर" -%}
+      {%- when 'skin' -%}{%- assign topic_title = "Skin & glow" -%}{%- assign topic_hindi = "त्वचा" -%}
+      {%- when 'hair' -%}{%- assign topic_title = "Hair & scalp" -%}{%- assign topic_hindi = "बाल" -%}
+      {%- when 'eyes' -%}{%- assign topic_title = "Eyes, ears & mouth" -%}{%- assign topic_hindi = "आँख, कान, मुँह" -%}
+      {%- when 'womens' -%}{%- assign topic_title = "Women's wellbeing" -%}{%- assign topic_hindi = "स्त्री-स्वास्थ्य" -%}
+      {%- when 'mens' -%}{%- assign topic_title = "Men's wellbeing" -%}{%- assign topic_hindi = "पुरुष-स्वास्थ्य" -%}
+      {%- when 'children' -%}{%- assign topic_title = "Children's care" -%}{%- assign topic_hindi = "बच्चों की देखभाल" -%}
+      {%- when 'elder' -%}{%- assign topic_title = "Elder care" -%}{%- assign topic_hindi = "बुजुर्गों की देखभाल" -%}
+      {%- when 'basics' -%}{%- assign topic_title = "Ayurveda basics" -%}{%- assign topic_hindi = "आयुर्वेद की बुनियाद" -%}
     {%- endcase -%}
 
-    {%- assign current_tag_handle = current_tag | handle -%}
-    {%- assign t_handle = t | handle -%}
-    {%- assign matches_tag = false -%}
-    {%- if current_tag_handle == t_handle -%}
-      {%- assign matches_tag = true -%}
-    {%- else -%}
-      {%- if t == 'digestion' and current_tag_handle == 'digestion-gut' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'food' and current_tag_handle == 'food-kitchen' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'herbs' and current_tag_handle == 'herbs-remedies' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'weight' and current_tag_handle == 'weight-cravings' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'seasons' and current_tag_handle == 'seasons-routine' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'sleep' and current_tag_handle == 'sleep-energy' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'mind' and current_tag_handle == 'mind-calm' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'habits' and current_tag_handle == 'daily-habits' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'joints' and current_tag_handle == 'joints-body' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'skin' and current_tag_handle == 'skin-glow' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'hair' and current_tag_handle == 'hair-scalp' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'eyes' and current_tag_handle == 'eyes-ears-mouth' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'womens' and current_tag_handle == 'womens-wellbeing' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'mens' and current_tag_handle == 'mens-wellbeing' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'children' and current_tag_handle == 'childrens-care' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'elder' and current_tag_handle == 'elder-care' -%}
-        {%- assign matches_tag = true -%}
-      {%- elsif t == 'basics' and current_tag_handle == 'ayurveda-basics' -%}
-        {%- assign matches_tag = true -%}
+    {%- for topic_card in blog.metafields.custom.topic_cards.value -%}
+      {%- assign tc = topic_card.value | default: topic_card -%}
+      {%- assign link_handle = tc.link | split: '/' | last | downcase -%}
+      {%- if link_handle == current_tag -%}
+        {%- assign topic_title = tc.title -%}
+        {%- assign topic_hindi = tc.hindi_title -%}
+        {%- break -%}
       {%- endif -%}
-    {%- endif -%}
+    {%- endfor -%}
 
-    {%- if is_tag_page and matches_tag -%}
-      {%- assign topic_title = t_title -%}
-      {%- assign topic_hindi = t_hindi -%}
-      {%- assign topic_count = t_count -%}
-      {%- assign mock_titles_str = t_titles -%}
-      {%- assign mock_excerpts_str = t_excerpts -%}
-      {%- assign mock_times_str = t_times -%}
-      {%- assign mock_handles_str = t_handles -%}
-      {%- assign mock_images_str = t_images -%}
-    {%- endif -%}
-
-    <script>
-      window.AYURHQ_FALLBACK_TOPICS[{{ t | json }}] = {
-        title: {{ t_title | json }},
-        hindi: {{ t_hindi | json }},
-        count: {{ t_count | json }},
-        titles: {{ t_titles | json }},
-        excerpts: {{ t_excerpts | json }},
-        times: {{ t_times | json }},
-        handles: {{ t_handles | json }},
-        images: {{ t_images | json }}
-      };
-    </script>
-  {%- endfor -%}
-
-  {%- if is_tag_page -%}
     <header class="ayurhq-topic-header">
       <div class="ayurhq-topic-header-container">
-        <a class="ayurhq-topic-back-link" href="{{ current_blog_url }}#guides">
+        <a class="ayurhq-topic-back-link" href="{{ current_blog_url }}">
           <span>←</span> All topics
         </a>
         <div class="ayurhq-topic-header-title-row">
@@ -309,148 +56,203 @@
             <span class="ayurhq-topic-header-hindi" lang="hi">{{ topic_hindi }}</span>
           {%- endif -%}
         </div>
-        <p class="ayurhq-topic-header-count">{{ topic_count }} articles</p>
+        {%- paginate blog.articles by 24 -%}
+          <p class="ayurhq-topic-header-count">{{ paginate.items }} articles</p>
+        {%- endpaginate -%}
       </div>
     </header>
 
     <div class="ayurhq-topic-content-container">
-      <div class="ayurhq-topic-articles-grid">
-        {%- if blog.articles.size > 0 -%}
+      {%- paginate blog.articles by 24 -%}
+        <div class="ayurhq-topic-articles-grid">
           {%- for article in blog.articles -%}
-            <a href="{{ article.url }}" class="ayurhq-topic-article-card group">
+            <a href="{{ article.url }}" class="ayurhq-topic-article-card">
               <div class="ayurhq-topic-article-card__image-wrapper">
                 {%- if article.image != blank -%}
-                  {{ article.image | image_url: width: 500 | image_tag: loading: 'lazy', class: 'ayurhq-topic-article-card__image' }}
+                  {{ article.image | image_url: width: 450 | image_tag: 
+                    loading: 'lazy', 
+                    class: 'ayurhq-topic-article-card__image'
+                  }}
                 {%- else -%}
                   <div class="ayurhq-topic-article-card__placeholder"></div>
                 {%- endif -%}
                 <div class="ayurhq-topic-article-card__accent-line"></div>
               </div>
               <div class="ayurhq-topic-article-card__info">
-                <h2 class="ayurhq-topic-article-card__title">{{ article.title }}</h2>
-                <p class="ayurhq-topic-article-card__excerpt">{{ article.excerpt | default: article.content | strip_html | truncatewords: 22 }}</p>
+                <h3 class="ayurhq-topic-article-card__title">{{ article.title }}</h3>
+                <p class="ayurhq-topic-article-card__excerpt">
+                  {{ article.excerpt | default: article.content | strip_html | truncatewords: 20 }}
+                </p>
                 {%- if article.metafields.custom.read_time != blank -%}
-                  <div class="ayurhq-topic-article-card__read-time">{{ article.metafields.custom.read_time.value }}</div>
+                  <span class="ayurhq-topic-article-card__read-time">
+                    {{ article.metafields.custom.read_time.value | replace: ' read', '' }} read
+                  </span>
                 {%- endif -%}
               </div>
             </a>
           {%- endfor -%}
-        {%- else -%}
-          
-
-          {%- if mock_titles_str != blank -%}
-            {%- assign mock_titles = mock_titles_str | split: "|" -%}
-            {%- assign mock_excerpts = mock_excerpts_str | split: "|" -%}
-            {%- assign mock_times = mock_times_str | split: "|" -%}
-            {%- assign mock_handles = mock_handles_str | split: "|" -%}
-            {%- assign mock_images = mock_images_str | split: "|" -%}
-
-            {%- for mock_title in mock_titles -%}
-              {%- assign m_idx = forloop.index0 -%}
-              {%- assign m_handle = mock_handles[m_idx] -%}
-              {%- assign m_excerpt = mock_excerpts[m_idx] -%}
-              {%- assign m_time = mock_times[m_idx] -%}
-              {%- assign m_image = mock_images[m_idx] -%}
-              <a href="{{ current_blog_url }}/{{ m_handle }}" class="ayurhq-topic-article-card group">
-                <div class="ayurhq-topic-article-card__image-wrapper">
-                  {%- if m_image contains '.webp' or m_image contains '.png' or m_image contains '.jpg' or m_image contains '.jpeg' -%}
-                    <img src="https://stage.dhyanhq.com/art/ayurveda/articles/{{ m_image }}" alt="{{ mock_title }}" class="ayurhq-topic-article-card__image" loading="lazy" width="300" height="200">
-                  {%- else -%}
-                    {%- assign fallback_img_name = 'ayurhq-topic-' | append: current_tag | append: '.webp' -%}
-                    <img src="{{ fallback_img_name | asset_url }}" alt="{{ mock_title }}" class="ayurhq-topic-article-card__image" loading="lazy" width="300" height="200">
-                  {%- endif -%}
-                  <div class="ayurhq-topic-article-card__accent-line"></div>
-                </div>
-                <div class="ayurhq-topic-article-card__info">
-                  <h2 class="ayurhq-topic-article-card__title">{{ mock_title }}</h2>
-                  <p class="ayurhq-topic-article-card__excerpt">{{ m_excerpt }}</p>
-                  <div class="ayurhq-topic-article-card__read-time">{{ m_time }}</div>
-                </div>
-              </a>
-            {%- endfor -%}
-          {%- else -%}
-            {%- for i in (1..6) -%}
-              <div class="ayurhq-topic-article-card ayurhq-topic-article-card--empty">
-                <div class="ayurhq-topic-article-card__image-wrapper">
-                  <div class="ayurhq-topic-article-card__placeholder"></div>
-                  <div class="ayurhq-topic-article-card__accent-line"></div>
-                </div>
-                <div class="ayurhq-topic-article-card__info">
-                  <h2 class="ayurhq-topic-article-card__title">Coming soon</h2>
-                  <p class="ayurhq-topic-article-card__excerpt">Articles on this topic are currently being prepared. Check back soon for guides and practices.</p>
-                </div>
-              </div>
-            {%- endfor -%}
-          {%- endif -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          {%- render 'pagination-controls', paginate: paginate -%}
         {%- endif -%}
-      </div>
+      {%- endpaginate -%}
     </div>
+
   {%- else -%}
-  
 
-  <!-- Care Paths Section -->
-  {%- if section.settings.show_care_paths -%}
-    <section class="ayurhq-blog-care-paths-section">
-      <div class="ayurhq-blog-container">
-        <div class="ayurhq-blog-editorial">
-          <div class="ayurhq-blog-editorial__teaser">
-            <span class="ayurhq-blog-editorial__teaser-eyebrow">{{ section.settings.care_paths_eyebrow }}</span>
-            <h2 class="ayurhq-blog-editorial__teaser-heading">{{ section.settings.care_paths_heading }}</h2>
-            <p class="ayurhq-blog-editorial__teaser-text">{{ section.settings.care_paths_text }}</p>
+    <!-- Care Paths Section -->
+    {%- if section.settings.show_care_paths -%}
+      <section class="ayurhq-blog-care-paths-section">
+        <div class="ayurhq-blog-container">
+          <div class="ayurhq-blog-editorial">
+            <div class="ayurhq-blog-editorial__teaser">
+              <span class="ayurhq-blog-editorial__teaser-eyebrow">{{ section.settings.care_paths_eyebrow }}</span>
+              <h2 class="ayurhq-blog-editorial__teaser-heading">{{ section.settings.care_paths_heading }}</h2>
+              <p class="ayurhq-blog-editorial__teaser-text">{{ section.settings.care_paths_text }}</p>
+            </div>
+
+            <div class="ayurhq-blog-editorial__list" aria-label="Care paths">
+              {%- assign care_paths = blog.metafields.custom.care_paths.value -%}
+              {%- if care_paths != blank -%}
+                {%- for path in care_paths -%}
+                  {%- assign pt = path.value | default: path -%}
+                  <article class="ayurhq-blog-editorial__row">
+                    <div class="ayurhq-blog-editorial__row-body">
+                      <h3 class="ayurhq-blog-editorial__row-title">{{ pt.title }}</h3>
+                      <p class="ayurhq-blog-editorial__row-text">{{ pt.description }}</p>
+                    </div>
+                    <div class="ayurhq-blog-editorial__row-meta">
+                      <div class="ayurhq-blog-editorial__row-label">{{ pt.labels | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                      <a href="{{ pt.link_url | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                        {{ pt.link_label }}
+                      </a>
+                    </div>
+                  </article>
+                {%- endfor -%}
+              {%- else -%}
+                <article class="ayurhq-blog-editorial__row">
+                  <div class="ayurhq-blog-editorial__row-body">
+                    <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path1_title }}</h3>
+                    <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path1_desc }}</p>
+                  </div>
+                  <div class="ayurhq-blog-editorial__row-meta">
+                    <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path1_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                    <a href="{{ section.settings.path1_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                      {{ section.settings.path1_label | default: 'Begin with asana' }}
+                    </a>
+                  </div>
+                </article>
+
+                <article class="ayurhq-blog-editorial__row">
+                  <div class="ayurhq-blog-editorial__row-body">
+                    <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path2_title }}</h3>
+                    <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path2_desc }}</p>
+                  </div>
+                  <div class="ayurhq-blog-editorial__row-meta">
+                    <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path2_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                    <a href="{{ section.settings.path2_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                      {{ section.settings.path2_label | default: 'Go to yoga nidra' }}
+                    </a>
+                  </div>
+                </article>
+
+                <article class="ayurhq-blog-editorial__row">
+                  <div class="ayurhq-blog-editorial__row-body">
+                    <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path3_title }}</h3>
+                    <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path3_desc }}</p>
+                  </div>
+                  <div class="ayurhq-blog-editorial__row-meta">
+                    <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path3_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                    <a href="{{ section.settings.path3_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                      {{ section.settings.path3_label | default: 'Start with breath' }}
+                    </a>
+                  </div>
+                </article>
+
+                <article class="ayurhq-blog-editorial__row">
+                  <div class="ayurhq-blog-editorial__row-body">
+                    <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path4_title }}</h3>
+                    <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path4_desc }}</p>
+                  </div>
+                  <div class="ayurhq-blog-editorial__row-meta">
+                    <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path4_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
+                    <a href="{{ section.settings.path4_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
+                      {{ section.settings.path4_label | default: 'See the day rhythm' }}
+                    </a>
+                  </div>
+                </article>
+              {%- endif -%}
+            </div>
           </div>
+        </div>
+      </section>
+    {%- endif -%}
 
-          <div class="ayurhq-blog-editorial__list" aria-label="Care paths">
-            <article class="ayurhq-blog-editorial__row">
-              <div class="ayurhq-blog-editorial__row-body">
-                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path1_title }}</h3>
-                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path1_desc }}</p>
-              </div>
-              <div class="ayurhq-blog-editorial__row-meta">
-                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path1_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-                <a href="{{ section.settings.path1_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                  {{ section.settings.path1_label | default: 'Begin with asana' }}
-                </a>
-              </div>
-            </article>
+    <!-- Daily Rhythm Section -->
+    {%- if section.settings.show_daily_rhythm -%}
+      <section class="ayurhq-blog-daily-rhythm-section">
+        <div class="ayurhq-blog-container">
+          <div class="ayurhq-daily-rhythm-grid">
+            <div class="ayurhq-daily-rhythm-teaser">
+              <span class="ayurhq-daily-rhythm-teaser__eyebrow">{{ section.settings.daily_rhythm_eyebrow }}</span>
+              <h2 class="ayurhq-daily-rhythm-teaser__heading">{{ section.settings.daily_rhythm_heading }}</h2>
+              <p class="ayurhq-daily-rhythm-teaser__text">{{ section.settings.daily_rhythm_text }}</p>
+            </div>
 
-            <article class="ayurhq-blog-editorial__row">
-              <div class="ayurhq-blog-editorial__row-body">
-                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path2_title }}</h3>
-                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path2_desc }}</p>
-              </div>
-              <div class="ayurhq-blog-editorial__row-meta">
-                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path2_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-                <a href="{{ section.settings.path2_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                  {{ section.settings.path2_label | default: 'Go to yoga nidra' }}
-                </a>
-              </div>
-            </article>
-
-            <article class="ayurhq-blog-editorial__row">
-              <div class="ayurhq-blog-editorial__row-body">
-                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path3_title }}</h3>
-                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path3_desc }}</p>
-              </div>
-              <div class="ayurhq-blog-editorial__row-meta">
-                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path3_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-                <a href="{{ section.settings.path3_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                  {{ section.settings.path3_label | default: 'Start with breath' }}
-                </a>
-              </div>
-            </article>
-
-            <article class="ayurhq-blog-editorial__row">
-              <div class="ayurhq-blog-editorial__row-body">
-                <h3 class="ayurhq-blog-editorial__row-title">{{ section.settings.path4_title }}</h3>
-                <p class="ayurhq-blog-editorial__row-text">{{ section.settings.path4_desc }}</p>
-              </div>
-              <div class="ayurhq-blog-editorial__row-meta">
-                <div class="ayurhq-blog-editorial__row-label">{{ section.settings.path4_tags | replace: ' - ', ' · ' | replace: '-', ' · ' | downcase }}</div>
-                <a href="{{ section.settings.path4_link | default: '#' }}" class="ayurhq-blog-editorial__row-link">
-                  {{ section.settings.path4_label | default: 'See the day rhythm' }}
-                </a>
-              </div>
-            </article>
+            <div class="ayurhq-daily-rhythm-list" aria-label="Daily rhythm steps">
+              {%- assign daily_rhythm = blog.metafields.custom.daily_rhythm.value -%}
+              {%- if daily_rhythm != blank -%}
+                {%- for step in daily_rhythm -%}
+                  {%- assign st = step.value | default: step -%}
+                  <div class="ayurhq-daily-rhythm-item">
+                    <div class="ayurhq-daily-rhythm-item__meta">
+                      <span class="ayurhq-daily-rhythm-item__tags">{{ st.label }}</span>
+                    </div>
+                    <div class="ayurhq-daily-rhythm-item__content">
+                      <h3 class="ayurhq-daily-rhythm-item__title">{{ st.title }}</h3>
+                      <p class="ayurhq-daily-rhythm-item__desc">{{ st.description }}</p>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              {%- else -%}
+                <div class="ayurhq-daily-rhythm-item">
+                  <div class="ayurhq-daily-rhythm-item__meta">
+                    <span class="ayurhq-daily-rhythm-item__tags">{{ section.settings.rhythm1_label }}</span>
+                  </div>
+                  <div class="ayurhq-daily-rhythm-item__content">
+                    <h3 class="ayurhq-daily-rhythm-item__title">{{ section.settings.rhythm1_title }}</h3>
+                    <p class="ayurhq-daily-rhythm-item__desc">{{ section.settings.rhythm1_desc }}</p>
+                  </div>
+                </div>
+                <div class="ayurhq-daily-rhythm-item">
+                  <div class="ayurhq-daily-rhythm-item__meta">
+                    <span class="ayurhq-daily-rhythm-item__tags">{{ section.settings.rhythm2_label }}</span>
+                  </div>
+                  <div class="ayurhq-daily-rhythm-item__content">
+                    <h3 class="ayurhq-daily-rhythm-item__title">{{ section.settings.rhythm2_title }}</h3>
+                    <p class="ayurhq-daily-rhythm-item__desc">{{ section.settings.rhythm2_desc }}</p>
+                  </div>
+                </div>
+                <div class="ayurhq-daily-rhythm-item">
+                  <div class="ayurhq-daily-rhythm-item__meta">
+                    <span class="ayurhq-daily-rhythm-item__tags">{{ section.settings.rhythm3_label }}</span>
+                  </div>
+                  <div class="ayurhq-daily-rhythm-item__content">
+                    <h3 class="ayurhq-daily-rhythm-item__title">{{ section.settings.rhythm3_title }}</h3>
+                    <p class="ayurhq-daily-rhythm-item__desc">{{ section.settings.rhythm3_desc }}</p>
+                  </div>
+                </div>
+                <div class="ayurhq-daily-rhythm-item">
+                  <div class="ayurhq-daily-rhythm-item__meta">
+                    <span class="ayurhq-daily-rhythm-item__tags">{{ section.settings.rhythm4_label }}</span>
+                  </div>
+                  <div class="ayurhq-daily-rhythm-item__content">
+                    <h3 class="ayurhq-daily-rhythm-item__title">{{ section.settings.rhythm4_title }}</h3>
+                    <p class="ayurhq-daily-rhythm-item__desc">{{ section.settings.rhythm4_desc }}</p>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
           </div>
         </div>
       </div>
@@ -534,7 +336,7 @@
             {%- render 'ayurhq-topic-card', topic_card: topic_card -%}
           {%- endfor -%}
         {%- else -%}
-          {% comment %} Fallback hardcoded topic grid of 18 categories – pipe-delimited to avoid splitting entries that contain commas {% endcomment %}
+          {% comment %} Fallback hardcoded topic grid of 18 categories {% endcomment %}
           {%- assign fallback_titles_str = "Digestion & gut|Food & kitchen|Herbs & remedies|Weight & cravings|Immunity|Seasons & routine|Sleep & energy|Mind & calm|Daily habits|Joints & body|Skin & glow|Hair & scalp|Eyes, ears & mouth|Women's wellbeing|Men's wellbeing|Children's care|Elder care|Ayurveda basics" -%}
           {%- assign fallback_titles = fallback_titles_str | split: "|" -%}
           {%- assign fallback_hindis_str = "पाचन|आहार|औषधि|वजन और लालच|रोग-प्रतिरोध|ऋतुचर्या|नींद और ऊर्जा|मन और शांति|दिनचर्या|जोड़ और शरीर|त्वचा|बाल|आँख, कान, मुँह|स्त्री-स्वास्थ्य|पुरुष-स्वास्थ्य|बच्चों की देखभाल|बुजुर्गों की देखभाल|आयुर्वेद की बुनियाद" -%}
@@ -614,137 +416,9 @@
       <p class="ayurhq-consultation-disclaimer">Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment.</p>
     </div>
   </section>
+
   {%- endif -%}
 </div>
-
-{% comment %}
-<!-- Floating Ask Guruji CTA -->
-{%- if section.settings.show_ask_guruji and section.settings.ask_guruji_link != blank -%}
-  <a href="{{ section.settings.ask_guruji_link }}" class="ayurhq-floating-guruji" aria-label="Ask Guruji">
-    <span class="ayurhq-floating-guruji__icon-wrapper">
-      <svg viewBox="-1 0 412 500" width="20" height="24" fill="none" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M 205 14 C 202 80, 167 112, 149.5 150 C 127 182, 105.5 225, 105.5 278 C 105.5 322, 133 362, 156 384 C 168 393, 150 400, 125 404 C 95 402, 20 407, 12 445 C 6 466, 38 486, 88 487.5 C 138 489, 180 468, 205 426 L 205 398 C 215 388, 243.5 358, 243.5 318 C 242 286, 208 246, 205 228 C 202 246, 168 286, 166.5 318 C 166.5 358, 195 388, 205 398 L 205 426 C 230 468, 272 489, 322 487.5 C 372 486, 404 466, 398 445 C 390 407, 315 402, 285 404 C 260 400, 242 393, 254 384 C 277 362, 304.5 322, 304.5 278 C 304.5 225, 283 182, 260.5 150 C 243 112, 208 80, 205 14 Z M 126 404 C 146 414, 160 432, 170 448 M 284 404 C 264 414, 250 432, 240 448" />
-      </svg>
-    </span>
-    <span>{{ section.settings.ask_guruji_label | default: 'Ask Guruji' }}</span>
-  </a>
-{%- endif -%}
-{% endcomment %}
-
-
-</div> <!-- end js-ayurhq-normal-blog-content -->
-
-  <script>
-    (function() {
-      const path = window.location.pathname.toLowerCase();
-      if (path.includes('/tagged/') || path.includes('/tag/')) {
-        const parts = path.split('/');
-        let tagIndex = parts.indexOf('tagged');
-        if (tagIndex === -1) tagIndex = parts.indexOf('tag');
-        
-        const tagHandle = tagIndex !== -1 && parts[tagIndex + 1] ? parts[tagIndex + 1] : '';
-        
-        // Normalize tag handle to match the keys of window.AYURHQ_FALLBACK_TOPICS
-        let normalizedTag = tagHandle;
-        const mappings = {
-          'digestion-gut': 'digestion',
-          'food-kitchen': 'food',
-          'herbs-remedies': 'herbs',
-          'weight-cravings': 'weight',
-          'seasons-routine': 'seasons',
-          'sleep-energy': 'sleep',
-          'mind-calm': 'mind',
-          'daily-habits': 'habits',
-          'joints-body': 'joints',
-          'skin-glow': 'skin',
-          'hair-scalp': 'hair',
-          'eyes-ears-mouth': 'eyes',
-          'womens-wellbeing': 'womens',
-          'mens-wellbeing': 'mens',
-          'childrens-care': 'children',
-          'elder-care': 'elder',
-          'ayurveda-basics': 'basics'
-        };
-        if (mappings[normalizedTag]) {
-          normalizedTag = mappings[normalizedTag];
-        }
-
-        if (normalizedTag && window.AYURHQ_FALLBACK_TOPICS && window.AYURHQ_FALLBACK_TOPICS[normalizedTag]) {
-          const data = window.AYURHQ_FALLBACK_TOPICS[normalizedTag];
-          
-          // Set dynamic browser tab title
-          document.title = data.title + ' · Ayurveda · AyurHQ';
-          
-          // Hide normal content, show fallback
-          const normalContent = document.getElementById('js-ayurhq-normal-blog-content');
-          if (normalContent) normalContent.style.display = 'none';
-          
-          const fallbackPage = document.getElementById('js-ayurhq-fallback-topic-page');
-          if (fallbackPage) fallbackPage.style.display = 'block';
-          
-          // Set back link
-          const backBtn = document.getElementById('js-fallback-topic-back-btn');
-          const currentBlogUrl = '{{ current_blog_url }}';
-          if (backBtn) backBtn.href = currentBlogUrl + '#guides';
-          
-          // Set title and hindi title
-          document.getElementById('js-fallback-topic-title').textContent = data.title;
-          const hindiEl = document.getElementById('js-fallback-topic-hindi');
-          if (data.hindi) {
-            hindiEl.textContent = data.hindi;
-            hindiEl.style.display = 'inline';
-          } else {
-            hindiEl.style.display = 'none';
-          }
-          
-          // Set count
-          document.getElementById('js-fallback-topic-count').textContent = data.count + ' articles';
-          
-          // Build cards
-          const grid = document.getElementById('js-fallback-topic-grid');
-          if (grid && data.titles) {
-            const arrTitles = data.titles.split('|');
-            const arrExcerpts = data.excerpts.split('|');
-            const arrTimes = data.times.split('|');
-            const arrHandles = data.handles.split('|');
-            const arrImages = data.images.split('|');
-            
-            let html = '';
-            for (let i = 0; i < arrTitles.length; i++) {
-              if (!arrTitles[i]) continue;
-              const title = arrTitles[i];
-              const excerpt = arrExcerpts[i] || '';
-              const readTime = arrTimes[i] || '';
-              const handle = arrHandles[i] || '';
-              const img = arrImages[i] || '';
-              
-              const imgUrl = img ? 'https://stage.dhyanhq.com/art/ayurveda/articles/' + img : '';
-              
-              html += `
-                <a href="${currentBlogUrl}/${handle}" class="ayurhq-topic-article-card group">
-                  <div class="ayurhq-topic-article-card__image-wrapper">
-                    ${imgUrl ? `
-                      <img src="${imgUrl}" alt="${title}" class="ayurhq-topic-article-card__image" loading="lazy" width="300" height="200">
-                    ` : `
-                      <div class="ayurhq-topic-article-card__placeholder"></div>
-                    `}
-                    <div class="ayurhq-topic-article-card__accent-line"></div>
-                  </div>
-                  <div class="ayurhq-topic-article-card__info">
-                    <h2 class="ayurhq-topic-article-card__title">${title}</h2>
-                    <p class="ayurhq-topic-article-card__excerpt">${excerpt}</p>
-                    ${readTime ? `<div class="ayurhq-topic-article-card__read-time">${readTime}</div>` : ''}
-                  </div>
-                </a>
-              `;
-            }
-            grid.innerHTML = html;
-          }
-        }
-      }
-    })();
-  </script>
-
 
 {% schema %}
 {

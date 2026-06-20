@@ -5,7 +5,7 @@
 {% endcomment %}
 
 {%- if topic_card != blank -%}
-  {%- assign tc = topic_card.value -%}
+  {%- assign tc = topic_card.value | default: topic_card -%}
   <a href="{{ tc.link | default: '#' }}" class="ayurhq-blog-topic-card">
     {%- if tc.image != blank -%}
       <div class="ayurhq-blog-topic-card__image-wrapper">

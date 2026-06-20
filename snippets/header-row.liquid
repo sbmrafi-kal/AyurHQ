@@ -83,61 +83,11 @@
         assign is_ayurveda_page = true
       %}
       {% if is_ayurveda_page and column == 'right' %}
-        <!-- Custom DhyanHQ Actions -->
+        <!-- Custom AyurHQ Actions -->
         <div class="dhyanhq-header-actions">
-
-
           <!-- Sign in link -->
           <a href="/account/login" class="dhyanhq-signin-link">Sign in</a>
         </div>
-
-        <style>
-          .dhyanhq-header-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-          }
-          @media screen and (max-width: 749px) {
-            .dhyanhq-header-actions {
-              position: absolute;
-              right: 18px;
-              top: 50%;
-              transform: translateY(-50%);
-              z-index: 100;
-            }
-          }
-          .dhyanhq-dropdown-btn {
-            background: none;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: #8d8177;
-            font-size: 13px;
-            cursor: pointer;
-            padding: 4px;
-            font-weight: 500;
-          }
-          .dhyanhq-dropdown-btn svg {
-            margin-top: 1px;
-            width: 10px !important;
-            height: 10px !important;
-            stroke-width: 1.5px !important;
-          }
-          .dhyanhq-signin-link {
-            color: #2F5A96;
-            text-decoration: none;
-            font-size: 14px;
-            font-family: 'Mukta', sans-serif;
-            font-weight: 500;
-            transition: color 0.2s;
-            cursor: pointer;
-            padding: 4px;
-          }
-          .dhyanhq-signin-link:hover {
-            color: #c94f17;
-          }
-        </style>
       {% else %}
         {% for key in items_array %}
           {% unless key == blank %}
