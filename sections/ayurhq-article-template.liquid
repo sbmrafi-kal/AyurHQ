@@ -193,6 +193,49 @@
           {{ article.content }}
         </article>
 
+        <!-- Recipe Card Block -->
+        {%- if article.metafields.custom.recipe_data.value != blank -%}
+          {%- assign recipe = article.metafields.custom.recipe_data.value -%}
+          <section class="ayurhq-article-recipe">
+            <div class="ayurhq-recipe-card">
+              <div class="ayurhq-recipe-header">
+                <span class="ayurhq-recipe-header__label">Recipe</span>
+                {%- if recipe.serving != blank -%}
+                  <span class="ayurhq-recipe-header__serving">{{ recipe.serving }}</span>
+                {%- endif -%}
+              </div>
+              <div class="ayurhq-recipe-body">
+                {%- if recipe.ingredients != blank -%}
+                  <div class="ayurhq-recipe-column">
+                    <h3 class="ayurhq-recipe-section-title">You will need</h3>
+                    <ul class="ayurhq-recipe-ingredients">
+                      {%- for item in recipe.ingredients -%}
+                        <li class="ayurhq-recipe-ingredient">
+                          <span class="ayurhq-recipe-dot"></span>
+                          <span>{{ item }}</span>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- endif -%}
+                {%- if recipe.method != blank -%}
+                  <div class="ayurhq-recipe-column">
+                    <h3 class="ayurhq-recipe-section-title">Method</h3>
+                    <ol class="ayurhq-recipe-method">
+                      {%- for step in recipe.method -%}
+                        <li class="ayurhq-recipe-step">
+                          <span class="ayurhq-recipe-step-number">{{ forloop.index }}</span>
+                          <span>{{ step }}</span>
+                        </li>
+                      {%- endfor -%}
+                    </ol>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </section>
+        {%- endif -%}
+
         <!-- Pull Quote Block -->
         {%- if article.metafields.custom.pull_quote != blank -%}
           <blockquote class="ayurhq-article-quote">
