@@ -49,6 +49,14 @@
         {%- else -%}
           <img src="{{ 'ayurhq-hero.webp' | asset_url }}" class="ayurhq-article-hero__image" loading="eager" alt="{{ article.title | escape }}">
         {%- endif -%}
+        <div class="ayurhq-article-hero__overlay"></div>
+        <div class="ayurhq-article-hero__content">
+          <div class="ayurhq-article-hero__badge">आयुर्वेद · Ayurveda</div>
+          <h1 class="ayurhq-article-hero__title">{{ article.title }}</h1>
+          {%- if article.excerpt != blank -%}
+            <p class="ayurhq-article-hero__excerpt">{{ article.excerpt | strip_html }}</p>
+          {%- endif -%}
+        </div>
       </div>
     </div>
 
@@ -57,34 +65,28 @@
         
         <!-- Post Header Details -->
         <header class="ayurhq-article-header">
-          {%- if article.metafields.custom.hero_badge != blank -%}
-            <span class="ayurhq-article-header__badge">{{ article.metafields.custom.hero_badge.value }}</span>
-          {%- endif -%}
-          
-          <h1 class="ayurhq-article-header__title">{{ article.title }}</h1>
-          
-          {%- if article.metafields.custom.hindi_title != blank -%}
-            <p class="ayurhq-article-header__hindi">{{ article.metafields.custom.hindi_title.value }}</p>
-          {%- endif -%}
-
-          {%- if article.excerpt != blank -%}
-            <p class="ayurhq-article-header__excerpt">{{ article.excerpt | strip_html }}</p>
-          {%- endif -%}
-
           <div class="ayurhq-article-meta">
             {%- assign display_author = article.author -%}
             {%- if display_author == 'DhyanHQ Ayurveda desk' or display_author == 'AyurHQ Ayurveda desk' or display_author == 'AyurHQ' -%}
               {%- assign display_author = 'AyurHQ' -%}
             {%- endif -%}
-            <span class="ayurhq-article-meta__item">By {{ display_author }}</span>
+            <span class="ayurhq-article-meta__author">By {{ display_author }}</span>
+            <span class="ayurhq-article-meta__separator">·</span>
             {%- if article.metafields.custom.read_time != blank -%}
-              <span class="ayurhq-article-meta__separator">•</span>
-              <span class="ayurhq-article-meta__item ayurhq-article-meta__read-time">{{ article.metafields.custom.read_time.value }}</span>
+              <span class="ayurhq-article-meta__read-time">{{ article.metafields.custom.read_time.value }}</span>
+              <span class="ayurhq-article-meta__separator">·</span>
             {%- endif -%}
             {%- if article.metafields.custom.review_label != blank -%}
-              <span class="ayurhq-article-meta__separator">•</span>
-              <span class="ayurhq-article-meta__item ayurhq-article-meta__review-badge">
+              <span class="ayurhq-article-meta__review-badge">
                 {{ article.metafields.custom.review_label.value }}
+              </span>
+              {%- if article.metafields.custom.hindi_title != blank -%}
+                <span class="ayurhq-article-meta__separator">·</span>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if article.metafields.custom.hindi_title != blank -%}
+              <span class="ayurhq-article-meta__hindi" lang="hi">
+                {{ article.metafields.custom.hindi_title.value }}
               </span>
             {%- endif -%}
           </div>
@@ -358,6 +360,17 @@
           </section>
         {%- endif -%}
 
+        <!-- Medical Disclaimer -->
+        {%- if article.metafields.custom.medical_disclaimer != blank -%}
+          <div class="ayurhq-article-disclaimer">
+            {{ article.metafields.custom.medical_disclaimer.value | replace: 'DhyanHQ', 'AyurHQ' | newline_to_br }}
+          </div>
+        {%- else -%}
+          <div class="ayurhq-article-disclaimer">
+            Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment.
+          </div>
+        {%- endif -%}
+
       </div>
     </div>
 
@@ -393,17 +406,6 @@
           {%- endif -%}
         </div>
       </section>
-    {%- endif -%}
-
-    <!-- Medical Disclaimer -->
-    {%- if article.metafields.custom.medical_disclaimer != blank -%}
-      <div class="ayurhq-article-disclaimer">
-        {{ article.metafields.custom.medical_disclaimer.value | replace: 'DhyanHQ', 'AyurHQ' | newline_to_br }}
-      </div>
-    {%- else -%}
-      <div class="ayurhq-article-disclaimer">
-        Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment.
-      </div>
     {%- endif -%}
 
   </div>

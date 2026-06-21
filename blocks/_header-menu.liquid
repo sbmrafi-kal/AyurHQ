@@ -58,7 +58,7 @@
           >
             {% if is_ayurveda_page %}
               {%- assign mock_titles = "Today,Yoga,Guruji,Gyaan,Ayurveda" | split: "," -%}
-              {%- assign mock_urls_str = current_blog_url | append: '/today,' | append: current_blog_url | append: '/yoga,/pages/consultation,' | append: current_blog_url | append: '/gyaan,' | append: current_blog_url -%}
+              {%- assign mock_urls_str = current_blog_url | append: ',' | append: current_blog_url | append: ',/pages/consultation,' | append: current_blog_url | append: ',' | append: current_blog_url -%}
               {%- assign mock_urls = mock_urls_str | split: "," -%}
               {%- for title in mock_titles -%}
                 {%- assign item_url = mock_urls[forloop.index0] -%}
@@ -241,7 +241,7 @@
       %}
       {% if is_ayurveda_page %}
         {%- assign mock_titles = "Today,Yoga,Gyaan,Ayurveda" | split: "," -%}
-        {%- assign mock_urls_str = current_blog_url | append: '/today,' | append: current_blog_url | append: '/yoga,' | append: current_blog_url | append: '/gyaan,' | append: current_blog_url -%}
+        {%- assign mock_urls_str = current_blog_url | append: ',' | append: current_blog_url | append: ',' | append: current_blog_url | append: ',' | append: current_blog_url -%}
         {%- assign mock_urls = mock_urls_str | split: "," -%}
         {%- for title in mock_titles -%}
           {%- assign item_url = mock_urls[forloop.index0] -%}

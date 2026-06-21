@@ -1,45 +1,36 @@
 {% comment %}
-  Renders a compact related article card.
+  Renders a compact background-image related article card.
   Accepts:
   - article: {Article} The article object
 {% endcomment %}
 
 {%- if article != blank -%}
-  <div class="ayurhq-article-related-card">
-    <a href="{{ article.url }}" class="ayurhq-article-related-card__link">
-      {%- if article.image != blank -%}
-        <div class="ayurhq-article-related-card__image-wrapper">
-          {{ article.image | image_url: width: 450 | image_tag: 
-            loading: 'lazy', 
-            sizes: '(min-width: 769px) 33vw, 100vw', 
-            widths: '200, 300, 450, 600',
-            class: 'ayurhq-article-related-card__image' 
-          }}
-        </div>
-      {%- else -%}
-        <div class="ayurhq-article-related-card__image-placeholder"></div>
-      {%- endif -%}
-      <div class="ayurhq-article-related-card__content">
-        {%- if article.tags.size > 0 -%}
-          <div class="ayurhq-article-related-card__tag-wrapper">
-            <span class="ayurhq-article-related-card__tag">{{ article.tags[0] }}</span>
-          </div>
-        {%- endif -%}
-        
-        <h4 class="ayurhq-article-related-card__title">{{ article.title }}</h4>
-        
-        {%- if article.excerpt != blank -%}
-          <p class="ayurhq-article-related-card__excerpt">{{ article.excerpt | strip_html | truncatewords: 20 }}</p>
-        {%- else -%}
-          <p class="ayurhq-article-related-card__excerpt">{{ article.content | strip_html | truncatewords: 20 }}</p>
-        {%- endif -%}
+  {%- assign topic_image_filename = 'ayurhq-hero.webp' -%}
+  {%- assign has_topic = false -%}
+  {%- for tag in article.tags -%}
+    {%- assign downcase_tag = tag | downcase -%}
+    {%- case downcase_tag -%}
+      {%- when 'digestion' or 'food' or 'herbs' or 'weight' or 'immunity' or 'seasons' or 'sleep' or 'mind' or 'habits' or 'joints' or 'skin' or 'hair' or 'eyes' or 'womens' or 'mens' or 'children' or 'elder' or 'basics' -%}
+        {%- assign topic_image_filename = 'ayurhq-topic-' | append: downcase_tag | append: '.webp' -%}
+        {%- assign has_topic = true -%}
+        {%- break -%}
+    {%- endcase -%}
+  {%- endfor -%}
 
-        {%- if article.metafields.custom.read_time != blank -%}
-          <div class="ayurhq-article-related-card__footer">
-            <span class="ayurhq-article-related-card__read-time">{{ article.metafields.custom.read_time.value }}</span>
-          </div>
-        {%- endif -%}
+  <a href="{{ article.url }}" class="ayurhq-related-card">
+    <img src="{{ topic_image_filename | asset_url }}" alt="{{ article.title | escape }}" class="ayurhq-related-card__bg" loading="lazy" width="360" height="200">
+    <div class="ayurhq-related-card__overlay"></div>
+    <div class="ayurhq-related-card__content">
+      <div class="ayurhq-related-card__title-row">
+        <span class="ayurhq-related-card__title">{{ article.title }}</span>
       </div>
-    </a>
-  </div>
+      {%- if article.metafields.custom.read_time != blank -%}
+        <div class="ayurhq-related-card__read-time">{{ article.metafields.custom.read_time.value }}</div>
+      {%- elsif article.content != blank -%}
+        {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+        {%- assign read_time_min = word_count | divided_by: 200 | at_least: 1 -%}
+        <div class="ayurhq-related-card__read-time">{{ read_time_min }} min read</div>
+      {%- endif -%}
+    </div>
+  </a>
 {%- endif -%}
