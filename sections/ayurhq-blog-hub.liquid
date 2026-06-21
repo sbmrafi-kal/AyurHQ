@@ -9,6 +9,16 @@
     {%- assign current_blog_url = blogs['news'].url | default: '/blogs/news' -%}
   {%- endif -%}
 
+  <!-- Sub-Navigation Menu -->
+  <div class="ayurhq-subnav-border">
+    <nav aria-label="Ayurveda" class="ayurhq-subnav-container">
+      <a class="ayurhq-subnav-pill{% if current_tags == blank %} active{% endif %}" href="{{ current_blog_url }}">Overview</a>
+      <a class="ayurhq-subnav-pill" href="{{ current_blog_url }}#care-paths">Care paths</a>
+      <a class="ayurhq-subnav-pill" href="{{ current_blog_url }}#topics">Topics</a>
+      <a class="ayurhq-subnav-pill" href="{{ current_blog_url }}#consult">Consult</a>
+    </nav>
+  </div>
+
   {%- if current_tags != blank -%}
     {%- assign current_tag = current_tags.first | downcase -%}
     {%- assign topic_title = current_tag | capitalize -%}
@@ -45,24 +55,31 @@
       {%- endif -%}
     {%- endfor -%}
 
-    <header class="ayurhq-topic-header">
-      <div class="ayurhq-topic-header-container">
-        <a class="ayurhq-topic-back-link" href="{{ current_blog_url }}">
-          <span>←</span> {{ section.settings.back_link_label | default: "All topics" }}
-        </a>
-        <div class="ayurhq-topic-header-title-row">
-          <h1 class="ayurhq-topic-header-title">{{ topic_title }}</h1>
-          {%- if topic_hindi != blank -%}
-            <span class="ayurhq-topic-header-hindi" lang="hi">{{ topic_hindi }}</span>
-          {%- endif -%}
-        </div>
-        {%- paginate blog.articles by 24 -%}
-          <p class="ayurhq-topic-header-count">{{ paginate.items }} {{ section.settings.count_suffix | default: "articles" }}</p>
-        {%- endpaginate -%}
+    {%- assign topic_image_filename = 'ayurhq-hero.webp' -%}
+    {%- case current_tag -%}
+      {%- when 'digestion' or 'food' or 'herbs' or 'weight' or 'immunity' or 'seasons' or 'sleep' or 'mind' or 'habits' or 'joints' or 'skin' or 'hair' or 'eyes' or 'womens' or 'mens' or 'children' or 'elder' or 'basics' -%}
+        {%- assign topic_image_filename = 'ayurhq-topic-' | append: current_tag | append: '.webp' -%}
+    {%- endcase -%}
+    {%- assign topic_image = topic_image_filename | asset_url -%}
+
+    <section class="ayurhq-topic-hero">
+      <img src="{{ topic_image }}" class="ayurhq-topic-hero__bg" alt="" aria-hidden="true">
+      <div class="ayurhq-topic-hero__overlay"></div>
+      <div class="ayurhq-topic-hero__content">
+        <div class="ayurhq-topic-hero__eyebrow">आयुर्वेद · Ayurveda</div>
+        <h1 class="ayurhq-topic-hero__title">{{ topic_title }}</h1>
       </div>
-    </header>
+    </section>
 
     <div class="ayurhq-topic-content-container">
+      <div class="ayurhq-topic-sub-header">
+        <a class="ayurhq-topic-back-link" href="{{ current_blog_url }}#topics">
+          <span>←</span> All topics
+        </a>
+        {%- if topic_hindi != blank -%}
+          <span class="ayurhq-topic-hindi" lang="hi">{{ topic_hindi }}</span>
+        {%- endif -%}
+      </div>
       {%- paginate blog.articles by 24 -%}
         <div class="ayurhq-topic-articles-grid">
           {%- for article in blog.articles -%}
@@ -100,9 +117,20 @@
 
   {%- else -%}
 
+    <!-- Hub Hero Section -->
+    <section class="ayurhq-hub-hero">
+      <img src="{{ 'ayurhq-hero.webp' | asset_url }}" class="ayurhq-hub-hero__bg" alt="" aria-hidden="true">
+      <div class="ayurhq-hub-hero__overlay"></div>
+      <div class="ayurhq-hub-hero__content">
+        <div class="ayurhq-hub-hero__eyebrow">Ayurveda inside the ashram</div>
+        <h1 class="ayurhq-hub-hero__title">आयुर्वेद · daily care for the body you practice with</h1>
+        <p class="ayurhq-hub-hero__desc">Food, sleep, movement and seasonal routine brought into the same calm rhythm as your yoga and meditation.</p>
+      </div>
+    </section>
+
     <!-- Care Paths Section -->
     {%- if section.settings.show_care_paths -%}
-      <section class="ayurhq-blog-care-paths-section">
+      <section id="care-paths" class="ayurhq-blog-care-paths-section">
         <div class="ayurhq-blog-container">
           <div class="ayurhq-blog-editorial">
             <div class="ayurhq-blog-editorial__teaser">
@@ -249,7 +277,7 @@
   </section>
 
   <!-- Topic Shelf Section -->
-  <section class="ayurhq-blog-topics-section">
+  <section id="topics" class="ayurhq-blog-topics-section">
     <div class="ayurhq-blog-container">
       <div class="ayurhq-section-header">
         <span class="ayurhq-section-eyebrow">{{ section.settings.browse_eyebrow | default: "BROWSE · विषय" }}</span>
@@ -281,17 +309,16 @@
             {%- assign fallback_handle = fallback_handles[forloop.index0] -%}
             
             <a href="{{ current_blog_url }}/tagged/{{ fallback_handle }}" class="ayurhq-blog-topic-card">
-              <div class="ayurhq-blog-topic-card__image-wrapper">
-                {%- assign image_filename = 'ayurhq-topic-' | append: fallback_handle | append: '.webp' -%}
-                <img src="{{ image_filename | asset_url }}" alt="{{ fallback_title }}" class="ayurhq-blog-topic-card__image" loading="lazy" width="300" height="200">
-              </div>
+              {%- assign image_filename = 'ayurhq-topic-' | append: fallback_handle | append: '.webp' -%}
+              <img src="{{ image_filename | asset_url }}" alt="{{ fallback_title | escape }}" class="ayurhq-blog-topic-card__image" loading="lazy" width="300" height="200">
+              <div class="ayurhq-blog-topic-card__overlay"></div>
               <div class="ayurhq-blog-topic-card__content">
-                <h3 class="ayurhq-blog-topic-card__title">
-                  {{ fallback_title }}
+                <div class="ayurhq-blog-topic-card__row">
+                  <span class="ayurhq-blog-topic-card__title">{{ fallback_title }}</span>
+                  {%- if fallback_hindi != blank -%}
+                    <span class="ayurhq-blog-topic-card__hindi" lang="hi">{{ fallback_hindi }}</span>
+                  {%- endif -%}
                   <span class="ayurhq-blog-topic-card__count">{{ fallback_count }}</span>
-                </h3>
-                <div class="ayurhq-blog-topic-card__footer">
-                  <span class="ayurhq-blog-topic-card__hindi">{{ fallback_hindi }}</span>
                 </div>
               </div>
             </a>
@@ -315,7 +342,7 @@
   {%- assign step3_desc = section.settings.step3_desc | default: "The plan points back to classes, breath and quiet reminders already inside AyurHQ." -%}
   {%- assign consult_disclaimer = section.settings.consult_disclaimer | default: "Ayurveda guidance on AyurHQ is supportive care, not emergency or diagnostic medical treatment." -%}
 
-  <section class="ayurhq-blog-consultation-section">
+  <section id="consult" class="ayurhq-blog-consultation-section">
     <div class="ayurhq-blog-container">
       <div class="ayurhq-blog-consultation">
         <div class="ayurhq-blog-consultation-container">

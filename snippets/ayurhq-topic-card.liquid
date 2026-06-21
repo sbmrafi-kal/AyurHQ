@@ -6,30 +6,28 @@
 
 {%- if topic_card != blank -%}
   {%- assign tc = topic_card.value | default: topic_card -%}
-  <a href="{{ tc.link | default: '#' }}" class="ayurhq-blog-topic-card">
+  {%- assign relative_link = tc.link | default: '#' | replace: 'https://6pwjp0-j0.myshopify.com', '' | replace: 'http://6pwjp0-j0.myshopify.com', '' -%}
+  <a href="{{ relative_link }}" class="ayurhq-blog-topic-card">
     {%- if tc.image != blank -%}
-      <div class="ayurhq-blog-topic-card__image-wrapper">
-        {{ tc.image | image_url: width: 400 | image_tag: 
-          loading: 'lazy', 
-          sizes: '(min-width: 769px) 25vw, (min-width: 481px) 50vw, 100vw', 
-          class: 'ayurhq-blog-topic-card__image' 
-        }}
-      </div>
+      {{ tc.image | image_url: width: 400 | image_tag: 
+        loading: 'lazy', 
+        sizes: '(min-width: 769px) 25vw, (min-width: 481px) 50vw, 100vw', 
+        class: 'ayurhq-blog-topic-card__image' 
+      }}
     {%- else -%}
       <div class="ayurhq-blog-topic-card__image-placeholder"></div>
     {%- endif -%}
+    <div class="ayurhq-blog-topic-card__overlay"></div>
     <div class="ayurhq-blog-topic-card__content">
-      <h3 class="ayurhq-blog-topic-card__title">
-        {{ tc.title }}
+      <div class="ayurhq-blog-topic-card__row">
+        <span class="ayurhq-blog-topic-card__title">{{ tc.title }}</span>
+        {%- if tc.hindi_title != blank -%}
+          <span class="ayurhq-blog-topic-card__hindi" lang="hi">{{ tc.hindi_title }}</span>
+        {%- endif -%}
         {%- if tc.article_count != blank -%}
           <span class="ayurhq-blog-topic-card__count">{{ tc.article_count | split: ' ' | first }}</span>
         {%- endif -%}
-      </h3>
-      {%- if tc.hindi_title != blank -%}
-        <div class="ayurhq-blog-topic-card__footer">
-          <span class="ayurhq-blog-topic-card__hindi">{{ tc.hindi_title }}</span>
-        </div>
-      {%- endif -%}
+      </div>
     </div>
   </a>
 {%- endif -%}
