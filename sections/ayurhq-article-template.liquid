@@ -1,14 +1,22 @@
 {{ 'ayurhq-article-template.css' | asset_url | stylesheet_tag }}
 
 {%- if article != blank -%}
+  {%- assign current_blog_url = blog.url -%}
+  {%- if current_blog_url == blank -%}
+    {%- assign current_blog_url = blogs['ayurveda'].url -%}
+  {%- endif -%}
+  {%- if current_blog_url == blank -%}
+    {%- assign current_blog_url = '/blogs/ayurveda' -%}
+  {%- endif -%}
+
 <div class="ayurhq-article-wrapper">
   <!-- Sub-Navigation Menu -->
   <div class="ayurhq-subnav-border">
     <nav aria-label="Ayurveda" class="ayurhq-subnav-container">
-      <a class="ayurhq-subnav-pill" href="{{ blog.url }}">Overview</a>
-      <a class="ayurhq-subnav-pill" href="{{ blog.url }}#care-paths">Care paths</a>
-      <a class="ayurhq-subnav-pill" href="{{ blog.url }}#topics">Topics</a>
-      <a class="ayurhq-subnav-pill" href="{{ blog.url }}#consult">Consult</a>
+      <a class="ayurhq-subnav-pill" href="{{ current_blog_url }}">Overview</a>
+      <a class="ayurhq-subnav-pill" href="{{ current_blog_url }}#care-paths">Care paths</a>
+      <a class="ayurhq-subnav-pill" href="{{ current_blog_url }}#topics">Topics</a>
+      <a class="ayurhq-subnav-pill" href="{{ current_blog_url }}#consult">Consult</a>
     </nav>
   </div>
 
@@ -29,7 +37,7 @@
 
     <div class="ayurhq-article-hero">
       <nav class="ayurhq-article-back-nav">
-        <a href="{{ blog.url }}" class="ayurhq-article-back-pill">
+        <a href="{{ current_blog_url }}" class="ayurhq-article-back-pill">
           <span class="ayurhq-back-arrow">←</span>
           <span>Ayurveda</span>
         </a>
