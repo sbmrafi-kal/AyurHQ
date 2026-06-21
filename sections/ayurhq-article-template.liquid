@@ -36,12 +36,6 @@
     {%- endfor -%}
 
     <div class="ayurhq-article-hero">
-      <nav class="ayurhq-article-back-nav">
-        <a href="{{ current_blog_url }}" class="ayurhq-article-back-pill">
-          <span class="ayurhq-back-arrow">←</span>
-          <span>Ayurveda</span>
-        </a>
-      </nav>
       <div class="ayurhq-article-hero__image-wrapper">
         {%- if has_topic -%}
           <img src="{{ topic_image_filename | asset_url }}" class="ayurhq-article-hero__image" loading="eager" alt="{{ article.title | escape }}">
