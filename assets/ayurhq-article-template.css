@@ -93,7 +93,7 @@ body.is-ayurveda-page {
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
   margin-bottom: 0;
-  margin-top: -36px;
+  margin-top: 0;
 }
 
 .ayurhq-article-hero__image-wrapper {
@@ -1450,6 +1450,8 @@ blockquote p,
   border-bottom: 1px solid rgba(223, 200, 170, 0.55);
   background-color: #ffffff;
   width: 100%;
+  position: relative;
+  z-index: 10;
 }
 
 .ayurhq-subnav-container {
