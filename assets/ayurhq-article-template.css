@@ -712,7 +712,7 @@ body.is-ayurveda-page {
   font-size: 12.5px;
   color: var(--ayurhq-muted-text);
   line-height: 1.6;
-  text-align: center;
+  text-align: left;
 }
 
 /* Related Articles Section */
@@ -1200,9 +1200,7 @@ body.is-article-page #header-group .header__row {
 .ayurhq-article-body h3,
 .ayurhq-article-body h4,
 .ayurhq-article-explainer__heading,
-.ayurhq-article-tips__heading,
-.ayurhq-article-ingredients__heading,
-.ayurhq-article-definitions__heading {
+.ayurhq-article-ingredients__heading {
   font-size: 22px !important;
   font-family: 'Mukta', sans-serif !important;
   font-weight: 600;
@@ -1212,9 +1210,7 @@ body.is-article-page #header-group .header__row {
 /* Descriptions & Paragraphs */
 .ayurhq-article-body p,
 .ayurhq-article-explainer__desc,
-.ayurhq-article-tip-item__desc,
 .ayurhq-article-ingredient-card__desc,
-.ayurhq-article-definition-item__desc,
 .ayurhq-article-sources__text,
 .ayurhq-article-disclaimer {
   font-size: 17.5px !important;
@@ -1304,7 +1300,7 @@ blockquote p,
   border: 1px solid rgba(234, 220, 200, 0.45) !important;
   border-radius: 12px !important;
   padding: 12px 24px !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 /* 3. Related Articles Section & "More from Ayurveda" Title */
@@ -1502,4 +1498,78 @@ blockquote p,
   background-color: rgb(255, 240, 217);
   font-weight: 700;
   color: #C2541B;
+}
+
+/* ── Custom Cards Fixes for Try This Today & Words to Know ── */
+
+/* Try This Today card */
+.ayurhq-article-tips-card {
+  padding: 20px !important;
+  border-radius: 18px !important;
+  border: 1px solid var(--ayurhq-border) !important;
+  background-color: var(--ayurhq-cream-card-light) !important;
+}
+
+.ayurhq-article-tips__heading {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.14em !important;
+  color: #C2541B !important;
+  margin: 0 0 16px 0 !important;
+}
+
+.ayurhq-article-tip-item__title {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: #1A1A1A !important;
+  line-height: 1.4 !important;
+  margin: 0 0 4px 0 !important;
+}
+
+.ayurhq-article-tip-item__desc {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 13.5px !important;
+  color: #5A544C !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+/* Words to Know card */
+.ayurhq-article-definitions {
+  padding: 20px !important;
+  border-radius: 18px !important;
+  border: none !important;
+  background-color: #FFF8EC !important;
+}
+
+.ayurhq-article-definitions__heading {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.14em !important;
+  color: #C2541B !important;
+  margin: 0 0 16px 0 !important;
+}
+
+.ayurhq-article-definition-item {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 13.5px !important;
+  line-height: 1.5 !important;
+}
+
+.ayurhq-article-definition-item__term {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #C2541B !important;
+}
+
+.ayurhq-article-definition-item__desc {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 13.5px !important;
+  color: #5A544C !important;
 }
