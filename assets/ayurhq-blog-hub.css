@@ -1154,7 +1154,7 @@ body.is-ayurveda-page {
 
 @media (max-width: 480px) {
   .ayurhq-blog-wrapper {
-    padding: 40px 0;
+    padding: 0 0 40px 0;
   }
 
   .ayurhq-blog-hero__heading {
@@ -2023,4 +2023,11 @@ body.is-ayurveda-page {
   background-color: rgb(255, 240, 217);
   font-weight: 700;
   color: #C2541B;
+}
+
+/* ── Scroll Offset Target Overrides ── */
+#care-paths,
+#topics,
+#consult {
+  scroll-margin-top: 130px;
 }
