@@ -425,7 +425,7 @@ body.is-ayurveda-page {
 .ayurhq-agni-card-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 60px;
   margin: 32px 0;
 }
@@ -433,7 +433,7 @@ body.is-ayurveda-page {
 .ayurhq-agni-gauge-wrapper {
   flex-shrink: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .ayurhq-agni-gauge {
@@ -471,17 +471,24 @@ body.is-ayurveda-page {
   color: var(--ayurhq-muted-text);
 }
 
+.ayurhq-agni-card .ayurhq-article-explainer__desc {
+  font-family: 'Mukta', sans-serif !important;
+  font-size: 12.5px;
+  color: #5A544C;
+  line-height: 1.6;
+}
+
 @media (max-width: 768px) {
   .ayurhq-agni-card-content {
     flex-direction: column;
+    align-items: flex-start;
     gap: 32px;
     margin: 24px 0;
   }
   .ayurhq-agni-legend {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
 
