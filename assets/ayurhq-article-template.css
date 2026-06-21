@@ -1391,11 +1391,11 @@ blockquote p,
   display: inline-block !important;
 }
 
-/* 5. Content Column Width Constraint (width 676px for everything in individual blog pages) */
+/* 5. Content Column Width Constraint (width 760px for everything in individual blog pages) */
 @media (min-width: 749px) {
   .ayurhq-article-main-column {
     width: 100% !important;
-    max-width: 676px !important;
+    max-width: 760px !important;
     padding: 0 !important;
   }
 }

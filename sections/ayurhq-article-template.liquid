@@ -233,14 +233,18 @@
                 {%- for herb in article.metafields.custom.ingredient_cards.value -%}
                   {%- assign herb_val = herb.value | default: herb -%}
                   <div class="ayurhq-ingredient-item">
-                    {%- if herb_val.image.value != blank -%}
-                      <div class="ayurhq-ingredient-image-wrapper">
-                        {{ herb_val.image.value | image_url: width: 112 | image_tag: 
-                          loading: 'lazy', 
-                          class: 'ayurhq-ingredient-image'
-                        }}
-                      </div>
+                    {%- assign downcase_handle = herb_val.handle | downcase -%}
+                    {%- assign herb_image_name = 'ginger.webp' -%}
+                    {%- if downcase_handle contains 'coriander' or downcase_handle contains 'dhaniya' or downcase_handle contains 'dhania' -%}
+                      {%- assign herb_image_name = 'coriander.webp' -%}
+                    {%- elsif downcase_handle contains 'fennel' or downcase_handle contains 'saunf' or downcase_handle contains 'shatapushpa' -%}
+                      {%- assign herb_image_name = 'fennel.webp' -%}
+                    {%- elsif downcase_handle contains 'cumin' or downcase_handle contains 'jeera' or downcase_handle contains 'jiraka' -%}
+                      {%- assign herb_image_name = 'cumin.webp' -%}
                     {%- endif -%}
+                    <div class="ayurhq-ingredient-image-wrapper">
+                      <img src="{{ herb_image_name | asset_url }}" loading="lazy" class="ayurhq-ingredient-image" alt="{{ herb_val.name.value | escape }}">
+                    </div>
                     <div class="ayurhq-ingredient-content">
                       <div class="ayurhq-ingredient-title-row">
                         <span class="ayurhq-ingredient-name">{{ herb_val.name.value }}</span>
